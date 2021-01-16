@@ -1,0 +1,194 @@
+@import "valid";
+@lWidth:400px;
+@lHeight:400px;
+@indexLogin:#F7F8FD;
+@lBtColor:#6EEEFF;
+body{
+  //background: #ededed;
+}
+#login{
+  //这种方法好
+  //background: url(../../../public/bg/img/login_bg.png) no-repeat;
+  height:100%;
+  position:absolute;
+  width:100%;
+  min-width: 1200px;
+  min-height:700px;
+}
+
+//两幅主图
+#imgF{
+  position: absolute;
+  top:0;
+  right:0;
+  width:249px;
+  height:200px;
+}
+#imgS{
+  position: absolute;
+  left:0;
+  bottom:0;
+  width:250px;
+  height:203px;
+}
+
+//表单背景部分
+.form_bg{
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
+}
+.form_bg img{
+  width: 508px;
+  height: 648px;
+}
+//表单部分
+#lForm{
+  height: 648px;
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+
+  .layui-form-item{
+    margin-bottom: 0;
+  }
+  .img{
+    padding-top: 30px;
+    padding-bottom:98px;
+    text-align: center;
+    color: #999999;
+    p{
+      margin-top: 20px;
+      font-family: '黑体';
+      font-size: 24px;
+      color: #ffffff;
+    }
+    span{
+      font-size: 14px;
+    }
+  }
+  //顶部标签
+  .topNav{
+    text-align: center;
+    padding-bottom: 40px;
+    a{
+       display:inline-block;
+        padding:10px 20px;
+       font-size:1.1em;
+       color:#AEAEAE
+    }
+    a:hover{
+      color:@lBtColor
+    }
+    i{
+      border-left: 1px solid #ddd;
+    }
+  }
+
+   #user,#pwd{
+     width: 360px;
+     padding: 0 20px;
+    border: none;
+     border-bottom: 1px solid #e4e4e4;
+    color:#333333;
+     height: 40px;
+     line-height: 1.3;
+     margin-top: 15px;
+
+  }
+  #captchaCode{
+    width: 360px;
+    padding: 0 20px;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    color:#333333;
+    height: 40px;
+    line-height: 1.3;
+    margin-top: 15px;
+
+  }
+  .layui-input-block{
+    margin:0;
+    position:relative;
+  }
+
+  //submit的button
+   #submit{
+     margin-top: 40px;
+     width: 200px;
+    background:linear-gradient(to right,#3CCAFF,#73F1FF);
+  }
+  .layui-input{
+    padding-left: 0;
+  }
+  #checkbox{
+    color:#C0C0C0;
+  }
+}
+
+//footer
+.footer{
+  width: 360px;
+  //调用居中对齐方法
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(50%, -50%);
+  z-index: 10;
+  text-align: center;
+  a{
+    color: #333333;
+    font-size:12px;
+  }
+}
+
+//logo部分
+#logo{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  img{
+    width:70px;
+  }
+}
+
+//user和pwd的小图
+i.imgPwd{
+  position: absolute;
+  right:-5px;
+  top:16px;
+  width:20px;
+  height:20px;
+}
+i.imgUser{
+  position: absolute;
+  right:-5px;
+  top:15px;
+  width:20px;
+  height:20px;
+}
+@media (max-width: 1441px) {
+
+  .form_bg img{
+    width: 400px;
+    height: 530px;
+  }
+
+  #lForm{
+    height: 530px;
+    .img{
+      padding-top: 10px;
+      padding-bottom:44px;
+      p{
+        font-size: 20px;
+      }
+    }
+    #user,#pwd{
+      width: 260px;
+    }
+  }
+}

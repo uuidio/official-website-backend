@@ -1,0 +1,263 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title th:text="${pageInfo ne null ? (pageInfo.seoTitle == '' || pageInfo.seoTitle == null ? '产品中心': pageInfo.seoTitle):'产品中心' }">产品中心</title>
+	<meta http-equiv="keywords" content="" th:content="${pageInfo ne null ? (pageInfo.seoKeywords == '' || pageInfo.seoKeywords == null ? '产品中心-北极鹅': pageInfo.seoKeywords):'产品中心-北极鹅' }">
+	<meta name="description" content="" th:content="${pageInfo ne null ? (pageInfo.seoDescription == '' || pageInfo.seoDescription == null ? '产品中心-北极鹅': pageInfo.seoDescription):'产品中心-北极鹅' }">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" th:href="@{/img/images/favicon.ico}">
+<link rel="stylesheet" href="js/plugin/swiper/css/swiper.min.css" th:href="@{/js/swiper/css/swiper.min.css}">
+<link href="css/jquery.mCustomScrollbar.css" rel="stylesheet" th:href="@{/nzq/css/jquery.mCustomScrollbar.css}"/>
+<link rel="stylesheet" href="js/plugin/layui/css/layui.css"  media="all" th:href="@{/nzq/layui/css/layui.css}">
+	<link rel="stylesheet" href="css/common.css" th:href="@{/nzq/css/common.css}">
+	<link rel="stylesheet" href="css/product_center.css" th:href="@{/nzq/css/product_center.css}">
+	<script src="js/plugin/jquery-3.0.0.min.js" th:src="@{/nzq/js/plugin/jquery-3.0.0.min.js}"></script>
+<script src="js/plugin/layui/layui.js" th:src="@{/nzq/layui/layui.js}"></script>
+<script src="js/utils.js" th:src="@{/nzq/js/utils.js}"></script>
+<script src="js/commonjs/header.js" th:src="@{/nzq/js/commonjs/header.js}"></script>
+</head>
+<body>
+<div class="big-bg-img-1" style=""></div>
+<!--header-->
+<div style="width: 100%;">
+    <div class="header">
+        <div class="header-con mg">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/header_logo.png" th:src="@{/img/images/header_logo.png}" alt="">
+                </a>
+            </div>
+
+            <ul class="menu">
+                <li >
+                    <a href="index.html">
+                        首页
+                    </a>
+                </li>
+                <li  class="on" >
+                    <a href="product-center.html">
+                        产品中心
+                    </a>
+                </li>
+                <li >
+                    <a href="about-us.html">
+                        关于我们
+                    </a>
+                </li>
+                <li >
+                    <a href="cooperation.html">
+                        商务合作
+                    </a>
+                </li>
+                <li >
+                    <a href="help.html">
+                        帮助中心
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<!--contain-->
+<div class="contain" >
+	<!-- banner -->
+	<div class="banner mg">
+		<img src="./images/product-banner.jpeg" th:src="${pageInfo ne null and pageInfo.bannerImg ne null ? pageInfo.bannerImg :'/img/images/product-banner.jpeg'}" alt="banner">
+	</div>
+	<div class="product_center-lg">
+		<div class="content">
+			<div class="product">
+				<div class="left-side">
+					<div class="side-bar">
+						<p class="title">产品中心</p>
+						<ul th:if="categories ne null" class="category">
+							<a href="javascript:void(0);" th:each="children,st:${categories}"><li th:class="${(!#strings.isEmpty(param.categoryId)  and param.categoryId+'' eq children.id+'') or (#strings.isEmpty(param.categoryId)  and st.index ==0) ?'active':''}" th:text="${children.name}" th:attr="data-id=${children.id}">饮水机</li></a>
+						</ul>
+					</div>
+				</div>
+				<div class="right-side">
+					<div class="right-side-content">
+						<ul class="product-content">
+							<!--<li>
+								<a href="">
+									<div class="img-wrap"><img src="./images/product.png" alt=""></div>
+									<p class="product_name">饮水机控制器</p>
+								</a>
+							</li>-->
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="product_center-sm">
+        <div class="content">
+            <div class="product_center-header">
+                <p class="title">产品中心</p>
+                <div class="select-item">
+                    <span class="select-val">饮水机</span>
+                    <i class="select-corner-icon"></i>
+                    <ul class="select-slide" style="display: none;">
+                        <li th:each="children,st:${categories}"><a href="javascript:void(0);" th:text="${children.name}" th:attr="data-id=${children.id}">饮水机控制器</a></li>
+					</ul>
+
+                </div>
+            </div>
+            <ul class="product-list product-content">
+                <!--<li>
+                    <a href="">
+                        <div class="img-wrap"><img src="./images/product.png" alt=""></div>
+                        <p class="product_name">饮水机控制器</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="img-wrap"><img src="./images/product.png" alt=""></div>
+                        <p class="product_name">饮水机控制器</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="img-wrap"><img src="./images/product.png" alt=""></div>
+                        <p class="product_name">饮水机控制器</p>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+	</div>
+</div>
+<!--footer-->
+<div class="footer">
+    <div class="part-1">
+        <div class="mg">
+            <div class="left-side">
+                <ul>
+                    <!--<li>
+                        <p class="title">关于我们</p>
+                        <p><a href="about-us.html">关于北极鹅</a></p>
+                        <p><a href="about-us.html#_hope">我们的愿景</a></p>
+                        <p><a href="company/index.html" target="_blank">掌趣科技</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p><a href="help.html">帮助中心</a></p>
+                        <p><a href="javascript:;" class="shangqiao">在线咨询</a></p>
+                        <p><a href="help.html#_advice">意见反馈</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p>客服热线：18565592203</p>
+                        <p>工作时间：9.00-21.00</p>
+                    </li>-->
+
+                    <li th:each="foot : ${footer}" th:if="${footer ne null}">
+                        <p class="title" th:text="${foot ne null ? foot.name : ''}">关于我们</p>
+                        <p th:each="f : ${foot.footerDetails}" th:if="${foot ne null}"><a href="about-us.html" th:href="${f ne null ? (f.url != null && f.url != '' ? f.url : '/footer/'+ f.id +'.html') : ''}" th:text="${f ne null ? f.name : ''}" th:class="${f ne null && f.name eq '在线咨询' ? 'shangqiao' :''}" >关于北极鹅</a></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <!--<div class="scan-code scan-code-app">-->
+                <!--<span class="QR-code"></span>-->
+                <!--<p>扫码下载北极鹅APP</p>-->
+                <!--</div>-->
+                <div class="scan-code scan-code-wechat">
+                    <span class="QR-code"></span>
+                    <p>北极鹅官方微信</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="part-2">
+        <div class="copyright">
+            <p class="author">2015-2019 © 广州掌趣网络科技有限公司 All Rights Reserved.</p>
+            <p><a href="http://www.beian.miit.gov.cn">粤ICP备15096947号-2</a></p>
+        </div>
+    </div>
+</div>
+<!--nav-bar-->
+<div class="nav-bar">
+    <div class="nav-bar-list">
+        <div class="nav-bar-item "><a href="index.html">首页</a></div>
+        <div class="nav-bar-item "><a href="cooperation.html">商务合作</a></div>
+        <div class="nav-bar-item service active">
+            <a href="javascript:;">服务大厅</a>
+            <div class="nav-bar-item-list">
+                <ul style="display: none;">
+                    <li><a class="active" href="product-center.html">产品中心</a></li>
+                    <li><a class="" href="about-us.html">关于我们</a></li>
+                    <li><a class="" href="help.html">帮助中心</a></li>
+                    <li><a href="https://www.zhqu.net/" target="_blank">掌趣科技</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    $(function () {
+        $(".select-item").on("click", function () {
+            $(".select-slide").toggle();
+        });
+        $(".shangqiao").click(function(event) {
+            if ($('#nb_invite_ok').length > 0) {
+                $('#nb_invite_ok').click();
+            }
+        });
+
+        $(".category").find("li").on("click",function () {
+            $(".category").find(".active").removeClass("active");
+            $(this).addClass("active");
+            var categoryId = $(this).data("id");
+            $(".product-content").html('');
+			 $(".product_center-header").find(".select-val").text($(".category").find(".active").text());
+			setData(categoryId);
+        });
+
+		$(".product_center-header").find("li a").on("click", function () {
+			$(".product_center-header").find(".select-val").text($(this).text());
+			var categoryId = $(this).data("id");
+            $(".product-content").html('');
+			setData(categoryId);
+		});
+
+		function setData(categoryId) {
+			$.ajax({
+				url: "/product.json?categoryId=" + categoryId,
+				type: "GET",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (res) {
+					if (res != null) {
+						if (res.code == 0) {
+							var data = res.data;
+							var html = '';
+							for (var i = 0; i < data.length; i++) {
+								html += '<li><a href="/product-detail.html?id=' + data[i].id + '&categoryId=' + categoryId + '">' +
+										'<div class="img-wrap"><img src="' + data[i].mainImage + '" alt=""></div>\n' +
+										'<p class="product_name">' + data[i].name + '</p>\n' +
+										'</a></li>';
+							}
+							$(".product-content").append(html);
+						} else {
+							layer.msg(res.msg);
+						}
+					}
+				}, fail: function () {
+					layer.msg("后台报错");
+				}
+			});
+		}
+
+        $(".category").find(".active").click();
+
+
+
+    })
+</script>
+</html>

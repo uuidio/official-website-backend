@@ -1,0 +1,278 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<title th:text="${pageInfo ne null ? (pageInfo.seoTitle == '' || pageInfo.seoTitle == null ? '商务合作': pageInfo.seoTitle):'商务合作' }">商务合作</title>
+	<meta http-equiv="keywords" content="" th:content="${pageInfo ne null ? (pageInfo.seoKeywords == '' || pageInfo.seoKeywords == null ? '北极鹅': pageInfo.seoKeywords):'北极鹅' }">
+	<meta name="description" content="" th:content="${pageInfo ne null ? (pageInfo.seoDescription == '' || pageInfo.seoDescription == null ? '北极鹅': pageInfo.seoDescription):'北极鹅' }">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" th:href="@{/img/images/favicon.ico}">
+<link rel="stylesheet" href="js/plugin/swiper/css/swiper.min.css" th:href="@{/js/swiper/css/swiper.min.css}">
+<link href="css/jquery.mCustomScrollbar.css" rel="stylesheet" th:href="@{/nzq/css/jquery.mCustomScrollbar.css}"/>
+<link rel="stylesheet" href="js/plugin/layui/css/layui.css"  media="all" th:href="@{/nzq/layui/css/layui.css}">
+	<link rel="stylesheet" href="css/common.css" th:href="@{/nzq/css/common.css}">
+	<link rel="stylesheet" href="css/cooperation.css" th:href="@{/nzq/css/cooperation.css}">
+	<script src="js/plugin/jquery-3.0.0.min.js" th:src="@{/nzq/js/plugin/jquery-3.0.0.min.js}"></script>
+<script src="js/plugin/layui/layui.js" th:src="@{/nzq/layui/layui.js}"></script>
+<script src="js/utils.js" th:src="@{/nzq/js/utils.js}"></script>
+<script src="js/commonjs/header.js" th:src="@{/nzq/js/commonjs/header.js}"></script>
+</head>
+<body>
+	<!--header-->
+	<div style="width: 100%;">
+    <div class="header">
+        <div class="header-con mg">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/header_logo.png" th:src="@{/img/images/header_logo.png}" alt="">
+                </a>
+            </div>
+
+            <ul class="menu">
+                <li >
+                    <a href="index.html">
+                        首页
+                    </a>
+                </li>
+                <li >
+                    <a href="product-center.html">
+                        产品中心
+                    </a>
+                </li>
+                <li >
+                    <a href="about-us.html">
+                        关于我们
+                    </a>
+                </li>
+                <li  class="on" >
+                    <a href="cooperation.html">
+                        商务合作
+                    </a>
+                </li>
+                <li >
+                    <a href="help.html">
+                        帮助中心
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+	<div class="big-bg-img-1"></div>
+	<!--contain-->
+	<div class="contain" >
+		<h1 class="cooperation-title">商务合作</h1>
+		<div class="submit-form">
+			<img src="./images/cooperation.png" th:src="@{/img/images/cooperation.png}" alt="">
+			<div class="form">
+				<div class="left-side">
+					<div class="form-group">
+						<label for="name">姓名：</label>
+						<input type="text" id="name">
+					</div>
+					<div class="form-group">
+						<label for="name">电话：</label>
+						<input type="text" id="mobile">
+					</div>
+				</div>
+				<div class="right-side">
+					<div class="form-group">
+						<label for="name">公司：</label>
+						<input type="text" id="company">
+					</div>
+					<div class="form-group">
+						<label for="name">邮箱：</label>
+						<input type="text" id="email">
+					</div>
+				</div>
+				<div class="form-group left-side">
+					<label for="content">需求描述：</label>
+					<textarea id="content" cols="30" rows="10"></textarea>
+				</div>
+			</div>
+			<button class="submit-btn">提交</button>
+			<p class="tip">提交之后，我们的工作人员会主动联系您</p>
+		</div>
+		<h1 class="cooperation-title">平台合作价值</h1>
+		<div class="platform-value">
+			<div class="item">
+				<div class="item-wrap">
+					<img src="./images/coo-icon-1.png"  th:src="@{/img/images/coo-icon-1.png}" alt="">
+					<h3>平台用户体验强</h3>
+					<p>平台易操作，体验效果好</p>
+					<p>与设备连接稳定，出水流畅</p>
+				</div>
+			</div>
+			<div class="item">
+				<div class="item-wrap">
+					<img src="./images/coo-icon-2.png" th:src="@{/img/images/coo-icon-2.png}" alt="">
+					<h3>物联模块成熟</h3>
+					<p>自有物联模块，满足新装、</p>
+					<p>改造饮水项目需求</p>
+					<p>流量池管理</p>
+				</div>
+			</div>
+			<div class="item">
+				<div class="item-wrap">
+					<img src="./images/coo-icon-3.png" th:src="@{/img/images/coo-icon-3.png}" alt="">
+					<h3>饮水设备性价比高</h3>
+					<p>主流品牌设备合作商</p>
+					<p>商业末端机、商务机设计</p>
+					<p>高校应用场景强</p>
+				</div>
+			</div>
+			<div class="item">
+				<div class="item-wrap">
+					<img src="./images/coo-icon-4.png" th:src="@{/img/images/coo-icon-4.png}" alt="">
+					<h3>增值服务运营强</h3>
+					<p>提升用户活跃率</p>
+					<p>享受增值服务收益</p>
+					<p>投资回报率高</p>
+				</div>
+			</div>
+		</div>
+		<h1 class="cooperation-title">增值服务</h1>
+		<div class="img-bottom-wrap">
+			<img src="./images/coo-bg-1.png" th:src="@{/img/images/coo-bg-1.png}" alt="">
+		</div>
+	</div>
+	<div class="img-wave-wrap"></div>
+	<!--footer-->
+	<div class="footer">
+    <div class="part-1">
+        <div class="mg">
+            <div class="left-side">
+                <ul>
+                    <!--<li>
+                        <p class="title">关于我们</p>
+                        <p><a href="about-us.html">关于北极鹅</a></p>
+                        <p><a href="about-us.html#_hope">我们的愿景</a></p>
+                        <p><a href="company/index.html" target="_blank">掌趣科技</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p><a href="help.html">帮助中心</a></p>
+                        <p><a href="javascript:;" class="shangqiao">在线咨询</a></p>
+                        <p><a href="help.html#_advice">意见反馈</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p>客服热线：18565592203</p>
+                        <p>工作时间：9.00-21.00</p>
+                    </li>-->
+
+                    <li th:each="foot : ${footer}" th:if="${footer ne null}">
+                        <p class="title" th:text="${foot ne null ? foot.name : ''}">关于我们</p>
+                        <p th:each="f : ${foot.footerDetails}" th:if="${foot ne null}"><a href="about-us.html" th:href="${f ne null ? (f.url != null && f.url != '' ? f.url : '/footer/'+ f.id +'.html') : ''}" th:text="${f ne null ? f.name : ''}" th:class="${f ne null && f.name eq '在线咨询' ? 'shangqiao' :''}" >关于北极鹅</a></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <!--<div class="scan-code scan-code-app">-->
+                <!--<span class="QR-code"></span>-->
+                <!--<p>扫码下载北极鹅APP</p>-->
+                <!--</div>-->
+                <div class="scan-code scan-code-wechat">
+                    <span class="QR-code"></span>
+                    <p>北极鹅官方微信</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="part-2">
+        <div class="copyright">
+            <p class="author">2015-2019 © 广州掌趣网络科技有限公司 All Rights Reserved.</p>
+            <p><a href="http://www.beian.miit.gov.cn">粤ICP备15096947号-2</a></p>
+        </div>
+    </div>
+</div>
+	<!--nav-bar-->
+	<div class="nav-bar">
+    <div class="nav-bar-list">
+        <div class="nav-bar-item "><a href="index.html">首页</a></div>
+        <div class="nav-bar-item active"><a href="cooperation.html">商务合作</a></div>
+        <div class="nav-bar-item service ">
+            <a href="javascript:;">服务大厅</a>
+            <div class="nav-bar-item-list">
+                <ul style="display: none;">
+                    <li><a class="" href="product-center.html">产品中心</a></li>
+                    <li><a class="" href="about-us.html">关于我们</a></li>
+                    <li><a class="" href="help.html">帮助中心</a></li>
+                    <li><a href="https://www.zhqu.net/" target="_blank">掌趣科技</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+	layui.use(['element','jquery','util','layer'],function(){
+		var $ = layui.$;
+		var util = layui.util;
+		var layer = layui.layer;
+
+		$(function () {
+			$('#demand,.demand-input').on('input inputpropertychange', function (e) {
+				$('#demand,.demand-input').val($(this).val());
+			});
+			$(".shangqiao").click(function(event) {console.log(1)
+				if ($('#nb_invite_ok').length > 0) {
+					$('#nb_invite_ok').click();
+				}
+			});
+
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(document).ajaxSend(function (e, xhr, options) {
+				xhr.setRequestHeader(header, token);
+			});
+
+			$(".submit-btn").on("click", function () {
+
+				var postData = {};
+
+				postData.name = $("#name").val();
+				postData.mobile = $("#mobile").val();
+				postData.company = $("#company").val();
+				postData.email = $("#email").val();
+				postData.content = $("#content").val();
+
+				if (postData.name == '') {
+					layer.msg("请填写姓名！");
+					return false;
+				}
+
+				if (postData.mobile == '' || postData.mobile == null) {
+					layer.msg("请填写手机！");
+					return false;
+				}
+
+				$.ajax({
+					url: "/busCooperation/c",
+					type: "post",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					data: JSON.stringify(postData),
+					success: function (data) {
+						if (data != null) {
+							if (data.code == 0) {
+								layer.msg("提交成功");
+							} else {
+								layer.msg(data.msg);
+							}
+						}
+					}, fail: function () {
+						layer.msg("后台报错");
+					}
+				});
+			});
+		})
+	});
+
+</script>
+</html>

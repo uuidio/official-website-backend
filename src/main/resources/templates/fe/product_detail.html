@@ -1,0 +1,305 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title th:text="${product ne null and product.name ne null ? product.name+'-北极鹅' :'产品详情'}">产品详情</title>
+	<meta http-equiv="keywords" content="" th:content="${product ne null and product.name ne null ? product.name+'-北极鹅' :'产品详情'}">
+	<meta name="description" content="" th:content="${product ne null and product.name ne null ? product.name+'-北极鹅' :'产品详情'}">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" th:href="@{/img/images/favicon.ico}">
+<link rel="stylesheet" href="js/plugin/swiper/css/swiper.min.css" th:href="@{/js/swiper/css/swiper.min.css}">
+<link href="css/jquery.mCustomScrollbar.css" rel="stylesheet" th:href="@{/nzq/css/jquery.mCustomScrollbar.css}"/>
+<link rel="stylesheet" href="js/plugin/layui/css/layui.css"  media="all" th:href="@{/nzq/layui/css/layui.css}">
+	<link rel="stylesheet" href="css/common.css" th:href="@{/nzq/css/common.css}">
+	<link rel="stylesheet" href="css/product_detail.css" th:href="@{/nzq/css/product_detail.css}">
+	<script src="js/plugin/jquery-3.0.0.min.js" th:src="@{/nzq/js/plugin/jquery-3.0.0.min.js}"></script>
+<script src="js/plugin/layui/layui.js" th:src="@{/nzq/layui/layui.js}"></script>
+<script src="js/utils.js" th:src="@{/nzq/js/utils.js}"></script>
+<script src="js/commonjs/header.js" th:src="@{/nzq/js/commonjs/header.js}"></script>
+</head>
+<body>
+<div class="big-bg-img-1" style=""></div>
+<!--header-->
+<div style="width: 100%;">
+    <div class="header">
+        <div class="header-con mg">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/header_logo.png" th:src="@{/img/images/header_logo.png}" alt="">
+                </a>
+            </div>
+
+            <ul class="menu">
+                <li >
+                    <a href="index.html">
+                        首页
+                    </a>
+                </li>
+                <li  class="on" >
+                    <a href="product-center.html">
+                        产品中心
+                    </a>
+                </li>
+                <li >
+                    <a href="about-us.html">
+                        关于我们
+                    </a>
+                </li>
+                <li >
+                    <a href="cooperation.html">
+                        商务合作
+                    </a>
+                </li>
+                <li >
+                    <a href="help.html">
+                        帮助中心
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<!--contain-->
+<div class="contain" >
+	<!-- banner -->
+	<div class="banner mg">
+		<img src="./images/product-banner.jpeg" th:src="${pageInfo ne null and pageInfo.bannerImg ne null ? pageInfo.bannerImg :'/img/images/product-banner.jpeg'}" alt="banner">
+	</div>
+	<div class="product_center-lg">
+		<div class="content">
+			<div class="product">
+				<div class="left-side">
+					<div class="side-bar">
+						<p class="title">产品中心</p>
+						<ul th:if="categories ne null" class="category">
+							<a href="javascript:void(0);" th:href="${'/product-center.html?categoryId='+children.id}" th:each="children,st:${categories}"><li th:class="${children.id==categoryId?'active':''}" th:text="${children.name}" th:attr="data-id=${children.id}">饮水机</li></a>
+						</ul>
+					</div>
+				</div>
+				<div class="right-side">
+					<div class="right-side-content">
+						<p class="device-name" th:text="${product.name}" th:if="product ne null">饮水控制器</p>
+						<div style="width: 100%;height: 60px;background: #eee;"></div>
+						<div style="display: table;width: 100%;">
+							<div class="product-img-wrap">
+								<img src="./images/product.png" alt="" id="show_img" th:src="${product.mainImage}" th:if="${product ne null && product.mainImage ne null}">
+							</div>
+						</div>
+						<div class="slide-product-img">
+							<a href="javascript:;" class="left-icon"></a>
+							<div class="slide-wrap">
+								<ul th:if="${product ne null}">
+									<li class="active" th:each="image,st:${product.images}" th:class="${st.index==0?'active':''}"><div class="img-wrap"><img src="./images/product.png" th:src="${image.imagePath}" alt=""></div></li>
+								</ul>
+							</div>
+							<a href="javascript:;" class="right-icon"></a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="device-feature" th:each="content,st:${product.contents}" th:if="${product ne null}">
+				<p class="title" th:text="${content.title}">饮水控制系统技术特点</p>
+				<div class="feature-list" th:utext="${content.content}">
+					<p>显示功能 : 剩余金额、本次使用的时间或流量。</p>
+					<p>提示功能 : 剩余金额不足;错误代码。</p>
+				</div>
+			</div>
+
+			<!--<div class="device-feature">
+				<p class="title">饮水控制系统技术特点</p>
+				<div class="feature-list">
+					<p>显示功能 : 剩余金额、本次使用的时间或流量。</p>
+					<p>提示功能 : 剩余金额不足;错误代码。</p>
+				</div>
+			</div>
+			<div class="device-params">
+				<p class="title">技术参数：</p>
+				<div class="params-list">
+					<div class="row">
+						<p class="col">额定电压 ：DC12V</p>
+						<p class="col">额定功率 ：10W </p>
+					</div>
+					<div class="row">
+						<p class="col">待机功率 ：2W</p>
+						<p class="col">水温水质 ：（5-90°）无悬浮杂质及胶质</p>
+					</div>
+				</div>
+			</div>-->
+		</div>
+	</div>
+	<div class="product_center-sm">
+		<div class="content">
+			<div class="product_center-header">
+				<p class="title">产品中心</p>
+				<div class="select-item">
+					<span class="select-val">饮水机</span>
+					<i class="select-corner-icon"></i>
+					<ul th:if="categories ne null" class="select-slide" style="display: none;">
+						<a href="javascript:void(0);" th:href="${'/product-center.html?categoryId='+children.id}" th:each="children,st:${categories}"><li th:class="${children.id==categoryId?'active':''}" th:text="${children.name}" th:attr="data-id=${children.id}">饮水机</li></a>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="product-info">
+			<p class="device-name" th:text="${product.name}" th:if="${product ne null}">饮水控制器</p>
+			<div class="separate-line"></div>
+			<div style="display: table;width: 100%;">
+				<div class="product-img-wrap">
+					<img src="./images/product.png" alt="" id="show_img" th:src="${product.mainImage}" th:if="${product ne null && product.mainImage ne null}">
+				</div>
+			</div>
+			<div class="slide-product-img">
+				<a href="javascript:;" class="left-icon"></a>
+				<div class="slide-wrap">
+					<ul th:if="${product ne null}">
+						<li class="active" th:each="image,st:${product.images}" th:class="${st.index==0?'active':''}"><div class="img-wrap"><img src="./images/product.png" th:src="${image.imagePath}" alt=""></div></li>
+					</ul>
+				</div>
+				<a href="javascript:;" class="right-icon"></a>
+			</div>
+
+		</div>
+		<div class="device-feature" th:each="content,st:${product.contents}" th:if="${product ne null}">
+			<p class="title" th:text="${content.title}">饮水控制系统技术特点</p>
+			<div class="feature-list" th:utext="${content.content}">
+				<p>显示功能 : 剩余金额、本次使用的时间或流量。</p>
+				<p>提示功能 : 剩余金额不足;错误代码。</p>
+			</div>
+		</div>
+		<!--<div class="device-feature">
+			<p class="title">饮水控制系统技术特点</p>
+			<div class="feature-list">
+				<p>显示功能 : 剩余金额、本次使用的时间或流量。</p>
+				<p>提示功能 : 剩余金额不足;错误代码。</p>
+			</div>
+		</div>
+		<div class="device-params">
+			<p class="title">技术参数：</p>
+			<div class="params-list">
+				<div class="row">
+					<p class="col">额定电压 ：DC12V</p>
+					<p class="col">额定功率 ：10W </p>
+				</div>
+			</div>
+		</div>-->
+	</div>
+</div>
+<!--footer-->
+<div class="footer">
+    <div class="part-1">
+        <div class="mg">
+            <div class="left-side">
+                <ul>
+                    <!--<li>
+                        <p class="title">关于我们</p>
+                        <p><a href="about-us.html">关于北极鹅</a></p>
+                        <p><a href="about-us.html#_hope">我们的愿景</a></p>
+                        <p><a href="company/index.html" target="_blank">掌趣科技</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p><a href="help.html">帮助中心</a></p>
+                        <p><a href="javascript:;" class="shangqiao">在线咨询</a></p>
+                        <p><a href="help.html#_advice">意见反馈</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p>客服热线：18565592203</p>
+                        <p>工作时间：9.00-21.00</p>
+                    </li>-->
+
+                    <li th:each="foot : ${footer}" th:if="${footer ne null}">
+                        <p class="title" th:text="${foot ne null ? foot.name : ''}">关于我们</p>
+                        <p th:each="f : ${foot.footerDetails}" th:if="${foot ne null}"><a href="about-us.html" th:href="${f ne null ? (f.url != null && f.url != '' ? f.url : '/footer/'+ f.id +'.html') : ''}" th:text="${f ne null ? f.name : ''}" th:class="${f ne null && f.name eq '在线咨询' ? 'shangqiao' :''}" >关于北极鹅</a></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <!--<div class="scan-code scan-code-app">-->
+                <!--<span class="QR-code"></span>-->
+                <!--<p>扫码下载北极鹅APP</p>-->
+                <!--</div>-->
+                <div class="scan-code scan-code-wechat">
+                    <span class="QR-code"></span>
+                    <p>北极鹅官方微信</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="part-2">
+        <div class="copyright">
+            <p class="author">2015-2019 © 广州掌趣网络科技有限公司 All Rights Reserved.</p>
+            <p><a href="http://www.beian.miit.gov.cn">粤ICP备15096947号-2</a></p>
+        </div>
+    </div>
+</div>
+<!--nav-bar-->
+<div class="nav-bar">
+    <div class="nav-bar-list">
+        <div class="nav-bar-item "><a href="index.html">首页</a></div>
+        <div class="nav-bar-item "><a href="cooperation.html">商务合作</a></div>
+        <div class="nav-bar-item service ">
+            <a href="javascript:;">服务大厅</a>
+            <div class="nav-bar-item-list">
+                <ul style="display: none;">
+                    <li><a class="active" href="product-center.html">产品中心</a></li>
+                    <li><a class="active" href="about-us.html">关于我们</a></li>
+                    <li><a class="" href="help.html">帮助中心</a></li>
+                    <li><a href="https://www.zhqu.net/" target="_blank">掌趣科技</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=zuF2N4TsocMdA8kjgC9skGVpt8YX35wP"></script>
+
+<script>
+    $(function () {
+        $(".right-side-content, .product-info").on("click", ".slide-wrap li", function () {
+            $(this).parent("ul").find("li").removeClass("active");
+            $(this).addClass("active");
+			var src = $(this).find("img").attr("src");
+			$("#show_img").attr("src", src);
+        });
+        $(".slide-product-img").on("click", ".left-icon", function () {
+			var parent = $(this).parent(".slide-product-img");
+			var li_active_index = 0;
+			parent.find("li").each(function (index, item) {
+				if ($(item).hasClass("active")) {
+				    li_active_index = index;
+				}
+            });
+			if (li_active_index != 0) {
+			  parent.find("li").removeClass("active").eq(li_active_index - 1).addClass("active");
+			}
+        });
+        $(".slide-product-img").on("click", ".right-icon", function () {
+            var parent = $(this).parent(".slide-product-img");
+            var li_active_index = 0, length = parent.find("li").length;
+            parent.find("li").each(function (index, item) {
+                if ($(item).hasClass("active")) {
+                    li_active_index = index;
+                }
+            });
+            if (li_active_index != length - 1) {
+                parent.find("li").removeClass("active").eq(li_active_index + 1).addClass("active");
+            }
+        });
+        $(".select-item").on("click", function () {
+            $(".select-slide").toggle();
+        });
+        $(".shangqiao").click(function(event) {
+            if ($('#nb_invite_ok').length > 0) {
+                $('#nb_invite_ok').click();
+            }
+        });
+
+		$(".product_center-header").find(".select-val").text($(".category").find(".active").text());
+    })
+</script>
+</html>

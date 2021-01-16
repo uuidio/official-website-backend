@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.ArticleDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.ArticleModel">
+        <id column="article_id" property="id"/>
+        <result column="article_title" property="title"/>
+        <result column="article_content" property="content"/>
+        <result column="article_summary" property="summary"/>
+        <result column="article_click_num" property="clickNum"/>
+        <result column="article_image" property="image"/>
+        <result column="article_cover" property="cover"/>
+        <result column="article_sort" property="sort"/>
+        <result column="article_user" property="articleUser"/>
+        <result column="article_one_key_college_id" property="oneKeyCollege"/>
+        <result column="article_create_time" property="createTime"/>
+        <result column="article_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+  <!--      <association property="oneKeyCategory" javaType="net.zhqu.website.bg.model.OneKeyCategoryModel">
+            <id property="id" column="category_id"/>
+            <result property="name" column="category_name"/>
+        </association>
+        <association property="oneKeyTwoMenu" javaType="net.zhqu.website.bg.model.OneKeyTwoMenuModel">
+            <id property="id" column="menu_id"/>
+            <result property="name" column="menu_name"/>
+        </association>-->
+        <!--<collection property="oneKeyLabel" javaType="java.util.List"-->
+        <!--ofType="net.zhqu.website.bg.model.OneKeyLabelModel">-->
+        <!--<id column="label_id" property="id"/>-->
+        <!--<result column="label_name" property="name"/>-->
+        <!--</collection>-->
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+       SELECT
+        a.id                    article_id,
+        a.title                 article_title,
+        a.content               article_content,
+        a.summary               article_summary,
+        a.click_num             article_click_num,
+        a.image                 article_image,
+        a.cover                 article_cover,
+        a.sort                 article_sort,
+        a.article_user                 article_user,
+        a.create_time           article_create_time,
+        a.last_modified_time    article_last_modified_time,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM article a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        WHERE  a.id = #{id}
+    </select>
+
+    <select id="findSummaryPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id article_id,
+        a.title article_title,
+        a.summary  article_summary,
+        a.click_num article_click_num,
+        a.article_user article_user,
+        a.image article_image,
+        a.cover article_cover,
+        a.sort article_sort,
+        a.create_time article_create_time,
+        a.last_modified_time article_last_modified_time,
+        org.id org_id,
+        org.name org_name,
+        u.id creator_id,
+        u.name creator_name
+        FROM article a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        <where>
+            <if test="search !=null and search != ''">
+                and a.title like concat('%',#{search},'%')
+            </if>
+        </where>
+        ORDER BY if(a.sort is not null,0,1),a.sort ,a.create_time DESC
+    </select>
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id article_id,
+        a.title article_title,
+        a.content article_content,
+        a.summary  article_summary,
+        a.click_num article_click_num,
+        a.article_user article_user,
+        a.image article_image,
+        a.cover article_cover,
+        a.sort article_sort,
+
+        a.create_time article_create_time,
+        a.last_modified_time article_last_modified_time,
+        org.id org_id,
+        org.name org_name,
+        u.id creator_id,
+        u.name creator_name
+        FROM article a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        <where>
+            <if test="search !=null and search != ''">
+                and a.title like concat('%',#{search},'%')
+            </if>
+        </where>
+        ORDER BY if(a.sort is not null,0,1),a.sort ,a.create_time DESC
+    </select>
+
+    <select id="findAllPageClickNum" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                    article_id,
+        a.title                 article_title,
+        a.content               article_content,
+        a.summary               article_summary,
+        a.click_num             article_click_num,
+        a.article_user                 article_user,
+        a.image                 article_image,
+        a.cover                 article_cover,
+        a.sort                 article_sort,
+
+        a.create_time           article_create_time,
+        a.last_modified_time    article_last_modified_time,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM article a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        order by a.click_num desc
+    </select>
+
+    <insert id="insert" parameterType="net.zhqu.website.bg.model.ArticleModel">
+        INSERT INTO article(
+               title,
+               content,
+               summary,
+			   click_num,
+			   image,
+			   cover,
+			   sort,
+			   article_user,
+			   org_id,
+			   creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES(
+            #{title},
+            #{content},
+            #{summary},
+            0,
+            #{image},
+            #{cover},
+            #{sort},
+            #{articleUser},
+            #{org.id},
+            #{creator.id},
+            now(),
+            now()
+            )
+    </insert>
+
+    <update id="clickNumAddOne" parameterType="Param">
+        UPDATE article a
+        set a.click_num = a.click_num + 1
+        where id = #{id}
+    </update>
+
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.ArticleModel">
+        UPDATE article a
+        <set>
+            a.last_modified_time = now(),
+            a.sort = #{sort},
+            <if test="title!=null and title != ''">a.title = #{title},</if>
+            <if test="content!=null and content != ''">a.content = #{content},</if>
+            <if test="summary!=null and summary != ''">a.summary = #{summary},</if>
+            <if test="image != null">a.image = #{image},</if>
+            <if test="cover!=null and cover != ''">a.cover = #{cover},</if>
+            <if test="articleUser!=null and articleUser != ''">a.article_user = #{articleUser},</if>
+        </set>
+        WHERE
+        a.id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM article
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

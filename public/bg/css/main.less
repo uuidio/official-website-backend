@@ -1,0 +1,127 @@
+@import "valid";
+@font-color:#3BC9FF;
+#main{
+  //logo
+  .logo{
+    font-size: 1.2em;text-align: center; line-height:60px;background-color: #3BC9FF;height:60px;
+  }
+  //左侧导航
+  .lfNav{
+    i{
+      display: inline-block;
+      padding-right:5px;
+      color:#fff;
+      font-weight: 800;
+    }
+    //设置下dd的padding-left
+    dl{
+      dd{
+        padding-left: 22px;
+      }
+    }
+  }
+
+  //右侧内容
+  .trList{
+    margin-left: 200px;
+    //统一定制i图表的颜色和大小
+    i{
+      color:#3E9EFF;
+      font-weight: 800;
+    }
+    //设置背景
+    background-color: #F4F5F5;
+    //右侧导航
+    .rtNav{
+      //统一设置dd 的padding-left
+      text-align: right;
+      dl{
+        text-align: center;
+      }
+    }
+    //高校占比
+    .percentage{
+      .flex();
+      align-items: flex-start;
+      padding:20px 20px 20px 20px;
+      //新增高校占比
+      .newDec{
+        //布局
+        .flex();
+        margin-right: 12px;
+        align-items: flex-start;
+        background-color: #fff;
+        width:280px;
+        height: 160px;
+        .pLf{
+          margin-top: 8px;
+          padding:12px 0 12px 12px;
+          width:140px;
+          height:145px;
+          box-shadow:0 0 2px #fff;
+          h3{
+            font-size: 1.3em;
+          }
+          h2{
+            color:@font-color;
+            padding:8px 0;
+            font-size: 2em;
+          }
+          output{
+            font-size:1.3em;
+          }
+          >div{
+            .flex();
+            margin-top:10px;
+            .lBar{
+              padding:0 8px;
+              width:17px;
+              height: 5px;
+              background-color:#F3F4F4 ;
+            }
+            .rBar{
+              width:17px;
+              height:5px;
+              background-color:@font-color;
+              margin-left: 7px;
+            }
+            output{
+              font-size: 1.2em;
+            }
+          }
+        }
+      }
+    }
+    //数据图
+    .map{
+      padding:20px;
+      background-color:#F4F5F5;
+      position:relative;
+      //线提示
+      .tip{
+        position:absolute;
+        top: 43px;
+        right:40px;
+        .flex();
+        >div{
+          .flex();
+          margin-top:10px;
+          .rBar{
+            margin:0 8px;
+            width:17px;
+            height:5px;
+            background-color:@font-color;
+          }
+          output{
+            font-size: 1.2em;
+          }
+        }
+      }
+    }
+  }
+}
+
+//修改源码样式部分
+.layui-nav .layui-nav-item{
+  line-height: 55px;
+}

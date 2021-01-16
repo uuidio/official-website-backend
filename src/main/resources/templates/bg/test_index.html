@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新增广告</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/content/Layui-KnifeZ/css/layui.css"
+          th:href="@{/nzq/content/Layui-KnifeZ/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/product.css" th:href="@{/bg/ec/css/product.css}"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/iconfont.css"
+          th:href="@{/nzq/layui/css/iconfont.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/picturePlugin.css"
+          th:href="@{/bg/ec/css/picturePlugin.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/image_management.css"
+          th:href="@{/bg/css/image_management.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <!--<script src="../../../../../public/nzq/layui/layui.js"-->
+            <!--th:src="@{/nzq/layui/layui.js}"> </script>-->
+    <script src="../../../../../public/nzq/content/Layui-KnifeZ/layui.js"
+            th:src="@{/nzq/content/Layui-KnifeZ/layui.js}"></script>
+    <script src="../../../../../public/nzq/content/ace/ace.js" th:src="@{/nzq/content/ace/ace.js}"></script>
+    <script src="../../../../../public/js/global.js" th:src="@{/js/global.js}"></script>
+    <style>
+        .mark_img {
+            z-index: 29891016;
+        }
+    </style>
+</head>
+<body>
+<div class="body_bg">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <textarea id="layeditDemo"></textarea>
+        </div>
+    </form>
+</div>
+<div style="display: none" class="images"></div>
+
+<button id="sss">aaa</button>
+
+<script>
+    layui.config({
+        base: '/nzq/layui'
+    }).extend({
+        selectPicture: '/lay/layui_extends/selectPicture'
+    }).use(['layedit', 'layer', 'form', 'jquery', 'selectPicture'], function () {
+        var $ = layui.jquery
+        var layer = layui.layer
+        var layedit = layui.layedit;
+        var selectPicture = layui.selectPicture;
+
+        $('body').on('click', '.add_usimg', function () {
+            var src = $(this)
+            var selPic = selectPicture({
+                elem: '#add_pictureImages',
+                callback: function (res) {
+
+                    src.parent().find("input[name='Imgsrc']").val(res.url)
+
+//                    $(".images").html('<div class="pic_item image"><img src="' + res.url + '"><input id="image" type="hidden" value="' + res.url + '" name="image"><i class="layui-icon">&#x1006;</i></div>');
+                }
+            });
+            selPic.show();
+            console.log('ss')
+        });
+
+
+        layedit.set({
+            uploadImage: {
+                url: '/bg/picture/c/upload/0    ',
+                accept: 'image',
+                acceptMime: 'image/*',
+                exts: 'jpg|png|gif|bmp|jpeg',
+                size: 1024 * 10,
+                done: function (data) {
+                    console.log(data);
+                }
+            },
+//            , uploadVideo: {
+//                url: 'your url',
+//                accept: 'video',
+//                acceptMime: 'video/*',
+//                exts: 'mp4|flv|avi|rm|rmvb',
+//                size: 1024 * 10 * 2,
+//                done: function (data) {
+//                    console.log(data);
+//                }
+//            }
+//            , uploadFiles: {
+//                url: 'your url',
+//                accept: 'file',
+//                acceptMime: 'file/*',
+//                size: '20480',
+//                done: function (data) {
+//                    console.log(data);
+//                }
+//            }
+//            , calldel: {
+//                url: 'your url',
+//                done: function (data) {
+//                    console.log(data);
+//                }
+//            }
+//            , facePath: 'http://knifez.gitee.io/kz.layedit/Content/Layui-KnifeZ/'
+//            , devmode: true
+            tool: [
+//                'html',
+                'undo',
+                'redo',
+//                'code',
+                'strong',
+                'italic',
+                'underline',
+//                'del',
+//                'addhr', '|',
+                'fontFomatt',
+                'fontfamily',
+//                'fontSize',
+//                'fontBackColor',
+//                'colorpicker',
+//                'face',
+                '|',
+                'left',
+                'center',
+                'right',
+                '|',
+                'link',
+                'unlink',
+//                'images',
+                'image_alt',
+//                'video',
+//                'attachment',
+//                'anchors', '|',
+//                'table',
+//                'fullScreen'
+            ]
+            , height: '90%'
+        });
+        var ieditor = layedit.build('layeditDemo');
+//        layedit.setContent(ieditor, "<h1>hello layedit</h1>", false);
+        $("#sss").on('click', function () {
+            console.log(layedit.getContent(ieditor));
+
+        })
+
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+@import "valid";
+#list{
+  //logo
+  .logo{
+
+    font-size: 1.2em;text-align: center; line-height:60px;background-color: #fff;height:60px;
+    img{
+      width:80%;
+    }
+  }
+  //左侧导航
+  .lfNav{
+    i{
+      display: inline-block;
+      padding-right:5px;
+      color:#fff;
+      font-weight: 800;
+    }
+    //设置下dd的padding-left
+    dl{
+      dd{
+        padding-left: 22px;
+      }
+    }
+  }
+
+  //右侧内容
+  .trList{
+    min-width: 900px;
+    margin-left: 200px;
+    //统一定制i图表的颜色和大小
+    //右侧导航
+    .rtNav{
+      //统一设置dd 的padding-left
+      text-align: right;
+      dl{
+        text-align: center;
+      }
+    }
+
+    .rtTab{    //tab切换头
+      min-width:1200px ;
+      i{
+        color:#3E9EFF;
+        font-weight: 800;
+      }
+      dl{
+        dd{
+          padding-left: 15px;
+        }
+      }
+      .select{
+
+        display: inline-block;  //用inline-block比较好
+        output{
+          display: inline-block;
+          margin:0 10px;
+          font-weight: 500;
+        }
+        input{
+          padding:5px;
+          border-color: #F8F8F8;
+          width:80px;
+          height:13px;
+        }
+      }
+      .btnLayout{//数据表格上按钮布局
+        display:flex!important;
+        justify-content: flex-start;
+        align-items: center;
+        width:100%;
+      }
+    }
+    //table表格
+    .rtTable{
+      margin: 20px 0 0 0 ;
+      width:100%;
+      padding:0;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    #rtTree{//layui tree数据表格右边
+      min-width: 180px;
+      padding:0 10px;
+    }
+  }
+}
+
+//编辑页面部分（模态框）
+#edit,.popupHtml{
+  background-color: rgba(100,100,100,.7);
+  position: fixed;
+  z-index: 1000;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  padding:20px;
+  min-height:1000px;
+
+  display: none; //控制编辑页面的显示隐藏
+
+  .scroll{  //添加滚动条
+    position:relative;
+    padding:20px;
+    padding-top:0;
+    background-color: #fff;
+    .center();
+    top:40%;
+    width:70%;
+    .section{
+      height:800px;
+      h2{
+        margin:20px 0;
+      }
+      form{
+        .sBtn{
+          margin-bottom: 300px;
+          button:first-child{//保持按钮
+            width:150px;margin-top:30px;
+          }
+          button:last-child{//取消按钮
+            width:150px;margin-top:30px;
+          }
+        }
+
+      }
+    }
+  }
+
+  .close{  //关闭按钮
+    position:absolute;
+    top:15px;
+    right:15px;
+    cursor: pointer;
+    i{
+      font-size: 2.3em;
+      color:#3BC9FF
+    }
+  }
+}
+
+.layui-nav .layui-nav-item{//修改源码样式部分
+  line-height: 55px;
+}
+body .layui-tree-skin-shihuang .layui-tree-branch{color: #EDCA50!important;}
+
+.layui-tree-leaf{
+  color:#3BC9FF!important;
+}
+
+.layui-nav-child dd {
+  cursor: pointer;
+}
+.hidden {
+  display: none;
+}

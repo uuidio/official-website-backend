@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.LogoDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.LogoModel">
+        <id column="logo_id" property="id"/>
+        <result column="logo_logo_id" property="logo"/>
+        <result column="logo_url" property="logoUrl"/>
+        <result column="logo_name" property="name"/>
+        <result column="logo_create_time" property="createTime"/>
+        <result column="logo_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+        SELECT
+        a.id                    logo_id,
+        a.logo_id               logo_logo_id,
+        a.name                  logo_name,
+        a.logo_url              logo_url,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name,
+        a.create_time           logo_create_time,
+        a.last_modified_time    logo_last_modified_time
+        FROM homelogo a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        WHERE  a.id = #{id}
+    </select>
+
+
+
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id logo_id,
+        a.logo_id logo_logo_id,
+        a.name                  logo_name,
+        a.logo_url logo_url,
+        org.id org_id,
+        org.name org_name,
+        u.id creator_id,
+        u.name creator_name,
+        a.create_time logo_create_time,
+        a.last_modified_time logo_last_modified_time
+        FROM homelogo a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        <if test="orderByCreateTimeDesc">
+            order by a.create_time desc
+        </if>
+    </select>
+
+
+    <select id="count" resultType="java.lang.Integer" parameterType="Param">
+        SELECT count(1)
+		FROM homelogo a
+    </select>
+
+    <insert id="insertList">
+        INSERT INTO homelogo(
+        logo_id,
+        name,
+        logo_url,
+        org_id,
+        creator_id,
+        create_time,
+        last_modified_time
+        )VALUES
+        <foreach collection="logoModels" item="logoModels" separator=",">
+            (#{logoModels.logo},#{logoModels.logoUrl},#{logoModels.org.id},#{logoModels.creator.id},now(),now())
+        </foreach>
+    </insert>
+
+    <insert id="insert">
+         INSERT INTO homelogo(
+               logo_id,
+               name,
+               logo_url,
+               org_id,
+               creator_id,
+               create_time,
+			   last_modified_time
+        )VALUES(
+        #{logo},
+        #{name},
+        #{logoUrl},
+        #{org.id},
+        #{creator.id},
+        now(),
+        now()
+        )
+
+    </insert>
+
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.LogoModel">
+        UPDATE homelogo a
+        <set>
+            a.last_modified_time = now(),
+            <if test="logoUrl != null and logoUrl != ''">
+                a.logo_url = #{logoUrl},
+            </if>
+            <if test="name != null and name != ''">
+                a.name = #{name},
+            </if>
+        </set>
+        WHERE
+        a.id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM homelogo
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

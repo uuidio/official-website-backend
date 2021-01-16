@@ -1,0 +1,342 @@
+.input {
+  height: 34px;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #C9C9C9;
+  opacity: .7;
+}
+.input:focus {
+  border: #ff8080;
+}
+.tRight {
+  margin-bottom: 25px;
+}
+.tRight a:hover {
+  color: #fff;
+}
+.tRight dt {
+  padding: 0 40px 0 5px ;
+}
+.tRight dt a {
+  font-size: 1.2em;
+  color: #06A8E9;
+}
+.tRight dd a {
+  display: inline-block;
+  text-align: center;
+  background-color: #C9C9C9;
+  width: 30px;
+  padding: 2px;
+}
+.tRight a:hover {
+  background-color: #06A8E9;
+}
+.tRight .foc {
+  background-color: #C4C4C4;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fl {
+  float: left;
+}
+.rl {
+  float: right;
+}
+@keyframes rot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*设置基本的样式*/
+* {
+  box-sizing: border-box;
+}
+body {
+  line-height: 1.4;
+  font-size: 12px;
+  font-family: 'Microsoft Yahei', Tahoma, Verdana;
+  color: #4D4D4D;
+}
+body,
+html,
+ul,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+ol,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#section,
+#top,
+#login,
+#manage,
+#cSection {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1120px;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+a:hover {
+  color: #6ED7FF;
+}
+.input {
+  padding: 10px;
+}
+.content .samll_title {
+  font-size: 18px;
+  margin: 10px;
+  font-weight: normal;
+  height: 30px;
+  line-height: 30px;
+}
+.content .samll_title .layui-btn {
+  float: right;
+}
+.mark_img {
+  background: #ffffff;
+}
+.mark_img .mark_body {
+  overflow: hidden;
+}
+.mark_img .mark_body .mark_left {
+  padding-right: 120px;
+  padding-top: 10px;
+}
+.mark_img .mark_body .mark_left ul {
+  float: left;
+  width: 100%;
+}
+.mark_img .mark_body .mark_left ul li {
+  float: left;
+  font-size: 14px;
+  padding: 0 20px;
+  line-height: 40px;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+  margin: 0 8px 10px;
+}
+.mark_img .mark_body .mark_left ul .on {
+  border: 1px solid #e6620f;
+  background: #ffffff;
+  color: #e6620f;
+}
+.mark_img .mark_body .mark_left ul .num {
+  width: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: right;
+  text-align: right;
+  margin-right: -50px;
+}
+.mark_img .mark_body .mark_left .add_btn {
+  float: right;
+  margin-right: -110px;
+  text-align: center;
+}
+.mark_img .mark_body .mark_left .add_btn button {
+  background-color: transparent;
+  border: 1px solid #e4e4e4;
+  color: #666;
+}
+.mark_img .mark_body .mark_right {
+  min-width: 790px;
+}
+.mark_img .mark_body .mark_right .layui-form-checkbox[lay-skin=primary] span {
+  font-size: 14px;
+}
+.mark_img .mark_body .mark_right .layui-form-checked[lay-skin=primary] i {
+  border-color: #009688;
+  background-color: #009688;
+}
+.mark_img .mark_body .mark_right .layui-form-checkbox[lay-skin=primary]:hover i {
+  border-color: #009688;
+}
+.mark_img .mark_body .mark_right .mark_head {
+  background: #ededed;
+  padding: 0 10px;
+}
+.mark_img .mark_body .mark_right .mark_head .mark_head_box {
+  padding: 10px 0;
+  font-size: 14px;
+}
+.mark_img .mark_body .mark_right .mark_head .mark_head_box .layui-icon {
+  width: 16px;
+  height: 16px;
+}
+.mark_img .mark_body .mark_right .mark_head .mark_head_box a {
+  margin: 0 10px ;
+  color: #666666;
+  float: right;
+}
+.mark_img .mark_body .mark_right .img_box {
+  overflow: hidden;
+}
+.mark_img .mark_body .mark_right .img_box li {
+  float: left;
+  margin: 5px 18px ;
+  position: relative;
+}
+.mark_img .mark_body .mark_right .img_box li .img {
+  width: 160px;
+  height: 160px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  line-height: 160px;
+}
+.mark_img .mark_body .mark_right .img_box li .img img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.mark_img .mark_body .mark_right .img_box li .img p {
+  color: #ffffff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 160px;
+  background: #000;
+  opacity: 0.6;
+  text-align: center;
+}
+.mark_img .mark_body .mark_right .img_box li p {
+  font-size: 16px;
+  width: 160px;
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mark_img .mark_body .mark_right .img_box li .txt {
+  display: none;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 4px;
+}
+.mark_img .mark_body .mark_right .img_box li .txt .layui-form-checkbox[lay-skin=primary] i {
+  width: 16px;
+  height: 16px;
+}
+.mark_img .mark_body .mark_right .img_box li .edit_btn {
+  display: none;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+.mark_img .mark_body .mark_right .img_box li .edit_btn span {
+  float: right;
+  cursor: pointer;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: #FFFFFF;
+  font-size: 16px;
+  border: 1px solid #e4e4e4;
+  line-height: 8px;
+  text-align: center;
+  border-radius: 9px;
+  margin-bottom: 4px;
+}
+.mark_img .mark_body .mark_right .img_box li .edit_btn .operation {
+  display: none;
+  clear: both;
+  width: 80px;
+  background: #ffffff;
+  text-align: center;
+  margin-top: 4px;
+  border-radius: 2px;
+}
+.mark_img .mark_body .mark_right .img_box li .edit_btn .operation a {
+  display: block;
+  font-size: 14px;
+  line-height: 28px;
+}
+.mark_img .mark_body .mark_right .img_box li:hover .img {
+  background: #eaffea ;
+}
+.mark_img .mark_body .mark_right .img_box li:hover .edit_btn {
+  display: block;
+}
+.mark_img .mark_body .mark_right .img_box li:hover .edit_btn:hover .operation {
+  display: block;
+}
+.mark_img .mark_body .mark_right .img_box li:hover .txt {
+  display: block;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom {
+  font-size: 14px;
+  overflow: hidden;
+  margin: 30px;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .link {
+  float: right;
+  margin-right: 10px;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box .link {
+  overflow: hidden;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box .link .layui-input {
+  width: 60px;
+  float: left;
+  height: 30px;
+  line-height: 30px;
+  margin: 0 0 0 10px;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box .link button {
+  float: left;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box .tips {
+  height: 30px;
+  line-height: 30px;
+  color: #333333;
+  display: inline-block;
+  float: right;
+  margin-right: 4px;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box ul {
+  display: inline-block;
+  float: right;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box ul li {
+  position: relative;
+  float: left;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #999999;
+  color: #333333;
+  text-align: center;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box ul li a {
+  display: block;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom .page_box ul .on a {
+  color: #6ED7FF;
+}

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.BusCooperationDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.BusCooperationModel">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="company" property="company"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+        SELECT
+        a.id                    id,
+        a.name                      name,
+        a.company             company,
+        a.mobile          mobile,
+        a.email                 email,
+        a.content                 content,
+        a.create_time           create_time,
+        a.last_modified_time    last_modified_time,
+		org.id                   org_id,
+        org.name                 org_name,
+        u.id                     creator_id,
+        u.name                   creator_name
+        FROM bus_cooperation a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        <where>
+            <if test="id!=null">
+                a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                    id,
+        a.name                      name,
+        a.company             company,
+        a.mobile          mobile,
+        a.email                 email,
+        a.content                 content,
+        a.create_time           create_time,
+        a.last_modified_time    last_modified_time,
+        org.id                                org_id,
+        org.name                              org_name,
+        u.id                                  creator_id,
+        u.name                                creator_name
+        FROM bus_cooperation a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        order by a.create_time desc
+    </select>
+
+    <insert id="insert">
+        INSERT INTO bus_cooperation(
+        name,
+        company,
+        mobile,
+               email,
+               content,
+			   org_id,
+			   creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES(
+          #{name},
+            #{company},
+            #{mobile},
+            #{email},
+            #{content},
+            #{org.id},
+            #{creator.id},
+            now(),
+            now()
+            )
+    </insert>
+
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.BusCooperationModel">
+        UPDATE bus_cooperation a
+        <set>
+            a.last_modified_time = now(),
+            <if test="name != null">a.name  = #{name},</if>
+            <if test="company != null">a.company  = #{company},</if>
+            <if test="mobile != null">a.mobile  = #{mobile},</if>
+            <if test="email!=null and email != ''">a.email = #{email},</if>
+            <if test="content!=null and content != ''">a.content = #{content},</if>
+        </set>
+        where
+        a.id = #{id}
+
+
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM bus_cooperation
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

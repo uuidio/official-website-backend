@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.FooterDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.FooterModel">
+        <id column="footer_id" property="id"/>
+        <result column="footer_name" property="name"/>
+        <result column="footer_sort" property="sort"/>
+        <result column="footer_create_time" property="createTime"/>
+        <result column="footer_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+        <collection property="footerDetails" ofType="net.zhqu.website.bg.model.FooterDetailsModel"
+                    javaType="java.util.List">
+            <id column="fd_id" property="id"/>
+            <result property="name" column="fd_name"/>
+            <result property="url" column="fd_url"/>
+        </collection>
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+        SELECT
+        a.id                     footer_id,
+        a.name                   footer_name,
+        a.sort                   footer_sort,
+        a.create_time            footer_create_time,
+        a.last_modified_time     footer_last_modified_time,
+        org.id                   org_id,
+        org.name                 org_name,
+        u.id                     creator_id,
+        u.name                   creator_name
+        FROM footer a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        WHERE  a.id = #{id}
+    </select>
+
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id footer_id,
+        a.name footer_name,
+        a.sort footer_sort,
+        a.create_time footer_create_time,
+        a.last_modified_time footer_last_modified_time,
+        org.id org_id,
+        org.name org_name,
+        u.id creator_id,
+        u.name creator_name
+        FROM footer a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        order by a.sort
+
+    </select>
+
+    <select id="findFooter" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id footer_id,
+        a.name footer_name,
+        a.sort footer_sort,
+        a.create_time footer_create_time,
+        a.last_modified_time footer_last_modified_time,
+        fd.id    fd_id,
+        fd.name  fd_name,
+        fd.url   fd_url,
+        org.id org_id,
+        org.name org_name,
+        u.id creator_id,
+        u.name creator_name
+        FROM footer a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        LEFT JOIN footer_details fd ON a.id = fd.footer_id
+        order by a.sort
+    </select>
+
+
+    <select id="count" resultType="java.lang.Integer" parameterType="Param">
+        SELECT count(1)
+		FROM footer a
+    </select>
+
+
+    <insert id="insert">
+        INSERT INTO footer(
+               name,
+               sort,
+			   org_id,
+			   creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES(
+            #{name},
+            #{sort},
+            #{org.id},
+            #{creator.id},
+            now(),
+            now()
+            )
+    </insert>
+
+    <insert id="insertFooter" parameterType="net.zhqu.website.bg.model.FooterModel">
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO footer(
+        name,
+        sort,
+        org_id,
+        creator_id,
+        create_time,
+        last_modified_time
+        )VALUES(
+        #{name},
+        #{sort},
+        #{org.id},
+        #{creator.id},
+        now(),
+        now()
+        )
+    </insert>
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.FooterModel">
+        UPDATE footer a
+        <set>
+            a.last_modified_time = now(),
+            <if test="name!=null and name != ''">a.name = #{name},</if>
+            <if test="sort!=null and sort != ''">a.sort = #{sort},</if>
+        </set>
+        WHERE
+        a.id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM footer
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.UserOrgRelDao" >
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.UserOrgRel">
+        <id column="user_org_rel_id" property="id"/>
+        <result column="user_org_rel_create_time" property="createTime"/>
+        <result column="user_org_rel_last_modified_time" property="lastModifiedTime"/>
+        <association property="partnerOrg" javaType="net.zhqu.framework.entity.Org">
+            <id     property="id"                       column="org_id"/>
+            <result property="name"                     column="org_name"/>
+        </association>
+        <association property="partnerUser" javaType="net.zhqu.framework.entity.User">
+            <id     property="id"                       column="creator_id"/>
+            <result property="name"                     column="creator_name"/>
+        </association>
+    </resultMap>
+
+    <select id="getByOrgIdOrUserId" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        p.id                  partner_id,
+        p.partner_name        partner_name,
+        p.create_time         partner_create_time,
+        p.last_modified_time  partner_last_modified_time
+        FROM user_org_rel a
+        LEFT JOIN partner p ON a.r_user_id = p.partner_user_id
+        <where>
+            <if test="rOrgId != null and '' != rOrgId">
+                AND a.r_org_id = #{rOrgId}
+            </if>
+            <if test="rUserId != null and '' != rUserId">
+                AND a.r_user_id = #{rUserId}
+            </if>
+        </where>
+    </select>
+
+    <!-- 条件：排序 -->
+    <sql id="commonOrder">
+        ORDER BY a.create_time DESC
+    </sql>
+
+    <!-- 条件：通用查询 -->
+    <sql id="commonQuery">
+        <where>
+            <if test="id!=null and '' != id ">
+                AND a.id = #{id, jdbcType=BIGINT}
+            </if>
+            <if test="partnerUserId != null and ''!= partnerUserId">
+                AND r_user_id = #{partnerUserId,jdbcType=BIGINT}
+            </if>
+            <if test="partnerOrgId != null and ''!= partnerOrgId">
+                AND r_org_id = #{partnerOrgId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+         SELECT
+              a.id                  user_org_rel_id,
+              a.create_time         user_org_rel_create_time,
+              a.last_modified_time  user_org_rel_last_modified_time,
+              b.id                  org_id,
+              b.name                org_name,
+              c.id                  creator_id,
+              c.name                creator_name
+         FROM user_org_rel a
+            LEFT JOIN org b ON a.r_org_id = b.id
+            LEFT JOIN user c ON a.r_user_id = c.id
+        <include refid="commonOrder"/>
+    </select>
+
+    <select id="query" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+            a.id                  user_org_rel_id,
+            a.create_time         user_org_rel_create_time,
+            a.last_modified_time  user_org_rel_last_modified_time,
+            b.id                  org_id,
+            b.name                org_name,
+            c.id                  creator_id,
+            c.name                creator_name
+        FROM user_org_rel a
+        LEFT JOIN org b ON a.r_org_id = b.id
+        LEFT JOIN user c ON a.r_user_id = c.id
+        <include refid="commonQuery"/>
+        <include refid="commonOrder"/>
+    </select>
+
+    <select id="findOne" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                  user_org_rel_id,
+        a.create_time         user_org_rel_create_time,
+        a.last_modified_time  user_org_rel_last_modified_time,
+        b.id                  org_id,
+        b.name                org_name,
+        c.id                  creator_id,
+        c.name                creator_name
+        FROM user_org_rel a
+        LEFT JOIN org b ON a.r_org_id = b.id
+        LEFT JOIN user c ON a.r_user_id = c.id
+        <include refid="commonQuery"/>
+    </select>
+
+    <insert id="insert" parameterType="net.zhqu.website.bg.model.UserOrgRel">
+        <selectKey resultType="java.lang.Long"  order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO user_org_rel(
+               id,
+               r_org_id,
+               r_user_id,
+               creator_id,
+               org_id,
+               create_time,
+               last_modified_time
+        )VALUES (
+              #{id},
+              #{partnerOrg.id},
+              #{partnerUser.id},
+              #{creator.id},
+              #{org.id},
+              now(),
+              now()
+        )
+    </insert>
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.UserOrgRel">
+        UPDATE user_org_rel a
+        <set>
+            a.last_modified_time= now(),
+            <if test="partnerOrg != null and partnerOrg.id != null">
+                a.r_org_id = #{partnerOrg.id},
+            </if>
+            <if test="partnerUser != null and partnerUser.id != null">
+                a.r_user_id = #{partnerUser.id},
+            </if>
+        </set>
+        WHERE
+        a.id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM user_org_rel
+        <where>
+            <if test="id !=null and '' != id ">
+                AND a.id = #{id, jdbcType=BIGINT}
+            </if>
+            <if test="partnerUserId != null and ''!= partnerUserId">
+                AND r_user_id = #{partnerUserId,jdbcType=BIGINT}
+            </if>
+            <if test="partnerOrgId != null and ''!= partnerOrgId">
+                AND r_org_id = #{partnerOrgId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </delete>
+</mapper>

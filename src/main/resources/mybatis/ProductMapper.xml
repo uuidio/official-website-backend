@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.ProductDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.ProductModel">
+        <id column="p_id" property="id"/>
+        <result column="p_name" property="name"/>
+        <result column="p_mainImage" property="mainImage"/>
+        <result column="p_create_time" property="createTime"/>
+        <result column="p_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+
+        <association property="category" javaType="net.zhqu.website.bg.model.ProductCategoryModel">
+            <id property="id" column="c_id"/>
+            <result property="name" column="c_name"/>
+        </association>
+
+        <collection property="images" javaType="java.util.List" ofType="net.zhqu.website.bg.model.PictureModel">
+                <id property="id" column="pic_id"/>
+                <result property="imagePath" column="pic_imagePath"/>
+        </collection>
+        <collection property="contents" javaType="java.util.List" ofType="net.zhqu.website.bg.model.ProductContentModel">
+            <id property="id" column="pc_id"/>
+            <result property="title" column="pc_title"/>
+            <result property="content" column="pc_content"/>
+        </collection>
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+       SELECT
+        a.id                    p_id,
+        a.name                  p_name,
+        a.main_image            p_mainImage,
+        a.create_time           p_create_time,
+        a.last_modified_time    p_last_modified_time,
+        a.category_id           c_id,
+        pic.id                  pic_id,
+        pic.image_path          pic_imagePath,
+        pc.id                   pc_id,
+        pc.title                pc_title,
+        pc.content              pc_content,
+        c.name                  c_name,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM product a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        left join product_category c on c.id = a.category_id
+        left join product_image pi on pi.product_id = a.id
+        left join picture pic on pic.id = pi.pic_id
+        left join product_content pc on pc.product_id = a.id
+        WHERE  a.id = #{id}
+    </select>
+
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                    p_id,
+        a.name                  p_name,
+        a.main_image            p_mainImage,
+        a.category_id           c_id,
+        c.name                  c_name,
+        a.create_time           p_create_time,
+        a.last_modified_time    p_last_modified_time,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM product a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        left join product_category c on c.id = a.category_id
+        <where>
+            <if test="name !=null and name != ''">
+                and a.name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId!=null">
+                and a.category_id= #{categoryId}
+            </if>
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="findAll" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                    p_id,
+        a.name                  p_name,
+        a.main_image            p_mainImage,
+        a.category_id           c_id,
+        c.name                  c_name,
+        a.create_time           p_create_time,
+        a.last_modified_time    p_last_modified_time,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM product a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        left join product_category c on c.id = a.category_id
+        <where>
+            <if test="name !=null and name != ''">
+                and a.name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId!=null">
+                and a.category_id= #{categoryId}
+            </if>
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+
+
+    <insert id="insert" parameterType="net.zhqu.website.bg.model.ProductModel">
+        <selectKey resultType="java.lang.Long"  order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO product(
+               name,
+               main_image,
+               category_id,
+			   org_id,
+			   creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES(
+            #{name},
+            #{mainImage},
+            #{category.id},
+            #{org.id},
+            #{creator.id},
+            now(),
+            now()
+            )
+    </insert>
+
+    <insert id="addImages" parameterType="net.zhqu.framework.entity.Param">
+        INSERT INTO product_image(id,product_id,pic_id,create_time,last_modified_time)
+        VALUES
+        <foreach collection="images" item="image" separator=",">
+            (#{id},#{productId},#{image.id},now(),now())
+        </foreach>
+    </insert>
+
+    <delete id="deleteAllImages" parameterType="net.zhqu.framework.entity.Param">
+        delete from product_image where product_id=#{productId}
+    </delete>
+
+    <insert id="addContents" parameterType="net.zhqu.framework.entity.Param">
+        INSERT INTO product_content(id,product_id,title,content,last_modified_time,create_time)
+        VALUES
+        <foreach collection="contents" item="content" separator=",">
+            (#{id},#{productId},#{content.title},#{content.content},now(),now())
+        </foreach>
+    </insert>
+
+    <delete id="deleteAllContents" parameterType="net.zhqu.framework.entity.Param">
+        delete from product_content where product_id=#{productId}
+    </delete>
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.ProductModel">
+        UPDATE product a
+        <set>
+            a.last_modified_time = now(),
+            <if test="name!=null and name != ''">a.name = #{name},</if>
+            <if test="mainImage!=null and mainImage != ''">a.main_image = #{mainImage},</if>
+            <if test="category!=null and category.id != null">a.category_id = #{category.id},</if>
+        </set>
+        WHERE
+        a.id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM product
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

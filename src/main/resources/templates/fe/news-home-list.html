@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="parters-list" class="layui-carousel">
+    <ul>
+        <li th:each="article,iterator : ${articles}" th:if="${articles ne null}" >
+            <div class="item-wrap" th:if="${article ne null}">
+                <div class="img-wrap left"><img src="" alt="" th:src="${article.cover}"></div>
+                <div class="left info">
+                    <div>
+                        <h5 th:text="${article.title}">精致生活守则第1条</h5>
+                        <div class="content" th:utext="${article.summary}">北极鹅云一家从事高校直饮水物联网平台开发及运营的互联网科技企业，打造一个基于‘物联网+互联网’技术的，覆盖高校消费领域的，综合性互联网运营服务平台</div>
+                    </div>
+                </div>
+                <div class="right right-info">
+                    <div>
+                        <p th:text="${#dates.format(article.createTime,'yyyy-MM-dd HH:mm')}">2019-05-06  14:50</p>
+                        <a href="javascript:;" th:href="${'/news-detail.html?id='+article.id}">查看详情</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

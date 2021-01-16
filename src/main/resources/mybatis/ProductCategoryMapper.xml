@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.ProductCategoryDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.ProductCategoryModel">
+        <id column="pc_id" property="id"/>
+        <result column="pc_name" property="name"/>
+        <result column="pc_sort" property="sort"/>
+        <result column="pc_create_time" property="createTime"/>
+        <result column="pc_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+       SELECT
+        a.id                    pc_id,
+        a.name                  pc_name,
+        a.sort                  pc_sort,
+        a.create_time           pc_create_time,
+        a.last_modified_time    pc_last_modified_time,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM product_category a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        WHERE  a.id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                    pc_id,
+        a.name                  pc_name,
+        a.sort                  pc_sort,
+        a.create_time           pc_create_time,
+        a.last_modified_time    pc_last_modified_time,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM product_category a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        <where>
+            <if test="search !=null and search != ''">
+                and a.name like concat('%',#{search},'%')
+            </if>
+        </where>
+        ORDER BY if(a.sort is not null,0,1),a.sort ,a.create_time DESC
+    </select>
+
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                    pc_id,
+        a.name                  pc_name,
+        a.sort                  pc_sort,
+        a.create_time           pc_create_time,
+        a.last_modified_time    pc_last_modified_time,
+        org.id                  org_id,
+        org.name                org_name,
+        u.id                    creator_id,
+        u.name                  creator_name
+        FROM product_category a
+        LEFT JOIN org org ON a.org_id = org.id
+        LEFT JOIN user u ON a.creator_id = u.id
+        <where>
+            <if test="search !=null and search != ''">
+                and a.name like concat('%',#{search},'%')
+            </if>
+        </where>
+        ORDER BY if(a.sort is not null,0,1),a.sort ,a.create_time DESC
+    </select>
+
+
+    <insert id="insert" parameterType="net.zhqu.website.bg.model.ProductCategoryModel">
+        <selectKey resultType="java.lang.Long"  order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO product_category(
+               name,
+               sort,
+			   org_id,
+			   creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES(
+            #{name},
+            #{sort},
+            #{org.id},
+            #{creator.id},
+            now(),
+            now()
+            )
+    </insert>
+
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.ProductCategoryModel">
+        UPDATE product_category a
+        <set>
+            a.last_modified_time = now(),
+            <if test="name!=null and name != ''">a.name = #{name},</if>
+            <if test="sort!=null and sort != ''">a.sort = #{sort},</if>
+        </set>
+        WHERE
+        a.id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM product_category
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.CarouselPicCompDao" >
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.CarouselPicCompModel">
+        <id column="cpc_id" property="id"/>
+        <result column="cpc_code" property="code" />
+        <result column="cpc_name" property="name" />
+        <result column="cpc_sequence" property="sequence" />
+        <result column="cpc_pic" property="pic" />
+        <result column="cpc_url" property="url" />
+        <result column="cpc_isBlank" property="isBlank" />
+
+    </resultMap>
+
+    <select id="findAll" resultMap="Base_Column_List" >
+        select
+        cpc.id cpc_id,
+        cpc.code cpc_code,
+        cpc.name cpc_name,
+        cpc.sequence cpc_sequence,
+        cpc.pic cpc_pic,
+        cpc.url cpc_url,
+        cpc.is_blank cpc_isBlank
+        from carousel_pic_comp cpc
+        <where>
+            <if test="id != null "> and cpc.id =#{id}</if>
+            <if test="name != null "> and cpc.name =#{name}</if>
+            <if test="code != null "> and cpc.code =#{code}</if>
+        </where>
+        <if test="orderBySequenceDesc !=null">
+            order by cpc.sequence desc
+        </if>
+        <if test="orderBySequenceAsc !=null">
+            order by cpc.sequence asc
+        </if>
+    </select>
+
+    <select id="findAllPage" resultMap="Base_Column_List" >
+        select
+        cpc.id cpc_id,
+        cpc.code cpc_code,
+        cpc.name cpc_name,
+        cpc.sequence cpc_sequence,
+        cpc.url cpc_url,
+        cpc.pic cpc_pic,
+        cpc.is_blank cpc_isBlank
+        from carousel_pic_comp cpc
+        <where>
+            <if test="id != null "> and cpc.id =#{id}</if>
+            <if test="name != null "> and cpc.name =#{name}</if>
+            <if test="code != null "> and cpc.code =#{code}</if>
+        </where>
+        <if test="orderBySequenceDesc !=null">
+            order by cpc.sequence desc
+        </if>
+        <if test="orderBySequenceAsc !=null">
+            order by cpc.sequence asc
+        </if>
+    </select>
+
+    <select id="findOne" resultMap="Base_Column_List" parameterType="Param">
+        select
+        cpc.id cpc_id,
+        cpc.code cpc_code,
+        cpc.name cpc_name,
+        cpc.sequence cpc_sequence,
+        cpc.url cpc_url,
+        cpc.pic cpc_pic,
+        cpc.is_blank cpc_isBlank
+        from carousel_pic_comp cpc
+        <where>
+            <if test="id != null "> and cpc.id =#{id}</if>
+            <if test="name != null "> and cpc.name =#{name}</if>
+            <if test="code != null "> and cpc.code =#{code}</if>
+        </where>
+        <if test="orderBySequenceDesc !=null">
+            order by cpc.sequence desc
+        </if>
+        <if test="orderBySequenceAsc !=null">
+            order by cpc.sequence asc
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="randOne" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        cpc.id cpc_id,
+        cpc.code cpc_code,
+        cpc.name cpc_name,
+        cpc.sequence cpc_sequence,
+        cpc.url cpc_url,
+        cpc.pic cpc_pic,
+        cpc.is_blank cpc_isBlank
+        FROM carousel_pic_comp cpc
+        JOIN (
+            SELECT
+                ROUND(
+                    RAND() * (
+                        (SELECT MAX(id) FROM carousel_pic_comp) - (SELECT MIN(id) FROM carousel_pic_comp)
+                    ) + (SELECT MIN(id) FROM carousel_pic_comp)
+                ) AS id
+        ) AS t2
+        WHERE
+            cpc.id >= t2.id
+        <if test="code != null "> AND cpc.code =#{code}</if>
+        LIMIT 0,1
+    </select>
+
+
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.CarouselPicCompModel">
+        update carousel_pic_comp
+        <set>
+            <if test="name !=null">name=#{name},</if>
+            <if test="code !=null">code=#{code},</if>
+            <if test="sequence !=null">sequence=#{sequence},</if>
+            <if test="pic !=null">pic=#{pic},</if>
+            <if test="url !=null">url=#{url},</if>
+            <if test="isBlank !=null">is_blank=#{isBlank},</if>
+            last_modified_time= now()
+        </set>
+		 where id=#{id}
+    </update>
+
+    <insert id="insert" parameterType="net.zhqu.website.bg.model.CarouselPicCompModel">
+        <selectKey resultType="java.lang.Long"  order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        INSERT INTO carousel_pic_comp (id, name ,code ,sequence, pic , url, is_blank, org_id, creator_id, create_time, last_modified_time)
+        VALUES (#{id}, #{name},#{code}, #{sequence}, #{pic} ,#{url} ,#{isBlank}, #{org.id}, #{creator.id} , now(), now())
+    </insert>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM carousel_pic_comp
+        <where>
+            <if test="id != null and id !=''">
+                and id = #{id}
+            </if>
+        </where>
+    </delete>
+
+</mapper>

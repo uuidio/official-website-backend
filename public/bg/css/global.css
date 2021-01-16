@@ -1,0 +1,63 @@
+body {
+  font-size: 12px;
+  padding: 10px;
+}
+.layui-form-label {
+  font-size: 14px;
+}
+.layui-input-block .layui-input {
+  font-size: 14px;
+}
+.layui-table-body .layui-table td {
+  font-size: 12px;
+}
+.layui-elem-field legend {
+  font-size: 16px;
+}
+.body_bg {
+  background: #ffffff;
+  padding: 10px 0;
+}
+.layui-table tbody tr:hover,
+.layui-table thead tr,
+.layui-table-click,
+.layui-table-header,
+.layui-table-hover,
+.layui-table-mend,
+.layui-table-patch,
+.layui-table-tool,
+.layui-table[lay-even] tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+tbody .operate-btn {
+  background: #ffffff;
+  color: #999;
+  border: 1px solid #e4e4e4;
+}
+tbody .operate-btn:hover {
+  color: #999;
+}
+tbody .choose-btn {
+  background: #ffffff;
+  color: #41ceff;
+  border: 1px solid #41ceff;
+}
+tbody .choose-btn:hover {
+  color: #41ceff;
+}
+.add_picture_desc {
+  width: 32px;
+  padding: 0 16px;
+  position: absolute;
+  height: 30px;
+  left: 594px;
+  margin-top: 8px;
+  z-index: 2;
+  background-color: transparent;
+}
+.layui-laydate-range.layui-laydate .layui-this {
+  background-color: #41ceff!important;
+}
+.layui-laydate-content td.laydate-selected {
+  background-color: #d9e5f4!important;
+}

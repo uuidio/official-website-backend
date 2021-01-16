@@ -1,0 +1,362 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title th:text="${pageInfo ne null ? (pageInfo.seoTitle == '' || pageInfo.seoTitle == null ? '北极鹅': pageInfo.seoTitle):'北极鹅' }">北极鹅</title>
+	<meta http-equiv="keywords" content="" th:content="${pageInfo ne null ? (pageInfo.seoKeywords == '' || pageInfo.seoKeywords == null ? '北极鹅': pageInfo.seoKeywords):'北极鹅' }">
+	<meta name="description" content="" th:content="${pageInfo ne null ? (pageInfo.seoDescription == '' || pageInfo.seoDescription == null ? '北极鹅': pageInfo.seoDescription):'北极鹅' }">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" th:href="@{/img/images/favicon.ico}">
+<link rel="stylesheet" href="js/plugin/swiper/css/swiper.min.css" th:href="@{/js/swiper/css/swiper.min.css}">
+<link href="css/jquery.mCustomScrollbar.css" rel="stylesheet" th:href="@{/nzq/css/jquery.mCustomScrollbar.css}"/>
+<link rel="stylesheet" href="js/plugin/layui/css/layui.css"  media="all" th:href="@{/nzq/layui/css/layui.css}">
+	<link rel="stylesheet" href="css/common.css" th:href="@{/nzq/css/common.css}">
+	<link rel="stylesheet" href="css/index.css" th:href="@{/nzq/css/index.css}">
+	<script src="js/plugin/jquery-3.0.0.min.js" th:src="@{/nzq/js/plugin/jquery-3.0.0.min.js}"></script>
+<script src="js/plugin/layui/layui.js" th:src="@{/nzq/layui/layui.js}"></script>
+<script src="js/utils.js" th:src="@{/nzq/js/utils.js}"></script>
+<script src="js/commonjs/header.js" th:src="@{/nzq/js/commonjs/header.js}"></script>
+</head>
+<body>
+<div class="big-bg-img-1" style=""></div>
+<div class="big-bg-img-2" style=""></div>
+	<!--header-->
+    <div style="width: 100%;">
+    <div class="header">
+        <div class="header-con mg">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/header_logo.png" th:src="@{/img/images/header_logo.png}" alt="">
+                </a>
+            </div>
+
+            <ul class="menu">
+                <li  class="on" >
+                    <a href="index.html">
+                        首页
+                    </a>
+                </li>
+                <li >
+                    <a href="product-center.html">
+                        产品中心
+                    </a>
+                </li>
+                <li >
+                    <a href="about-us.html">
+                        关于我们
+                    </a>
+                </li>
+                <li >
+                    <a href="cooperation.html">
+                        商务合作
+                    </a>
+                </li>
+                <li >
+                    <a href="help.html">
+                        帮助中心
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+	<!--contain-->
+	<div class="contain" style="position: relative;overflow: hidden;">
+		<!-- banner -->
+		<div class="banner mg" th:if="${carouselPics ne null}">
+			<div id="banner" class="layui-carousel">
+				<div carousel-item>
+					<img src="./images/index-banner-1.jpeg" alt="banner" th:each="carouselPics,iterator : ${carouselPics}" th:if="${carouselPics ne null}" th:src="${carouselPics.pic}">
+				</div>
+			</div>
+		</div>
+		<!--download-->
+		<div class="download mg">
+			<a class="donwload-link" href="javascript:;">
+				<img src="./images/ios.png" th:src="@{/img/images/ios.png}" alt="ios">
+				IOS下载
+				<span class="tip">
+					<span style="display: block;padding: 10px;">
+						<img class="erweima" src="./images/ios-bje-qr.png" th:src="@{/img/images/ios-bje-qr.png}"  alt="">
+					</span>
+					<span class="tipTxt">扫描下载北极鹅APP</span>
+					<img class="tip_icon" src="./images/tip_icon.png" th:src="@{/img/images/tip_icon.png}" >
+				</span>
+			</a>
+			<a class="donwload-link" href="javascript:;">
+				<img src="./images/android.png" alt="android" th:src="@{/img/images/android.png}">
+				Android下载
+				<span class="tip">
+					<span style="display: block;padding: 10px;">
+						<img class="erweima" src="./images/android-qr.png" alt="" th:src="@{/img/images/android-qr.png}">
+					</span>
+					<span class="tipTxt">扫描下载北极鹅APP</span>
+					<img class="tip_icon" src="./images/tip_icon.png" th:src="@{/img/images/tip_icon.png}">
+				</span>
+			</a>
+			<a class="donwload-link" href="javascript:;">
+				<img src="./images/weixin.png" alt="weixin" th:src="@{/img/images/weixin.png}">
+				微信公众号
+				<span class="tip">
+					<span style="display: block;padding: 10px;">
+						<img class="erweima" src="./images/wechat-bje-qr.jpeg" alt="" th:src="@{/img/images/wechat-bje-qr.jpeg}">
+					</span>
+					<span class="tipTxt">扫描下载北极鹅APP</span>
+					<img class="tip_icon" src="./images/tip_icon.png" th:src="@{/img/images/tip_icon.png}">
+				</span>
+			</a>
+		</div>
+		<!--introduce-->
+		<div class="introduce mg">
+			<div class="title">
+				<div style="display: inline-block;text-align: left;">
+					<p>精致生活守则第1条：</p>
+					<p>即使一瓶水，也要符合我的审美。</p>
+				</div>
+			</div>
+			<div class="introduce-text">
+				<div class="img-wrap">
+					<img src="./images/bg.png" alt="" th:src="@{/img/images/bg.png}">
+					<div class="corner left-top-corner">
+						<h5>更健康</h5>
+						<p>95后学生及家长对饮水健康更为讲究。</p>
+						<!--<p></p>-->
+					</div>
+					<div class="corner left-bottom-corner">
+						<h5>更安全</h5>
+						<p>直饮水全程可控，更容易掌握饮水安全。</p>
+						<!--<p></p>-->
+					</div>
+					<div class="corner right-top-corner">
+						<h5>更便利</h5>
+						<p>取水方便快捷，尤其适合新生代消费群体 。</p>
+						<!--<p></p>-->
+					</div>
+					<div class="corner right-bottom-corner-1">
+						<h5>更实惠</h5>
+						<p>一升水仅需0.35-0.4元，全学年仅需约90元（桶装水的消费远超止费用。</p>
+						<!--<p></p>-->
+						<!--<p></p>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--advantage-->
+		<div class="advantage mg">
+			<h3>平台核心优势</h3>
+			<ul>
+				<li>
+					<img src="./images/icon-1.png" th:src="@{/img/images/icon-1.png}" alt="">
+					<p>专业运营团队</p>
+				</li>
+				<li>
+					<img src="./images/icon-2.png" th:src="@{/img/images/icon-2.png}" alt="">
+					<p>优质客服保障</p>
+				</li>
+				<li>
+					<img src="./images/icon-3.png" th:src="@{/img/images/icon-3.png}" alt="">
+					<p>结算银企直联</p>
+				</li>
+				<li>
+					<img src="./images/icon-4.png" th:src="@{/img/images/icon-4.png}" alt="">
+					<p>赋能增值服务</p>
+				</li>
+			</ul>
+		</div>
+		<!--news-->
+		<div class="news mg" th:if="${articles ne null}">
+			<h3>资讯中心</h3>
+			<ul>
+				<li th:each="article,iterator : ${articles}" th:if="${articles ne null}" >
+					<div class="item-wrap">
+						<div class="img-wrap left"><img src="" alt="" th:src="${article.cover}"></div>
+						<div class="left info">
+								<h5 th:text="${article.title}">精致生活守则第1条</h5>
+								<p th:text="${article.summary}">北极鹅云一家从事高校直饮水物联网平台开发及运营的互联网科技企业，打造一个基于‘物联网+互联网’技术的，覆盖高校消费领域的，综合性互联网运营服务平台</p>
+						</div>
+						<div class="right right-info">
+							<div>
+								<p th:text="${#dates.format(article.createTime,'yyyy-MM-dd HH:mm')}">2019-05-06  14:50</p>
+								<a href="javascript:;" target="_blank" th:href="${'/news-detail.html?id='+article.id}">查看详情</a>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<a href="javascript:;" class="more-btn">查看更多</a>
+		</div>
+		<!--parter-->
+		<div class="parters">
+			<h3>合作伙伴</h3>
+			<div id="parters-list" class="layui-carousel">
+				<ul carousel-item>
+					<li>
+						<div class="school" th:each="logo,iterator : ${logos}" th:if="${logos ne null and iterator.index <5 }"><div class="img-wrap"><img src="./images/hn.png" th:src="${logo.logoUrl ne null ? logo.logoUrl :''}" alt=""></div><p class="school-name" th:text="${logo.name ne null ? logo.name :''}">湖南师范大学</p></div>
+					</li>
+
+					<li>
+						<div class="school" th:each="logo,iterator : ${logos}" th:if="${logos ne null and iterator.index >=5 and  iterator.index<10 }"><div class="img-wrap"><img src="./images/hn.png" th:src="${logo.logoUrl ne null ? logo.logoUrl :''}" alt=""></div><p class="school-name" th:text="${logo.name ne null ? logo.name :''}">湖南师范大学</p></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="parters-sm">
+			<h3>合作伙伴</h3>
+			<ul>
+				<li th:each="logo : ${logos}" th:if="${logos ne null}">
+					<div class="school"><div class="img-wrap"><img src="./images/hn.png" th:src="${logo.logoUrl ne null ? logo.logoUrl :''}" alt=""></div><p class="school-name" th:text="${logo.name ne null ? logo.name :''}">湖南师范大学</p></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!--footer-->
+	<div class="footer">
+    <div class="part-1">
+        <div class="mg">
+            <div class="left-side">
+                <ul>
+                    <!--<li>
+                        <p class="title">关于我们</p>
+                        <p><a href="about-us.html">关于北极鹅</a></p>
+                        <p><a href="about-us.html#_hope">我们的愿景</a></p>
+                        <p><a href="company/index.html" target="_blank">掌趣科技</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p><a href="help.html">帮助中心</a></p>
+                        <p><a href="javascript:;" class="shangqiao">在线咨询</a></p>
+                        <p><a href="help.html#_advice">意见反馈</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p>客服热线：18565592203</p>
+                        <p>工作时间：9.00-21.00</p>
+                    </li>-->
+
+                    <li th:each="foot : ${footer}" th:if="${footer ne null}">
+                        <p class="title" th:text="${foot ne null ? foot.name : ''}">关于我们</p>
+                        <p th:each="f : ${foot.footerDetails}" th:if="${foot ne null}"><a href="about-us.html" th:href="${f ne null ? (f.url != null && f.url != '' ? f.url : '/footer/'+ f.id +'.html') : ''}" th:text="${f ne null ? f.name : ''}" th:class="${f ne null && f.name eq '在线咨询' ? 'shangqiao' :''}" >关于北极鹅</a></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <!--<div class="scan-code scan-code-app">-->
+                <!--<span class="QR-code"></span>-->
+                <!--<p>扫码下载北极鹅APP</p>-->
+                <!--</div>-->
+                <div class="scan-code scan-code-wechat">
+                    <span class="QR-code"></span>
+                    <p>北极鹅官方微信</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="part-2">
+        <div class="copyright">
+            <p class="author">2015-2019 © 广州掌趣网络科技有限公司 All Rights Reserved.</p>
+            <p><a href="http://www.beian.miit.gov.cn">粤ICP备15096947号-2</a></p>
+        </div>
+    </div>
+</div>
+    <!--nav-bar-->
+	<div class="nav-bar">
+    <div class="nav-bar-list">
+        <div class="nav-bar-item active"><a href="index.html">首页</a></div>
+        <div class="nav-bar-item "><a href="cooperation.html">商务合作</a></div>
+        <div class="nav-bar-item service ">
+            <a href="javascript:;">服务大厅</a>
+            <div class="nav-bar-item-list">
+                <ul style="display: none;">
+                    <li><a class="" href="product-center.html">产品中心</a></li>
+                    <li><a class="" href="about-us.html">关于我们</a></li>
+                    <li><a class="" href="help.html">帮助中心</a></li>
+                    <li><a href="https://www.zhqu.net/" target="_blank">掌趣科技</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+	$(function () {
+	  var ins1 = null, ins2 = null;
+	  var news_page = 1;
+      var win_width = $(window).width() > 1200 ? 1200 : $(window).width();
+      $(".shangqiao").click(function(event) {
+        if ($('#nb_invite_ok').length > 0) {
+          $('#nb_invite_ok').click();
+        }
+      });
+      layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        ins1 = carousel.render({
+          elem: '#banner',
+		  width: '100%', //设置容器宽度
+		  height: 480/1200 * win_width + 'px',
+		  arrow: 'none' //始终显示箭头
+          //,anim: 'updown' //切换动画方式
+        });
+        ins2 = carousel.render({
+          elem: '#parters-list',
+          width: '100%', //设置容器宽度
+          height: '170px',
+          indicator: 'none',
+          arrow: 'none' //始终显示箭头
+          //,anim: 'updown' //切换动画方式
+        });
+		  if ($('#parters-list').find("li").find(".school").length <= 5) {
+			  ins2.reload({
+				  autoplay:false
+			  });
+		  }
+      });
+
+      window.addEventListener('resize', function () {
+        var win_width = $(window).width() > 1200 ? 1200 : $(window).width();
+        var ins1_width = 480 / 1200 * win_width + 'px';
+        if (win_width <= 1200) {
+          ins1.reload({
+            elem: '#banner',
+            width: '100%', //设置容器宽度
+            height: ins1_width,
+            arrow: 'none' //始终显示箭头
+          });
+		}
+
+      });
+      $('.donwload-link').on('click touch', function (e) {
+		  if ($(e.currentTarget).hasClass('donwload-link')) {
+		      $(e.currentTarget).find('.tip').toggle();
+		  }
+      });
+      $('.more-btn').on('click', function () {
+		news_page += 1;
+		getNews();
+      });
+
+      /**
+	   * 获取资讯
+       */
+      function getNews() {
+        utils.ajax({
+			url: "/newsHomeList.html?page=" + news_page,
+			type:"GET",
+			dataType:"html",
+			contentType :"text/html"
+        }).done(function (res) {
+			if ($(res).find("ul").find("li").length <= 0) {
+				$('.more-btn').hide();
+				return;
+			}
+			$(".news").find("ul").append($(res).find("ul").html());
+        }).fail(function () {
+
+        });
+      }
+	})
+</script>
+</html>

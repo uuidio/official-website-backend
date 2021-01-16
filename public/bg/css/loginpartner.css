@@ -1,0 +1,266 @@
+.input {
+  height: 34px;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #C9C9C9;
+  opacity: .7;
+}
+.input:focus {
+  border: #ff8080;
+}
+.tRight {
+  margin-bottom: 25px;
+}
+.tRight a:hover {
+  color: #fff;
+}
+.tRight dt {
+  padding: 0 40px 0 5px ;
+}
+.tRight dt a {
+  font-size: 1.2em;
+  color: #06A8E9;
+}
+.tRight dd a {
+  display: inline-block;
+  text-align: center;
+  background-color: #C9C9C9;
+  width: 30px;
+  padding: 2px;
+}
+.tRight a:hover {
+  background-color: #06A8E9;
+}
+.tRight .foc {
+  background-color: #C4C4C4;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fl {
+  float: left;
+}
+.rl {
+  float: right;
+}
+@keyframes rot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*设置基本的样式*/
+* {
+  box-sizing: border-box;
+}
+body {
+  line-height: 1.4;
+  font-size: 12px;
+  font-family: 'Microsoft Yahei', Tahoma, Verdana;
+  color: #4D4D4D;
+}
+body,
+html,
+ul,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+ol,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#section,
+#top,
+#login,
+#manage,
+#cSection {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1120px;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+a:hover {
+  color: #6ED7FF;
+}
+.input {
+  padding: 10px;
+}
+#login {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  min-width: 1200px;
+  min-height: 700px;
+}
+#imgF {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 249px;
+  height: 200px;
+}
+#imgS {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  height: 203px;
+}
+.form_bg {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
+}
+.form_bg img {
+  width: 508px;
+  height: 648px;
+}
+#lForm {
+  height: 648px;
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+#lForm .layui-form-item {
+  margin-bottom: 0;
+}
+#lForm .img {
+  padding-top: 30px;
+  padding-bottom: 98px;
+  text-align: center;
+  color: #999999;
+}
+#lForm .img p {
+  margin-top: 20px;
+  font-family: '黑体';
+  font-size: 24px;
+  color: #ffffff;
+}
+#lForm .img span {
+  font-size: 14px;
+}
+#lForm .topNav {
+  text-align: center;
+  padding-bottom: 40px;
+}
+#lForm .topNav a {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  color: #AEAEAE;
+}
+#lForm .topNav a:hover {
+  color: #6EEEFF;
+}
+#lForm .topNav i {
+  border-left: 1px solid #ddd;
+}
+#lForm #user,
+#lForm #pwd {
+  width: 360px;
+  padding: 0 20px;
+  border: none;
+  border-bottom: 1px solid #e4e4e4;
+  color: #333333;
+  height: 40px;
+  line-height: 1.3;
+  margin-top: 15px;
+}
+#lForm #captchaCode {
+  width: 130px;
+  padding: 0 20px;
+  border: none;
+  border-bottom: 1px solid #e4e4e4;
+  color: #333333;
+  height: 40px;
+  line-height: 1.3;
+  margin-top: 15px;
+}
+#lForm .layui-input-block {
+  margin: 0;
+  position: relative;
+}
+#lForm #submit {
+  margin-top: 40px;
+  width: 200px;
+  background: linear-gradient(to right, #3CCAFF, #73F1FF);
+}
+#lForm .layui-input {
+  padding-left: 0;
+}
+#lForm #checkbox {
+  color: #C0C0C0;
+}
+.footer {
+  width: 360px;
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(50%, -50%);
+  z-index: 10;
+  text-align: center;
+}
+.footer a {
+  color: #333333;
+  font-size: 12px;
+}
+#logo {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+#logo img {
+  width: 70px;
+}
+i.imgPwd {
+  position: absolute;
+  right: -5px;
+  top: 16px;
+  width: 20px;
+  height: 20px;
+}
+i.imgUser {
+  position: absolute;
+  right: -5px;
+  top: 15px;
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 1441px) {
+  .form_bg img {
+    width: 400px;
+    height: 530px;
+  }
+  #lForm {
+    height: 530px;
+  }
+  #lForm .img {
+    padding-top: 10px;
+    padding-bottom: 44px;
+  }
+  #lForm .img p {
+    font-size: 20px;
+  }
+  #lForm #user,
+  #lForm #pwd {
+    width: 260px;
+  }
+}

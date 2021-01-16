@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>主页设置</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/layui.css" th:href="@{/nzq/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/product.css" th:href="@{/bg/ec/css/product.css}"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/iconfont.css"
+          th:href="@{/nzq/layui/css/iconfont.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/picturePlugin.css"
+          th:href="@{/bg/ec/css/picturePlugin.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/image_management.css"
+          th:href="@{/bg/css/image_management.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <script src="../../../../../public/nzq/layui/layui.js" th:src="@{/nzq/layui/layui.js}"></script>
+    <script src="../../../../../public/js/global.js" th:src="@{/js/global.js}"></script>
+    <style>
+        .layui-form-label {
+            padding: 9px 10px;
+        }
+
+        #spots {
+            margin: 10px 0px 0px 109px;
+        }
+
+        #pdss {
+            margin-top: 10px;
+            padding-left: 110px;
+        }
+
+        .pdsList {
+            margin-bottom: 54px;
+        }
+
+        .AboutPlatform {
+            margin-bottom: 54px;
+        }
+
+        .AboutPlatform .layui-input {
+            border-bottom: 1px solid #ededed;
+        }
+
+        .pdsList .layui-input {
+            border-bottom: 1px solid #ededed;
+        }
+
+        .removeAp {
+            float: right;
+            margin: 10px 0;
+        }
+
+        .removePds {
+            float: right;
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="body_bg">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>修改搜索优化内容</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form submit-form"><!--th:action="@{/bg/adverts/c/}"-->
+        <!--<input th:value="${currs}" type="hidden" id="currs" name="currs"> &lt;!&ndash; 暂存页数 提交或者返回时提交到后台 &ndash;&gt;-->
+        <input id="homePageId" type="hidden" name="homepage.id" th:value="${homepage.id}" th:if="${homepage ne null}">
+
+        <!--<hr class="layui-bg-black">-->
+        <!--<tr th:each="banner : ${homepage.homeBanner}">-->
+        <!--<td><img th:src="${banner.bannerUrl}" height="60"/></td>-->
+        <!--</tr>-->
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">页面标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="seoTitle" lay-verify="required" placeholder="请输入网站页面标题"
+                           autocomplete="off" class="layui-input" id="seoTitle"
+                           th:value="${homepage ne null ? homepage.seoTitle:''}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">页面关键字</label>
+                <div class="layui-input-block">
+                    <input type="text" name="seoKeywords" lay-verify="required" placeholder="请输入网站关键字"
+                           autocomplete="off" class="layui-input" id="seoKeywords"
+                           th:value="${homepage ne null ? homepage.seoKeywords:''}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">页面描述</label>
+                <div class="layui-input-block">
+                    <input type="text" name="seoDescription" lay-verify="required" placeholder="请输入网站描述"
+                           autocomplete="off" class="layui-input" id="seoDescription"
+                           th:value="${homepage ne null ? homepage.seoDescription:''}">
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;margin-bottom: 10px;">
+            <a class="layui-btn submit-btn">提交</a>
+            <!--<a class="layui-btn comeBack">返回</a>-->
+        </div>
+    </form>
+</div>
+
+<script>
+    layui.config({
+        base: '/nzq/layui'
+    }).extend({
+        selectPicture: '/lay/layui_extends/selectPicture'
+    }).use(['jquery', 'form', 'layer', 'laydate', 'selectPicture'], function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+        var selectPicture = layui.selectPicture;
+        var subform = $(".submit-form");
+        //ApImgs
+
+
+        $(".submit-btn").on("click", function () {
+            var homePageModel = {};
+            homePageModel.id = $("#homePageId").val();
+            homePageModel.seoTitle = $("#seoTitle").val();
+            homePageModel.seoKeywords = $("#seoKeywords").val();
+            homePageModel.seoDescription = $("#seoDescription").val();
+
+            $.ajax({
+                url: "/bg/homePage/c/",
+                type: "post",
+                contentType: "application/json;charset=UTF-8",//必须
+                data: JSON.stringify(homePageModel),
+                success: function (data) {
+                    if (data != null) {
+                        if (data.code == 0) {
+                            layer.msg(data.msg);
+                            location.href = '/bg/homePage/v/index.html';
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                }, fail: function () {
+                    layer.msg("后台报错");
+                }
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>

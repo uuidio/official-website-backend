@@ -1,0 +1,14 @@
+version: "2"
+services:
+  ssc-website:
+    image: 172.18.45.237:5000/ssc-website
+    container_name: ssc-website
+    environment:
+      - JAVA_OPTS=${JAVA_XMX_MIDDLE}
+    env_file:
+      - .env
+    volumes:
+      - /data/uploads:/root/resource
+    ports:
+      - 172.18.12.62:8034:8034
+    network_mode: bridge

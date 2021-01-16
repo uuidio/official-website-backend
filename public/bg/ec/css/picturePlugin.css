@@ -1,0 +1,152 @@
+.mark_img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 1000px;
+    height: 600px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+}
+.mark_img .mark_head {
+    height: 45px;
+    padding: 10px;
+    font-size: 18px;
+    background: #ffffff;
+    border-bottom: 1px solid #ededed;
+}
+.mark_img .mark_head .close {
+    cursor: pointer;
+    float: right;
+}
+.mark_img .mark_head .close img {
+    width: 20px;
+    height: 20px;
+}
+.mark_img .mark_body {
+    height: 508px;
+    overflow: hidden;
+}
+.mark_img .mark_body .mark_left {
+    float: left;
+    width: 200px;
+    height: 508px;
+    background: #ededed;
+}
+.mark_img .mark_body .mark_left ul {
+    padding: 10px 0;
+}
+.mark_img .mark_body .mark_left ul li {
+    display: block;
+    font-size: 16px;
+    padding: 0 60px 0 10px;
+    line-height: 40px;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mark_img .mark_body .mark_left ul .on {
+    background: #ffffff;
+}
+.mark_img .mark_body .mark_left ul .num {
+    width: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: right;
+    text-align: right;
+    margin-right: -50px;
+}
+.mark_img .mark_body .mark_right {
+    float: right;
+    width: 790px;
+    height: 508px;
+}
+.mark_img .mark_body .mark_right .img_box {
+    height: 400px;
+    overflow: hidden;
+}
+.mark_img .mark_body .mark_right .img_box .img_on {
+    box-shadow: 0px 0px 4px 3px #8297ff;
+    -webkit-box-shadow: 0px 0px 4px 3px #8297ff;
+    -o-box-shadow: 0px 0px 4px 3px #8297ff;
+    -moz-box-shadow: 0px 0px 4px 3px #8297ff;
+}
+.mark_img .mark_body .mark_right .img_box li {
+    float: left;
+    margin: 5px 18px ;
+}
+.mark_img .mark_body .mark_right .img_box li .img {
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+}
+.mark_img .mark_body .mark_right .img_box li .img img {
+    width: 160px;
+    height: 160px;
+}
+.mark_img .mark_body .mark_right .img_box li .img p {
+    color: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 160px;
+    background: #000;
+    opacity: 0.6;
+    text-align: center;
+}
+.mark_img .mark_body .mark_right .img_box li p {
+    font-size: 16px;
+    width: 160px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mark_img .mark_body .mark_right .mark_right_bottom {
+    font-size: 14px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+.mark_img .mark_footer {
+    border-top: 1px solid #ededed;
+    text-align: center;
+    height: 45px;
+    padding: 7px 10px;
+    background: #ffffff;
+}
+.picture-container {
+    overflow: hidden;
+    padding: 0 10px;
+    border-top: 1px solid #DEDEDE;
+}
+.picture-container .pic_item {
+    position: relative;
+    float: left;
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+    margin: 5px 10px 5px 0;
+}
+.picture-container .pic_item img {
+    width: 110px;
+    height: 110px;
+}
+.picture-container .pic_item .layui-icon {
+    position: absolute;
+    font-size: 20px;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.2);
+    width: 20px;
+    height: 22px;
+    color: #ffffff;
+    cursor: pointer;
+    display: none;
+}
+.picture-container .pic_item:hover .layui-icon {
+    display: block;
+}

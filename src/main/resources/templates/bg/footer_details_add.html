@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新增广告</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/layui.css" th:href="@{/nzq/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/product.css" th:href="@{/bg/ec/css/product.css}"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/iconfont.css"
+          th:href="@{/nzq/layui/css/iconfont.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/picturePlugin.css"
+          th:href="@{/bg/ec/css/picturePlugin.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/image_management.css"
+          th:href="@{/bg/css/image_management.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <script src="../../../../../public/nzq/content/Layui-KnifeZ/layui.js"
+            th:src="@{/nzq/content/Layui-KnifeZ/layui.js}"></script>
+    <script src="../../../../../public/nzq/content/ace/ace.js" th:src="@{/nzq/content/ace/ace.js}"></script>
+    <script src="../../../../../public/js/global.js" th:src="@{/js/global.js}"></script>
+    <style>
+        .layui-form-label {
+            padding: 9px 10px;
+        }
+
+        .mark_img {
+            z-index: 2;
+        }
+
+        #spots {
+            margin: 0 0 0 40px;
+        }
+        .mark_img {
+            z-index: 29891016;
+        }
+    </style>
+</head>
+<body>
+<div class="body_bg">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend th:text="${footerDetails ne null ?'修改页脚内容':'新增页脚内容'}">新增页脚</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form submit-form"><!--th:action="@{/bg/adverts/c/}"-->
+        <!--<input th:value="${currs}" type="hidden" id="currs" name="currs"> &lt;!&ndash; 暂存页数 提交或者返回时提交到后台 &ndash;&gt;-->
+        <input type="hidden" name="id" id="id" th:value="${footerDetails.id}"
+               th:if="${footerDetails ne null}">
+        <!--<div class="layui-field-box">-->
+            <!--<div class="layui-form-item">-->
+                <!--<label class="layui-form-label">图片</label>-->
+                <!--<div class="layui-input-block">-->
+                    <!--<a id="add_pictureCover" class="layui-btn">添加封面图片</a>-->
+                    <!--<span>图片比例：1:1！推荐比例： 280px*280px</span>-->
+                <!--</div>-->
+                <!--<div class="picture-container covers" style="margin-left: 110px">-->
+                    <!--<div th:if="${article ne null}">-->
+                        <!--<div class="pic_item cover">-->
+                            <!--<img th:src="${article ne null ? article.cover :''}">-->
+                            <!--<input id="cover" type="hidden" name="cover" th:value="${article.cover}"-->
+                                   <!--th:if="${article.cover ne null}">-->
+                            <!--<i class="layui-icon">&#x1006;</i></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="layui-field-box">-->
+            <!--<div class="layui-form-item">-->
+                <!--<label class="layui-form-label">图片</label>-->
+                <!--<div class="layui-input-block">-->
+                    <!--<a id="add_pictureImg" class="layui-btn">添加图片</a>-->
+                    <!--<span>图片比例：1:1！推荐比例： 1300px*430px</span>-->
+                <!--</div>-->
+                <!--<div class="picture-container img" style="margin-left: 110px">-->
+                    <!--<div th:if="${article ne null}">-->
+                        <!--<div class="pic_item image">-->
+                            <!--<img th:src="${article ne null ? article.image : ''}">-->
+                            <!--<input id="image" type="hidden" name="image" th:value="${article.image}"-->
+                                   <!--th:if="${article.image ne null}">-->
+                            <!--<i class="layui-icon">&#x1006;</i></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类列表</label>
+                <div class="layui-input-inline">
+                    <select name="footer.id" lay-verify="required" lay-search="" lay-filter="oneKeyCategory"
+                            id="footer">
+                        <option value="" th:text="请选择分类"></option>
+                        <option th:each="f,stat2:${footer}"
+                                th:value="${f.id}"
+                                th:text="${f.name}"
+                                th:selected="${footerDetails ne null ? footerDetails.footer.id == f.id : false}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">页脚名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" placeholder="请输入名称"
+                           autocomplete="off" class="layui-input" id="name"
+                           th:value="${footerDetails ne null ? footerDetails.name:''}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">跳转连接</label>
+                <div class="layui-input-block">
+                    <input type="text" name="url" lay-verify="required" placeholder="请输入跳转地址以http，https开头，填写链接后优先跳链接不跳转内容"
+                           autocomplete="off" class="layui-input" id="url"
+                           th:value="${footerDetails ne null ? footerDetails.url:''}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">页脚内容</label>
+                <div class="layui-input-block" style="border: 0px solid #ededed;">
+                    <textarea style="height: 400px" placeholder="请输入内容" name="content" class="pro_textarea" id="content"
+                              th:value="${footerDetails ne null ?footerDetails.content:''}"
+                              th:text="${footerDetails ne null ?footerDetails.content:''}"></textarea>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center;margin-bottom: 10px;">
+            <!--<button class="layui-btn" lay-submit="" id="sub-btn">提交</button>-->
+            <!--<input type="button" class="layui-btn comeBack" lay-submit="" value="返回" name="comeBack"/>-->
+            <a class="layui-btn submit-btn">提交</a>
+            <a class="layui-btn comeBack">返回</a>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    layui.config({
+        base: '/nzq/layui'
+    }).extend({
+        selectM: '/lay/layui_extends/selectM',
+        selectPicture: '/lay/layui_extends/selectPicture',
+    }).use(['jquery', 'form', 'layer', 'selectPicture', 'selectM','layedit'], function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var selectPicture = layui.selectPicture;
+        var subform = $(".submit-form");
+        var selectM = layui.selectM;
+
+        $('body').on('click', '.add_usimg', function () {
+            var src = $(this)
+            var selPic = selectPicture({
+                elem: '#add_pictureImages',
+                callback: function (res) {
+                    src.parent().find("input[name='Imgsrc']").val(res.url)
+                }
+            });
+            selPic.show();
+        });
+
+        $('.picture-container').on('click', '.pic_item .layui-icon', function () {
+            $(this).parent().remove();
+        });
+//
+//        selectPicture({
+//            elem: '#add_pictureImg',
+//            callback: function (res) {
+//                $(".picture-container.img").html('<div class="pic_item img"><img src="' + res.url + '"><input id="image" type="hidden" value="' + res.url + '" name="image"><i class="layui-icon">&#x1006;</i></div>');
+//            }
+//        });
+//    selectPicture({
+//            elem: '#add_pictureCover',
+//            callback: function (res) {
+//                $(".picture-container.covers").html('<div class="pic_item cover"><img src="' + res.url + '"><input id="cover" type="hidden" value="' + res.url + '" name="cover"><i class="layui-icon">&#x1006;</i></div>');
+//            }
+//        });
+
+
+        layedit.set({
+            uploadImage: {
+                url: '/bg/picture/c/upload/0    ',
+                accept: 'image',
+                acceptMime: 'image/*',
+                exts: 'jpg|png|gif|bmp|jpeg',
+                size: 1024 * 10,
+                done: function (data) {
+                    console.log(data);
+                }
+            },
+            tool: [
+                'undo',
+                'redo',
+                'strong',
+                'italic',
+                'underline',
+                 '|',
+                'fontFomatt',
+                'fontfamily',
+                '|',
+                'left',
+                'center',
+                'right',
+                '|',
+                'link',
+                'unlink',
+                'image_alt',
+            ]
+            , height: '300px'
+        });
+        var ieditor = layedit.build('content');
+
+        $(".submit-btn").on("click", function () {
+            var postData = {};
+            postData.id = $("#id").val();
+            postData.name = $("#name").val();
+            var footer = {};
+            footer.id = $("#footer").val();
+            if ($("#footer").val() == '' || typeof ($("#footer").val())=='undefined'){
+                layer.msg("请选择分类")
+                return;
+            }
+            if ($("#name").val() == '' || typeof ($("#name").val()) == 'undefined') {
+                layer.msg("请填写名称")
+                return;
+            }
+            postData.footer = footer;
+            postData.content = layedit.getContent(ieditor);
+            postData.url = $("#url").val();
+            console.log(postData);
+//            return;
+            $.ajax({
+                url: "/bg/footerDetails/c/",
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(postData),
+                success: function (data) {
+                    if (data != null) {
+                        if (data.code == 0) {
+                            layer.msg(data.msg);
+                            location.href = '/bg/footerDetails/v/index.html';
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                }, fail: function () {
+                    layer.msg("后台报错");
+                }
+            });
+        });
+
+        $(".comeBack").on('click', function () {
+            location.href = "/bg/footerDetails/v/index.html";
+        });
+    });
+</script>
+
+</body>
+</html>

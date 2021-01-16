@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新增问题</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/layui.css" th:href="@{/nzq/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/product.css" th:href="@{/bg/ec/css/product.css}"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/iconfont.css"
+          th:href="@{/nzq/layui/css/iconfont.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/picturePlugin.css"
+          th:href="@{/bg/ec/css/picturePlugin.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/image_management.css"
+          th:href="@{/bg/css/image_management.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <script src="../../../../../public/nzq/content/Layui-KnifeZ/layui.js"
+            th:src="@{/nzq/content/Layui-KnifeZ/layui.js}"></script>
+    <script src="../../../../../public/nzq/content/ace/ace.js" th:src="@{/nzq/content/ace/ace.js}"></script>
+    <script src="../../../../../public/js/global.js" th:src="@{/js/global.js}"></script>
+    <style>
+        .layui-form-label {
+            padding: 9px 10px;
+        }
+
+        .mark_img {
+            z-index: 2;
+        }
+
+        #spots {
+            margin: 0 0 0 40px;
+        }
+        .mark_img {
+            z-index: 29891016;
+        }
+    </style>
+</head>
+<body>
+<div class="body_bg">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend th:text="${question ne null ?'修改问题':'新增问题'}">新增问题</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form submit-form"><!--th:action="@{/bg/adverts/c/}"-->
+        <!--<input th:value="${currs}" type="hidden" id="currs" name="currs"> &lt;!&ndash; 暂存页数 提交或者返回时提交到后台 &ndash;&gt;-->
+        <input type="hidden" name="id" id="id" th:value="${question.id}"
+               th:if="${question ne null}">
+
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入标题"
+                           autocomplete="off" class="layui-input" id="title"
+                           th:value="${question ne null ? question.title:''}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章内容</label>
+                <div class="layui-input-block" style="border: 0px solid #ededed;">
+                    <textarea  placeholder="请输入内容" name="content" id="content" class="layui-textarea"
+                              th:value="${question ne null ?question.content:''}"
+                              th:text="${question ne null ?question.content:''}"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">发表人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="questionUser" lay-verify="required" placeholder="请输入发表人姓名"
+                           autocomplete="off" class="layui-input layui-disabled" id="questionUser"
+                           th:value="${question ne null and question.creator ne null ? question.creator.nickname:session.user.nickname}"
+                            disabled>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center;margin-bottom: 10px;">
+            <!--<button class="layui-btn" lay-submit="" id="sub-btn">提交</button>-->
+            <!--<input type="button" class="layui-btn comeBack" lay-submit="" value="返回" name="comeBack"/>-->
+            <a class="layui-btn submit-btn">提交</a>
+            <a class="layui-btn comeBack">返回</a>
+        </div>
+    </form>
+    <!--<div class="layui-hide">-->
+        <!--<input th:value="${labels}" id="labels">-->
+        <!--<input th:value="${selectData}" id="selectData">-->
+    <!--</div>-->
+</div>
+
+<script>
+    layui.config({
+        base: '/nzq/layui'
+    }).extend({
+        selectM: '/lay/layui_extends/selectM',
+        selectPicture: '/lay/layui_extends/selectPicture',
+    }).use(['jquery', 'form', 'layer', 'selectPicture', 'selectM','layedit'], function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+        var subform = $(".submit-form");
+
+
+        $(".submit-btn").on("click", function () {
+
+            var postData = {};
+
+            postData.id = $("#id").val();
+            postData.title = $("#title").val();
+            postData.content = $("#content").val();
+
+            if (postData.title == '' || $("#title").val() == '') {
+                layer.msg("请填写标题！");
+                return false;
+            }
+
+            if (postData.content == '' || postData.content == null) {
+                layer.msg("请填写内容！");
+                return false;
+            }
+
+            $.ajax({
+                url: "/bg/questions/c/",
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(postData),
+                success: function (data) {
+                    if (data != null) {
+                        if (data.code == 0) {
+                            layer.msg(data.msg);
+                            location.href = '/bg/questions/v/index.html';
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                }, fail: function () {
+                    layer.msg("后台报错");
+                }
+            });
+        });
+
+        $(".comeBack").on('click', function () {
+            location.href = "/bg/questions/v/index.html";
+        });
+    })
+    ;
+</script>
+
+</body>
+</html>

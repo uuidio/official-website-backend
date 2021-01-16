@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>资讯中心</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/layui.css" th:href="@{/nzq/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/iconfont.css"
+          th:href="@{/nzq/layui/css/iconfont.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <script src="../../../../../public/nzq/layui/layui.js" th:src="@{/nzq/layui/layui.js}"
+            type="text/javascript"></script>
+    <script src="../../../../../public/js/global.js" th:src="@{/js/global.js}"></script>
+    <style>
+        .layui-btn.gray {
+            background: #f2f2f2;
+            color: #999999;
+            border: 1px solid #e4e4e4;
+        }
+
+        .layui-form-item {
+            clear: none;
+            float: left;
+        }
+
+        .laytable-cell-1-pic { /*最后的pic为字段的field*/
+            height: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+<!--<div>
+    <div style="padding: 10px;">
+        <form class="layui-form" action="" style="padding: 10px">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select lay-verify="" id="oneKeyCategoryId">
+                        <option value="" th:text="请选择分类"></option>
+                        <option th:each="category,stat2:${cetagorys}"
+                                th:value="${category.id}"
+                                th:text="${category.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" style="width:300px;margin-left: 40px;margin-top: 5px;">
+                <button class="layui-btn layui-btn-sm" id="search-btn">搜索</button>
+                <a class="layui-btn layui-btn-sm reset">重置</a>
+            </div>
+        </form>
+    </div>
+    <p style="clear: both"></p>
+</div>-->
+<div style="padding: 10px;">
+    <button class="layui-btn  layui-btn-sm layui-btn-primary" id="newBtn">
+        <i class="layui-icon">&#xe608;</i>
+        新增
+    </button>
+</div>
+
+<table id="dataTable" lay-filter="lTable"></table>
+<div class="popupHtml callback"></div>
+<script type="text/html" id="bar">
+    <a class="layui-btn layui-btn-xs operate-btn" lay-event="delete">删除</a>
+    <!--<a class="layui-btn layui-btn-xs operate-btn" lay-event="editSort">设置排序</a>-->
+    <a class="layui-btn layui-btn-xs operate-btn" lay-event="edit">编辑</a>
+</script>
+
+
+</div>
+<script>
+    layui.use(['element', 'table', 'jquery', 'util', 'upload', 'form'], function () {
+            var $ = layui.$;
+            var table = layui.table;
+            var form = layui.form;
+            var util = layui.util;
+            //第一个实例
+            var tableObj = table.render({
+                elem: '#dataTable'
+                , url: '/bg/article/r/all.json'//数据接口
+                , page: true
+                , loading: true
+                , even: true
+                , cols: [
+                    [ //表头
+//                    {type: "checkbox"},
+                        {field: "", title: "序号", align: "center", type: "numbers"}
+                        , {field: "sort", title: "文章显示排序", align: "center"}
+                        , {field: "title", title: "文章标题", align: "center"}
+                        , {field: "articleUser", title: "发表人", align: "center"}
+                        , {field: "cover", title: "封面图片", align: "center", templet: function (d) {
+                            if (d.cover == null || d.cover == '') {
+                                return '';
+                            } else {
+                                return '<img src='+ d.cover +'/>';
+                            }}}
+                        , {field: "createTime", title: "创建时间", align: "center", templet: function (d) {
+                            return util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss")
+                        }}
+                        , {field: "lastModifiedTime", title: "最后修改时间", align: "center", templet: function (d) {
+                            return util.toDateString(d.lastModifiedTime, "yyyy-MM-dd HH:mm:ss")
+                        }}
+                        , {field: "score", title: "操作", toolbar: "#bar", align: "center"}
+                    ]
+                ], done: function (res, curr, count) {
+
+                }
+            });
+
+
+            var iframeIndex;
+            table.on('tool(lTable)', function (obj) { //监听button工具条执行查看 添加删除等功能
+                var data = obj.data;
+                if (obj.event === 'edit') {
+                    location.href = '/bg/article/v/' + data.id;
+                } else if (obj.event === 'editSort') {
+//                    iframeIndex = layer.open({
+//                        type: 2,
+//                        title: '设置排序',
+//                        shadeClose: true,
+//                        shade: false,
+//                        //maxmin: true, //开启最大化最小化按钮
+//                        area: ['400px', '300px'],
+//                        content: '/bg/footer/v/soft/' + data.id + '.html'
+//                    });
+                } else if (obj.event === 'delete') {
+                    layer.confirm('是否删除', function (index) {
+                        $.ajax({
+                            url: '/bg/article/d/' + data.id,//传data.id
+                            type: 'delete',
+                            success: function (data) {
+                                if (data.code == 0) {
+                                    layer.msg('删除成功');
+                                    tableObj.reload();
+                                }
+                            }
+                        })
+                        layer.close(index);
+                    });
+                }
+            });
+
+            $(".callback").on("click", function () {
+                layer.close(iframeIndex);
+                location.reload();
+            });
+            $("#newBtn").on("click", function () {
+                location.href = "/bg/article/v/add.html";
+            });
+
+            $('.reset').click(function () {
+                $("#oneKeyCategoryId").val('');
+                form.render();
+            });
+
+            $("#search-btn").on("click", function () {
+                tableObj.reload({
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        oneKeyCategoryId: $("#oneKeyCategoryId").val()
+                    }
+                });
+                return false;
+
+            });
+        }
+    );
+</script>
+</body>
+</html>

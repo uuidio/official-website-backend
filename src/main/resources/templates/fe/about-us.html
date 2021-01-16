@@ -1,0 +1,317 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title th:text="${pageInfo ne null ? (pageInfo.seoTitle == '' || pageInfo.seoTitle == null ? '关于我们': pageInfo.seoTitle):'关于我们' }">关于我们</title>
+	<meta http-equiv="keywords" content="" th:content="${pageInfo ne null ? (pageInfo.seoKeywords == '' || pageInfo.seoKeywords == null ? '北极鹅': pageInfo.seoKeywords):'北极鹅' }">
+	<meta name="description" content="" th:content="${pageInfo ne null ? (pageInfo.seoDescription == '' || pageInfo.seoDescription == null ? '北极鹅': pageInfo.seoDescription):'北极鹅' }">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" th:href="@{/img/images/favicon.ico}">
+<link rel="stylesheet" href="js/plugin/swiper/css/swiper.min.css" th:href="@{/js/swiper/css/swiper.min.css}">
+<link href="css/jquery.mCustomScrollbar.css" rel="stylesheet" th:href="@{/nzq/css/jquery.mCustomScrollbar.css}"/>
+<link rel="stylesheet" href="js/plugin/layui/css/layui.css"  media="all" th:href="@{/nzq/layui/css/layui.css}">
+	<link rel="stylesheet" href="css/common.css" th:href="@{/nzq/css/common.css}">
+	<link rel="stylesheet" href="css/about-us.css" th:href="@{/nzq/css/about-us.css}">
+	<script src="js/plugin/jquery-3.0.0.min.js" th:src="@{/nzq/js/plugin/jquery-3.0.0.min.js}"></script>
+<script src="js/plugin/layui/layui.js" th:src="@{/nzq/layui/layui.js}"></script>
+<script src="js/utils.js" th:src="@{/nzq/js/utils.js}"></script>
+<script src="js/commonjs/header.js" th:src="@{/nzq/js/commonjs/header.js}"></script>
+</head>
+<body>
+    <div class="big-bg-img-1" style=""></div>
+	<!--header-->
+	<div style="width: 100%;">
+    <div class="header">
+        <div class="header-con mg">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/header_logo.png" th:src="@{/img/images/header_logo.png}" alt="">
+                </a>
+            </div>
+
+            <ul class="menu">
+                <li >
+                    <a href="index.html">
+                        首页
+                    </a>
+                </li>
+                <li >
+                    <a href="product-center.html">
+                        产品中心
+                    </a>
+                </li>
+                <li  class="on" >
+                    <a href="about-us.html">
+                        关于我们
+                    </a>
+                </li>
+                <li >
+                    <a href="cooperation.html">
+                        商务合作
+                    </a>
+                </li>
+                <li >
+                    <a href="help.html">
+                        帮助中心
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+	<!--contain-->
+	<div class="contain" >
+		<!-- banner -->
+		<div class="banner mg">
+			<img src="./images/about-us-banner.png" th:src="${pageInfo ne null and pageInfo.bannerImg ne null ? pageInfo.bannerImg :'/img/images/about-us-banner.png'}" alt="banner">
+		</div>
+		<!--introduction-->
+		<div class="introduction-lg mg">
+			<img src="./images/about-us-bg.png" th:src="@{/img/images/about-us-bg.png}" alt="">
+			<h5>关于北极鹅</h5>
+			<div>
+				<p>&emsp;&emsp;北极鹅云一家从事高校直饮水物联网平台开发及运营的互联网科技企业，打造一个基于‘物联网+互联网’技术的，覆盖高校消费领域的，综合性互联网运营服务平台。 公司致力于为高校学生提供物联网的直饮水服务，倡导“健康喝水，喝健康水”的经营理念，为学生提供从饮水场景、健康喝水、快乐生活的基础服务，同时在此基础上提供针对学生的更多增值服务。 为了完善高校直饮水的应用场景，公司在物联网设备的研发、净水设备的研发、直饮水运营平台的研发及运营都投入大量的人力物力，以确保合作高校在直饮水领域的稳健运营。</p>
+			</div>
+		</div>
+		<div class="introduction-sm mg">
+			<div class="sm-wrap">
+				<h5>关于北极鹅</h5>
+				<img src="./images/about-us-bg.png" th:src="@{/img/images/about-us-bg.png}" alt="">
+				<p>&emsp;&emsp;北极鹅云一家从事高校直饮水物联网平台开发及运营的互联网科技企业，打造一个基于‘物联网+互联网’技术的，覆盖高校消费领域的，综合性互联网运营服务平台。<br/>
+					&emsp;&emsp;公司致力于为高校学生提供物联网的直饮水服务，倡导“健康喝水，喝健康水”的经营理念，为学生提供从饮水场景、健康喝水、快乐生活的基础服务，同时在此基础上提供针对学生的更多增值服务。 <br/>
+					&emsp;&emsp;为了完善高校直饮水的应用场景，公司在物联网设备的研发、净水设备的研发、直饮水运营平台的研发及运营都投入大量的人力物力，以确保合作高校在直饮水领域的稳健运营。</p>
+			</div>
+		</div>
+		<!--introduction-->
+		<div class="introduction-2 mg">
+			<h5>打造当代大学校园直饮水标杆</h5>
+			<div class="txt">
+				<img class="img-lg" src="./images/about-us-bg-3.png" th:src="@{/img/images/about-us-bg-3.png}" alt="">
+				<img class="img-sm" src="./images/about-us-bg-4.png" th:src="@{/img/images/about-us-bg-4.png}" alt="">
+				<div class="inner-txt inner-txt-1">
+					<h6>5级过滤设备 中央净化</h6>
+					<p>以国家级净化标准为基础，实现整体楼栋水质净化。</p>
+				</div>
+				<div class="inner-txt inner-txt-2">
+					<h6>柜式净化主机 饮水末端</h6>
+					<p>实现宿舍生活空间整体覆盖，保证学生便捷用水。</p>
+				</div>
+				<div class="inner-txt inner-txt-3">
+					<h6>移动端智慧饮水管理系统</h6>
+					<p>学生以移动端app为基础，科学规划并管理自己的饮水健康问题。</p>
+				</div>
+				<div class="inner-txt inner-txt-4">
+					<h6>基于校园的本地化生活服务商城</h6>
+					<p>依托移动端app，接入校园内本地化的生活服务功能，便捷学校生活。</p>
+				</div>
+			</div>
+		</div>
+		<div class="introduction-3 mg">
+			<div class="txt">
+				<p>1）以专业水净化设备为核心；</p>
+				<p>2）以终端饮水网络为基础；</p>
+				<p>3）配合移动端智能化app饮水管理系统；</p>
+			</div>
+			<div class="imgs">
+				<dig class="img-wrap img-l">
+					<img src="./images/about-us-bg-l.png" th:src="@{/img/images/about-us-bg-l.png}"alt="">
+					<p>1）以专业水净化设备为核心；</p>
+				</dig>
+				<dig class="img-wrap img-c">
+					<img src="images/about-us-bg-c.png" th:src="@{/img/images/about-us-bg-c.png}" alt="">
+					<p>2）以终端饮水网络为基础；</p>
+				</dig>
+				<dig class="img-wrap img-r">
+					<img src="images/about-us-bg-r.png" th:src="@{/img/images/about-us-bg-r.png}" alt="">
+					<p>3）配合移动端智能化app饮水管理系统；</p>
+				</dig>
+			</div>
+		</div>
+		<div class="introduction-4 mg">
+			<p class="title">BOT模式：校园直饮水典型合作方式</p>
+			<ul>
+				<li>
+					<img src="./images/about-us-icon-1.png" th:src="@{/img/images/about-us-icon-1.png}" alt="">
+					<h5>校方零投资</h5>
+					<p>平台承担学校直饮水系统建设，运行的全部费用，学校零投资</p>
+				</li>
+				<li>
+					<img src="./images/about-us-icon-2.png" th:src="@{/img/images/about-us-icon-2.png}" alt="">
+					<h5>校方零责任</h5>
+					<p>安装调试完毕后，取水样送至当地疾控中心检测，检测报告由学校验收并留存。</p>
+				</li>
+				<li>
+					<img src="./images/about-us-icon-3.png" th:src="@{/img/images/about-us-icon-3.png}" alt="">
+					<h5>校方零管理</h5>
+					<p>校园直饮水系统运行，管理由运营公司派专业人员负责，学校无需派人管理。</p>
+				</li>
+			</ul>
+			<p class="fs">零投资、零责任、零管理的情况下，享受健康饮水，以及校园硬件升级的好结果</p>
+		</div>
+		<div class="introduction-5 mg" id="_hope">
+			<h3>我们的愿景</h3>
+			<p>饮水、金融培训、线上服务三位一体的创新型大学生活服务平台。</p>
+			<ul>
+				<li><img src="./images/about-us-icon-4.png" th:src="@{/img/images/about-us-icon-4.png}" alt=""></li>
+				<li><img src="./images/about-us-icon-5.png" th:src="@{/img/images/about-us-icon-5.png}" alt=""></li>
+				<li><img src="./images/about-us-icon-6.png" th:src="@{/img/images/about-us-icon-6.png}" alt=""></li>
+				<li><img src="./images/about-us-icon-7.png" th:src="@{/img/images/about-us-icon-7.png}" alt=""></li>
+			</ul>
+		</div>
+		<div class="introduction-6 mg">
+			<div class="map" id="bMap" style="width: 555px;height: 360px;"></div>
+			<div class="info-list">
+				<div class="info-item">
+					<h5>联系地址</h5>
+					<p>广州市天河区软件路17号5楼</p>
+				</div>
+				<div class="info-item">
+					<h5>客服电话</h5>
+					<p>18565592203</p>
+				</div>
+				<div class="info-item">
+					<h5>企业邮箱</h5>
+					<p>zqnet@outlook.com</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--footer-->
+	<div class="footer">
+    <div class="part-1">
+        <div class="mg">
+            <div class="left-side">
+                <ul>
+                    <!--<li>
+                        <p class="title">关于我们</p>
+                        <p><a href="about-us.html">关于北极鹅</a></p>
+                        <p><a href="about-us.html#_hope">我们的愿景</a></p>
+                        <p><a href="company/index.html" target="_blank">掌趣科技</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p><a href="help.html">帮助中心</a></p>
+                        <p><a href="javascript:;" class="shangqiao">在线咨询</a></p>
+                        <p><a href="help.html#_advice">意见反馈</a></p>
+                    </li>
+                    <li>
+                        <p class="title">帮助</p>
+                        <p>客服热线：18565592203</p>
+                        <p>工作时间：9.00-21.00</p>
+                    </li>-->
+
+                    <li th:each="foot : ${footer}" th:if="${footer ne null}">
+                        <p class="title" th:text="${foot ne null ? foot.name : ''}">关于我们</p>
+                        <p th:each="f : ${foot.footerDetails}" th:if="${foot ne null}"><a href="about-us.html" th:href="${f ne null ? (f.url != null && f.url != '' ? f.url : '/footer/'+ f.id +'.html') : ''}" th:text="${f ne null ? f.name : ''}" th:class="${f ne null && f.name eq '在线咨询' ? 'shangqiao' :''}" >关于北极鹅</a></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <!--<div class="scan-code scan-code-app">-->
+                <!--<span class="QR-code"></span>-->
+                <!--<p>扫码下载北极鹅APP</p>-->
+                <!--</div>-->
+                <div class="scan-code scan-code-wechat">
+                    <span class="QR-code"></span>
+                    <p>北极鹅官方微信</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="part-2">
+        <div class="copyright">
+            <p class="author">2015-2019 © 广州掌趣网络科技有限公司 All Rights Reserved.</p>
+            <p><a href="http://www.beian.miit.gov.cn">粤ICP备15096947号-2</a></p>
+        </div>
+    </div>
+</div>
+	<!--nav-bar-->
+	<div class="nav-bar">
+    <div class="nav-bar-list">
+        <div class="nav-bar-item "><a href="index.html">首页</a></div>
+        <div class="nav-bar-item "><a href="cooperation.html">商务合作</a></div>
+        <div class="nav-bar-item service active">
+            <a href="javascript:;">服务大厅</a>
+            <div class="nav-bar-item-list">
+                <ul style="display: none;">
+                    <li><a class="" href="product-center.html">产品中心</a></li>
+                    <li><a class="active" href="about-us.html">关于我们</a></li>
+                    <li><a class="" href="help.html">帮助中心</a></li>
+                    <li><a href="https://www.zhqu.net/" target="_blank">掌趣科技</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=zuF2N4TsocMdA8kjgC9skGVpt8YX35wP"></script>
+
+<script>
+	$(function () {
+      (function () {
+        var map;
+        //创建和初始化地图函数：
+        function initMap(){
+          createMap();//创建地图
+          setMapEvent();//设置地图事件
+          addMapControl();//向地图添加控件
+          addMapOverlay();//向地图添加覆盖物
+        }
+        function createMap(){
+          map = new BMap.Map("bMap");
+          map.centerAndZoom(new BMap.Point(113.4203509011,23.1782585972),18);
+        }
+        function setMapEvent(){
+          map.enableScrollWheelZoom();
+          map.enableKeyboard();
+          map.enableDragging();
+          map.enableDoubleClickZoom()
+        }
+        function addClickHandler(target,window){
+          target.addEventListener("click",function(){
+            target.openInfoWindow(window);
+          });
+        }
+        function addMapOverlay(){
+          var markers = [
+            {content:"广州市天河区软件路17号5楼",title:"北极鹅",imageOffset: {width:-46,height:-21},position:{lat:23.1782585972,lng:113.4203509011}}
+          ];
+          for(var index = 0; index < markers.length; index++ ){
+            var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+            var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+                imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
+              })});
+            var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
+            var opts = {
+              width: 200,
+              title: markers[index].title,
+              enableMessage: false
+            };
+            var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+            marker.setLabel(label);
+            addClickHandler(marker,infoWindow);
+            map.addOverlay(marker);
+          };
+        }
+        //向地图添加控件
+        function addMapControl(){
+          var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+          scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+          map.addControl(scaleControl);
+          var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+          map.addControl(navControl);
+          var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+          map.addControl(overviewControl);
+        }
+        initMap();
+      })();
+      $(".shangqiao").click(function(event) {
+        if ($('#nb_invite_ok').length > 0) {
+          $('#nb_invite_ok').click();
+        }
+      });
+	})
+</script>
+</html>

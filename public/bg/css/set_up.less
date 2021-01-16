@@ -1,0 +1,202 @@
+@import "valid";
+
+.content{
+  //小标题
+  .samll_title{
+    font-size: 18px;
+    margin:10px;
+    font-weight: normal;
+    height: 30px;
+    line-height: 30px;
+    .layui-btn{
+      float: right;
+    }
+  }
+  //基础设置
+  .base{
+    h2{
+      font-size: 18px;
+      margin:10px;
+      font-weight: normal;
+    }
+  }
+  //首页轮播图
+  .banner_setting{
+    .ban_items{
+      .ban_item{
+        height: 175px;
+        padding:15px 100px 0 294px;
+        border-bottom: 1px solid #ededed;
+        background: #f9f9f9;
+        //轮播图片
+        .img{
+          float: left;
+          margin-left: -274px;
+          cursor: pointer;
+          overflow: hidden;
+          img{
+            width: 256px;
+            height: 144px;
+          }
+        }
+        //文本部分
+        .txt{
+          display: inline-block;
+          width: 100%;
+          .layui-form-item{
+            .layui-form-label{
+              width: 110px;
+              text-align: center;
+            }
+          }
+        }
+        //按钮模块
+        .btn{
+          float: right;
+          margin-right: -80px;
+          .close{
+            text-align: right;
+            margin-bottom: 86px;
+            cursor: pointer;
+            img{
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+//弹出框
+.mark_img{
+  display: none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translateX(-50%) translateY(-50%);
+  width: 1000px;
+  height: 600px;
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  //弹窗头部
+  .mark_head{
+    height: 45px;
+    padding: 10px;
+    font-size: 18px;
+    background: #ffffff;
+    border-bottom: 1px solid #ededed;
+    .close{
+      cursor: pointer;
+      float: right;
+      img{
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  //弹窗内容
+  .mark_body{
+    height: 508px;
+    overflow: hidden;
+    //分组
+    .mark_left{
+      float: left;
+      width: 200px;
+      height: 508px;
+
+      background: #ededed;
+      ul{
+        padding: 10px 0;
+        li{
+          display: block;
+          font-size: 16px;
+          padding: 0 60px 0 10px;
+          line-height: 40px;
+          height: 40px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .on{
+          background: #ffffff;
+        }
+        .num{
+          width: 40px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          float: right;
+          text-align: right;
+          margin-right: -50px;
+        }
+      }
+    }
+    //图片展示
+    .mark_right{
+      float: right;
+      width: 790px;
+      height: 508px;
+
+      .img_box{
+        height: 400px;
+        overflow: hidden;
+        .img_on{
+          box-shadow: 0px 0px 4px 3px #8297ff;
+          -webkit-box-shadow: 0px 0px 4px 3px #8297ff;
+          -o-box-shadow: 0px 0px 4px 3px #8297ff;
+          -moz-box-shadow: 0px 0px 4px 3px #8297ff;
+        }
+        li{
+          float: left;
+          margin:5px 18px ;
+          .img{
+            width: 160px;
+            height: 160px;
+            background: #0bb20c;
+            overflow: hidden;
+            position: relative;
+            img{
+              width: 160px;
+              height: 160px;
+            }
+            p{
+              color: #ffffff;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 160px;
+              background: #000;
+              opacity: 0.6;
+              text-align: center;
+            }
+          }
+          p{
+            font-size: 16px;
+            width: 160px;
+            height: 30px;
+            line-height: 30px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+      .mark_right_bottom{
+        font-size: 14px;
+        overflow: hidden;
+        margin-top: 30px;
+
+      }
+    }
+  }
+  //弹窗底部
+  .mark_footer{
+    border-top: 1px solid #ededed;
+    text-align: center;
+    height: 45px;
+    padding:7px 10px;
+    background: #ffffff;
+  }
+}

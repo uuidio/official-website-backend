@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.HomePageDao">
+
+
+
+    <resultMap id="Base_Column_List_Details" type="net.zhqu.website.bg.model.HomePageModel">
+        <id column="homepage_id" property="id"/>
+        <result column="homepage_create_time" property="createTime"/>
+        <result column="seo_title" property="seoTitle"/>
+        <result column="seo_keywords" property="seoKeywords"/>
+        <result column="seo_description" property="seoDescription"/>
+        <result column="homepage_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+    </resultMap>
+
+
+    <select id="findAllPage" resultMap="Base_Column_List_Details" parameterType="Param">
+        SELECT
+        a.id homepage_id,
+        a.seo_title         seo_title,
+        a.seo_keywords      seo_keywords,
+        a.seo_description   seo_description,
+        a.create_time homepage_create_time,
+        a.last_modified_time homepage_last_modified_time,
+        org.id                   org_id,
+        org.name                 org_name,
+        u.id                     creator_id,
+        u.name                   creator_name
+        FROM homepage a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        <if test="orderByCreateTimeDesc">
+            order by a.create_time desc
+        </if>
+    </select>
+
+    <select id="findOne" resultMap="Base_Column_List_Details" parameterType="Param">
+        SELECT
+        a.id                        homepage_id,
+        a.seo_title         seo_title,
+        a.seo_keywords      seo_keywords,
+        a.seo_description   seo_description,
+        a.create_time               homepage_create_time,
+        a.last_modified_time        homepage_last_modified_time,
+        org.id                      org_id,
+        org.name                    org_name,
+        u.id                        creator_id,
+        u.name                      creator_name
+		FROM homepage a
+		LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        WHERE a.id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="Param">
+        SELECT count(1)
+		FROM homepage a
+		WHERE a.id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="net.zhqu.website.bg.model.HomePageModel">
+        INSERT INTO homepage(
+               seo_title,
+               seo_keywords,
+               seo_description,
+               org_id,
+               creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES (
+              #{seoTitle},
+              #{seoKeywords},
+              #{seoDescription},
+              #{org.id},
+              #{creator.id},
+			  now(),
+			  now()
+        )
+    </insert>
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.HomePageModel">
+        UPDATE homepage a
+        <set>
+            <if test="seoTitle != null">a.seo_title  = #{seoTitle},</if>
+            <if test="seoKeywords != null">a.seo_keywords  = #{seoKeywords},</if>
+            <if test="seoDescription != null">a.seo_description  = #{seoDescription},</if>
+            a.last_modified_time = now()
+        </set>
+        WHERE
+        a.id = #{id}
+    </update>
+
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM homepage
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+
+</mapper>

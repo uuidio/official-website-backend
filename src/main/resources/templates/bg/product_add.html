@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新增产品</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/layui.css" th:href="@{/nzq/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/product.css" th:href="@{/bg/ec/css/product.css}"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/iconfont.css"
+          th:href="@{/nzq/layui/css/iconfont.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/picturePlugin.css"
+          th:href="@{/bg/ec/css/picturePlugin.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/image_management.css"
+          th:href="@{/bg/css/image_management.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <script src="../../../../../public/nzq/content/Layui-KnifeZ/layui.js"
+            th:src="@{/nzq/content/Layui-KnifeZ/layui.js}"></script>
+    <script src="../../../../../public/nzq/content/ace/ace.js" th:src="@{/nzq/content/ace/ace.js}"></script>
+    <script src="../../../../../public/js/global.js" th:src="@{/js/global.js}"></script>
+    <style>
+        .layui-form-label {
+            padding: 9px 10px;
+        }
+
+        .mark_img {
+            z-index: 2;
+        }
+
+        #spots {
+            margin: 0 0 0 40px;
+        }
+        .mark_img {
+            z-index: 29891016;
+        }
+    </style>
+</head>
+<body>
+<div class="body_bg">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend th:text="${product ne null ?'修改产品':'新增产品'}">新增产品</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form submit-form"><!--th:action="@{/bg/adverts/c/}"-->
+        <!--<input th:value="${currs}" type="hidden" id="currs" name="currs"> &lt;!&ndash; 暂存页数 提交或者返回时提交到后台 &ndash;&gt;-->
+        <input type="hidden" name="id" id="id" th:value="${product.id}"
+               th:if="${product ne null}">
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" placeholder="请输入名称"
+                           autocomplete="off" class="layui-input" id="name"
+                           th:value="${product ne null ? product.name:''}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">类目</label>
+                <div class="layui-input-inline">
+                    <select name="category.id" id="categories" required lay-verify="required" >
+                        <option value="">请选择类目</option>
+                        <option th:value="${children.id}" th:text="${children.name}" th:each="children,st:${categories}" th:selected="${product ne null and product.category ne null and product.category.id eq children.id ? 'selected':'false'}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片</label>
+                <div class="layui-input-block">
+                    <a id="add_pictures" class="layui-btn add-pictures">添加图片</a>
+                    <span>第一张作为封面</span>
+                </div>
+                <div class="picture-container pictures">
+                    <div th:if="${product ne null}" >
+                        <div class="pic_item" th:each="picture,stat:${product.images}"><img th:src="${picture.imagePath}"><input type="hidden" th:value="${picture.id}" th:name="'images['+${stat.index}+'].id'"><i class="layui-icon">&#x1006;</i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">内容</label>
+                <div class="contents" th:attr="data-sumnum=${product ne null and product.contents ne null ? product.contents.size() :0}">
+                    <div th:if="${product ne null}">
+                        <div class="layui-input-block content" th:each="content,stat:${product.contents}" th:attr="data-num=${stat.index+1}">
+                            <input type="text"  th:name="'contents['+${stat.index+1}+'].title'" lay-verify="required" placeholder="请输入标题"
+                                   autocomplete="off" class="layui-input" th:id="'title_'+${stat.index+1}"
+                                   th:value="${content.title}">
+                            <textarea style="height: 150px" placeholder="请输入内容"  th:name="'contents['+${stat.index+1}+'].content'"
+                                      class="pro_textarea" th:id="'content_'+${stat.index+1}"
+                                      th:value="${content.content}"
+                                      th:text="${content.content}"></textarea>
+                            <input type="button" class="layui-btn layui-btn-sm remove" value="删除"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" id="spots">
+                <input type="button" id="add" class="layui-btn" name="add" value="添加">
+            </div>
+        </div>
+
+        <div style="text-align: center;margin-bottom: 10px;">
+
+            <a class="layui-btn submit-btn">提交</a>
+            <a class="layui-btn comeBack">返回</a>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    layui.config({
+        base: '/nzq/layui'
+    }).extend({
+        selectPicture: '/lay/layui_extends/selectPicture',
+    }).use(['jquery', 'form', 'selectPicture', 'layer','layedit'], function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var selectPicture = layui.selectPicture;
+
+
+        $('body').on('click', '.add_usimg', function () {
+            var src = $(this)
+            var selPic = selectPicture({
+                elem: '#add_pictureImages',
+                callback: function (res) {
+                    src.parent().find("input[name='Imgsrc']").val(res.url)
+                }
+            });
+            selPic.show();
+        });
+
+        layedit.set({
+            uploadImage: {
+                url: '/bg/picture/c/upload/0    ',
+                accept: 'image',
+                acceptMime: 'image/*',
+                exts: 'jpg|png|gif|bmp|jpeg',
+                size: 1024 * 10,
+                done: function (data) {
+                    console.log(data);
+                }
+            },
+            tool: [
+                'html',
+                'undo',
+                'redo',
+                'code',
+                'strong',
+                'italic',
+                'underline',
+//                'del',
+//                'addhr', '|',
+                'fontFomatt',
+                'fontfamily',
+                'fontSize',
+ //               'fontBackColor',
+//                'colorpicker',
+//                'face',
+                '|',
+                'left',
+                'center',
+                'right',
+                '|',
+                'link',
+                'unlink',
+//                'images',
+                'image_alt',
+//                'video',
+//                'attachment',
+//                'anchors', '|',
+//                'table',
+//                'fullScreen'
+            ]
+            , height: '300px'
+        });
+
+        var abMax = 10;
+        if ($('.content').size() >= abMax) {
+            $('#add').hide();
+        }
+        $("#add").click(function () {
+            addSpot(this, abMax);
+        });
+        $(".remove").on('click', function () {
+            $(this).parent().remove();
+            $('input#add').show();
+        });
+
+        $(".content").each(function (index, e) {
+            var num = $(e).data("num");
+            var eIndex = layedit.build('content_' + num);
+        });
+
+        function addSpot(obj, sm) {
+            var sumNum = $('.contents').data("sumnum");
+            sumNum++
+            $('.contents').data("sumnum", sumNum);
+            $('.contents').append(
+                '<div class="layui-input-block content" data-num="' + sumNum + '">' +
+                '<input type="text" name="contents[' + sumNum + '].title" lay-verify="required" placeholder="请输入标题"' +
+                'autocomplete="off" class="layui-input" id="title_' + sumNum + '">' +
+                '<textarea style="height: 150px" placeholder="请输入内容" name="contents[' + sumNum + '].content"' +
+                'class="pro_textarea" id="content_' + sumNum + '"></textarea>' +
+                '<input type="button" class="layui-btn layui-btn-sm remove" value="删除"/>' +
+                '</div>')
+                .find("input.remove").click(function () {
+                $(this).parent().remove();
+                $('input#add').show();
+            });
+            if ($('.content').size() >= sm) {
+                $('#add').hide();
+            }
+
+            var eIndex = layedit.build('content_' + sumNum);
+            console.log(eIndex);
+        }
+
+
+        $(".submit-btn").on("click", function () {
+
+            var postData = {};
+
+            postData.id = $("#id").val();
+            postData.name = $("#name").val();
+
+            var categoryId = $("#categories").val();
+            if (categoryId == null || categoryId == '') {
+                layer.msg("请选择类目");
+                return;
+            }
+            var category = {};
+            category.id = categoryId;
+            postData.category = category;
+
+            var contents = [];
+            $(".content").each(function (index, e) {
+                var num = $(e).data("num");
+
+                var contentObj = {};
+                var title =  $(e).find("input[name='contents[" + num + "].title']").val();
+                var content = layedit.getContent(num);
+
+                contentObj.title = title;
+                contentObj.content = content;
+                contents.push(contentObj);
+            });
+            postData.contents = contents;
+            var images = [];
+            $(".picture-container").find("input[name^='images']").each(function (index, e) {
+                var image = {};
+                image.id = e.value;
+                images.push(image);
+            });
+            postData.images = images;
+            if (postData.name == '' || $("#name").val() == '') {
+                layer.msg("请填写名称！");
+                return false;
+            }
+
+            $.ajax({
+                url: "/bg/product/c/",
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(postData),
+                success: function (data) {
+                    if (data != null) {
+                        if (data.code == 0) {
+                            layer.msg(data.msg);
+                            location.href = '/bg/product/v/index.html';
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                }, fail: function () {
+                    layer.msg("后台报错");
+                }
+            });
+        });
+
+        $(".comeBack").on('click', function () {
+            location.href = "/bg/product/v/index.html";
+        });
+
+        $('.picture-container').on('click','.pic_item .layui-icon',function () {
+            $(this).parent().remove();
+        })
+        selectPicture({
+            elem: '#add_pictures',
+            multiSelect: true,
+            callback:function (res) {
+                var pictureJsonListNum=$(".picture-container.pictures").find(".pic_item").length;;
+                $(res).each(function (index) {
+                    $(".picture-container.pictures").append('<div class="pic_item"><img src="'+this.url+'"><input type="hidden" value="'+this.id+'" name="images['+pictureJsonListNum+'].id"><i class="layui-icon">&#x1006;</i></div>');
+                    pictureJsonListNum=pictureJsonListNum+1;
+                });
+            }
+        });
+    })
+    ;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.IntroducePageDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.IntroducePageModel">
+        <id column="introduce_id" property="id"/>
+        <result column="introduce_title" property="title"/>
+        <result column="introduce_bannerImg" property="bannerImg"/>
+        <result column="seo_title" property="seoTitle"/>
+        <result column="seo_keywords" property="seoKeywords"/>
+        <result column="seo_description" property="seoDescription"/>
+        <result column="introduce_create_time" property="createTime"/>
+        <result column="introduce_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Base_Column_List_R" type="net.zhqu.website.bg.model.IntroducePageVo">
+        <id column="r_id" property="id"/>
+        <result column="seo_title" property="seoTitle"/>
+        <result column="seo_keywords" property="seoKeywords"/>
+        <result column="seo_description" property="seoDescription"/>
+        <result column="r_title" property="title"/>
+        <result column="r_bannerImg" property="bannerImg"/>
+        <result column="r_create_time" property="createTime"/>
+        <result column="r_last_modified_time" property="lastModifiedTime"/>
+        <!--<collection property="titles" javaType="java.util.List"
+                    ofType="net.zhqu.website.bg.model.IntroduceContentTitleVo">
+            <id column="titles_id" property="id"/>
+            <result column="titles_title" property="title"/>
+            <collection property="contentList" javaType="java.util.List"
+                        ofType="net.zhqu.website.bg.model.IntroduceContentModel">
+                <id column="content_id" property="id"/>
+                <result column="content_sort" property="sort"/>
+                <result column="content_title" property="title"/>
+                <result column="content_content" property="content"/>
+                <result column="content_image" property="image"/>
+                <result column="content_beforeIcon" property="beforeIcon"/>
+                <result column="content_afterIcon" property="afterIcon"/>
+                <result column="content_url" property="url"/>
+            </collection>
+        </collection>-->
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+        SELECT
+        a.id                    introduce_id,
+        a.seo_title            seo_title,
+        a.seo_keywords             seo_keywords,
+        a.seo_description          seo_description,
+        a.title                 introduce_title,
+        a.banner_img                 introduce_bannerImg,
+        a.create_time           introduce_create_time,
+        a.last_modified_time    introduce_last_modified_time,
+		org.id                   org_id,
+        org.name                 org_name,
+        u.id                     creator_id,
+        u.name                   creator_name
+        FROM introduce_page a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        WHERE  a.id = #{id}
+    </select>
+
+    <select id="findAllR" resultMap="Base_Column_List_R" parameterType="Param">
+        SELECT
+
+        a.id 								 r_id,
+        a.seo_title         seo_title,
+        a.seo_keywords      seo_keywords,
+        a.seo_description   seo_description,
+        a.title 							 r_title,
+        a.banner_img 					     r_bannerImg,
+        a.create_time 						 r_create_time,
+        a.last_modified_time 				 r_last_modified_time,
+        org.id                                org_id,
+        org.name                              org_name,
+        u.id                                  creator_id,
+        u.name                                creator_name
+        FROM introduce_page a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        WHERE a.id = #{id}
+    </select>
+
+
+
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id introduce_id,
+        a.seo_title         seo_title,
+        a.seo_keywords      seo_keywords,
+        a.seo_description   seo_description,
+        a.title introduce_title,
+        a.banner_img introduce_bannerImg,
+        a.create_time introduce_create_time,
+        a.last_modified_time introduce_last_modified_time,
+        org.id                                org_id,
+        org.name                              org_name,
+        u.id                                  creator_id,
+        u.name                                creator_name
+        FROM introduce_page a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id,
+        <if test="orderByCreateTimeDesc">
+            order by a.create_time desc
+        </if>
+    </select>
+
+
+    <select id="count" resultType="java.lang.Integer" parameterType="Param">
+        SELECT count(1)
+		FROM introduce_page a
+    </select>
+
+
+    <insert id="insert">
+        INSERT INTO introduce_page(
+        seo_title,
+        seo_keywords,
+        seo_description,
+               title,
+               banner_img,
+			   org_id,
+			   creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES(
+          #{seoTitle},
+            #{seoKeywords},
+            #{seoDescription},
+            #{title},
+            #{bannerImg},
+            #{org.id},
+            #{creator.id},
+            now(),
+            now()
+            )
+    </insert>
+
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.IntroducePageModel">
+        UPDATE introduce_page a
+        <set>
+            a.last_modified_time = now(),
+            <if test="seoTitle != null">a.seo_title  = #{seoTitle},</if>
+            <if test="seoKeywords != null">a.seo_keywords  = #{seoKeywords},</if>
+            <if test="seoDescription != null">a.seo_description  = #{seoDescription},</if>
+            <if test="title!=null and title != ''">a.title = #{title},</if>
+            <if test="bannerImg!=null and bannerImg != ''">a.banner_img = #{bannerImg},</if>
+        </set>
+        WHERE
+        a.id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM introduce_page
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

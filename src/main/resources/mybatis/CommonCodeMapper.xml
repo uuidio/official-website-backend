@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.CommonCodeDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.CommonCodeModel">
+        <id column="common_code_id" property="id"></id>
+        <result column="common_code_code" property="code"></result>
+        <result column="common_code_value" property="codeValue"></result>
+        <result column="common_code_name" property="name"></result>
+        <result column="common_code_code_type" property="codeType"></result>
+        <result column="common_code_show_order" property="showOrder"></result>
+        <result column="common_code_remark" property="remark"></result>
+        <result column="common_code_create_time" property="createTime"/>
+        <result column="common_code_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id     property="id"                       column="creator_id"/>
+            <result property="name"                     column="creator_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+         SELECT
+            a.id                  common_code_id,
+            a.name                common_code_name,
+            a.code                common_code_code,
+            a.code_value          common_code_value,
+            a.code_type           common_code_code_type,
+            a.show_order          common_code_show_order,
+            a.remark              common_code_remark,
+            a.create_time         common_code_create_time,
+            a.last_modified_time  common_code_last_modified_time,
+            b.id                  creator_id,
+            b.name                creator_name
+        FROM common_code a
+            LEFT JOIN user b ON a.creator_id = b.id
+    </select>
+
+    <select id="findOne" resultMap="Base_Column_List" parameterType="Param">
+         SELECT
+            a.id                  common_code_id,
+            a.name                common_code_name,
+            a.code                common_code_code,
+            a.code_value          common_code_value,
+            a.code_type           common_code_code_type,
+            a.show_order          common_code_show_order,
+            a.remark              common_code_remark,
+            a.create_time         common_code_create_time,
+            a.last_modified_time  common_code_last_modified_time,
+            b.id                  creator_id,
+            b.name                creator_name
+        FROM common_code a
+            LEFT JOIN user b ON a.creator_id = b.id
+        <where>
+            <if test="id!=null">a.id = #{id}</if>
+            <if test="code!=null">a.code = #{code}</if>
+        </where>
+        limit 0,1
+    </select>
+
+    <select id="query" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id                  common_code_id,
+        a.name                common_code_name,
+        a.code                common_code_code,
+        a.code_value          common_code_value,
+        a.code_type           common_code_code_type,
+        a.show_order          common_code_show_order,
+        a.remark              common_code_remark,
+        a.create_time         common_code_create_time,
+        a.last_modified_time  common_code_last_modified_time,
+        b.id                  creator_id,
+        b.name                creator_name
+        FROM common_code a
+        LEFT JOIN user b ON a.creator_id = b.id
+        <where>
+            <if test="id!=null">a.id = #{id}</if>
+            <if test="code!=null">a.code = #{code}</if>
+            <if test="groupName!=null and groupName!=''">
+                AND a.group_name = #{groupName}
+            </if>
+            <if test="groupCode!=null and groupCode!=''">
+                AND a.group_code = #{groupCode}
+            </if>
+        </where>
+        ORDER BY a.show_order ASC
+    </select>
+
+    <insert id="insert" parameterType="net.zhqu.website.bg.model.CommonCodeModel">
+        INSERT INTO common_code(
+                id,
+                name,
+                code,
+                code_type,
+                code_value,
+                show_order,
+                remark,
+                creator_id,
+                create_time,
+                last_modified_time
+        )VALUES (
+                #{id},
+                #{name},
+                #{code},
+                #{codeType},
+                #{codeValue},
+                #{showOrder},
+                #{remark},
+                #{creator.id},
+                now(),
+                now()
+        )
+    </insert>
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.CommonCodeModel">
+        UPDATE common_code a
+        <set>
+            a.last_modified_time = now(),
+            <if test="name!=null">
+                a.name = #{name},
+            </if>
+            <if test="code!=null">
+                a.code = #{code},
+            </if>
+            <if test="codeValue!=null">
+                a.code_value = #{codeValue},
+            </if>
+            <if test="codeType!=null">
+                a.code_type = #{codeType},
+            </if>
+            <if test="showOrder!=null">
+                a.show_order = #{showOrder},
+            </if>
+            <if test="remark!=null">
+                a.remark = #{remark},
+            </if>
+        </set>
+		WHERE
+		a.id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM common_code
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+</mapper>

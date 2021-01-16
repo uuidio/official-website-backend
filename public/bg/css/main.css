@@ -1,0 +1,218 @@
+.input {
+  height: 34px;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #C9C9C9;
+  opacity: .7;
+}
+.input:focus {
+  border: #ff8080;
+}
+.tRight {
+  margin-bottom: 25px;
+}
+.tRight a:hover {
+  color: #fff;
+}
+.tRight dt {
+  padding: 0 40px 0 5px ;
+}
+.tRight dt a {
+  font-size: 1.2em;
+  color: #06A8E9;
+}
+.tRight dd a {
+  display: inline-block;
+  text-align: center;
+  background-color: #C9C9C9;
+  width: 30px;
+  padding: 2px;
+}
+.tRight a:hover {
+  background-color: #06A8E9;
+}
+.tRight .foc {
+  background-color: #C4C4C4;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fl {
+  float: left;
+}
+.rl {
+  float: right;
+}
+@keyframes rot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*设置基本的样式*/
+* {
+  box-sizing: border-box;
+}
+body {
+  line-height: 1.4;
+  font-size: 12px;
+  font-family: 'Microsoft Yahei', Tahoma, Verdana;
+  color: #4D4D4D;
+}
+body,
+html,
+ul,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+ol,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#section,
+#top,
+#login,
+#manage,
+#cSection {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1120px;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+a:hover {
+  color: #6ED7FF;
+}
+.input {
+  padding: 10px;
+}
+#main .logo {
+  font-size: 1.2em;
+  text-align: center;
+  line-height: 60px;
+  background-color: #3BC9FF;
+  height: 60px;
+}
+#main .lfNav i {
+  display: inline-block;
+  padding-right: 5px;
+  color: #fff;
+  font-weight: 800;
+}
+#main .lfNav dl dd {
+  padding-left: 22px;
+}
+#main .trList {
+  margin-left: 200px;
+  background-color: #F4F5F5;
+}
+#main .trList i {
+  color: #3E9EFF;
+  font-weight: 800;
+}
+#main .trList .rtNav {
+  text-align: right;
+}
+#main .trList .rtNav dl {
+  text-align: center;
+}
+#main .trList .percentage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-items: flex-start;
+  padding: 20px 20px 20px 20px;
+}
+#main .trList .percentage .newDec {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 12px;
+  align-items: flex-start;
+  background-color: #fff;
+  width: 280px;
+  height: 160px;
+}
+#main .trList .percentage .newDec .pLf {
+  margin-top: 8px;
+  padding: 12px 0 12px 12px;
+  width: 140px;
+  height: 145px;
+  box-shadow: 0 0 2px #fff;
+}
+#main .trList .percentage .newDec .pLf h3 {
+  font-size: 1.3em;
+}
+#main .trList .percentage .newDec .pLf h2 {
+  color: #3BC9FF;
+  padding: 8px 0;
+  font-size: 2em;
+}
+#main .trList .percentage .newDec .pLf output {
+  font-size: 1.3em;
+}
+#main .trList .percentage .newDec .pLf > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+#main .trList .percentage .newDec .pLf > div .lBar {
+  padding: 0 8px;
+  width: 17px;
+  height: 5px;
+  background-color: #F3F4F4 ;
+}
+#main .trList .percentage .newDec .pLf > div .rBar {
+  width: 17px;
+  height: 5px;
+  background-color: #3BC9FF;
+  margin-left: 7px;
+}
+#main .trList .percentage .newDec .pLf > div output {
+  font-size: 1.2em;
+}
+#main .trList .map {
+  padding: 20px;
+  background-color: #F4F5F5;
+  position: relative;
+}
+#main .trList .map .tip {
+  position: absolute;
+  top: 43px;
+  right: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#main .trList .map .tip > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+#main .trList .map .tip > div .rBar {
+  margin: 0 8px;
+  width: 17px;
+  height: 5px;
+  background-color: #3BC9FF;
+}
+#main .trList .map .tip > div output {
+  font-size: 1.2em;
+}
+.layui-nav .layui-nav-item {
+  line-height: 55px;
+}

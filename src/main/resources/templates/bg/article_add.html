@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新增资讯</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/layui.css" th:href="@{/nzq/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/product.css" th:href="@{/bg/ec/css/product.css}"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/iconfont.css"
+          th:href="@{/nzq/layui/css/iconfont.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/ec/css/picturePlugin.css"
+          th:href="@{/bg/ec/css/picturePlugin.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/image_management.css"
+          th:href="@{/bg/css/image_management.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <script src="../../../../../public/nzq/content/Layui-KnifeZ/layui.js"
+            th:src="@{/nzq/content/Layui-KnifeZ/layui.js}"></script>
+    <script src="../../../../../public/nzq/content/ace/ace.js" th:src="@{/nzq/content/ace/ace.js}"></script>
+    <script src="../../../../../public/js/global.js" th:src="@{/js/global.js}"></script>
+    <style>
+        .layui-form-label {
+            padding: 9px 10px;
+        }
+
+        .mark_img {
+            z-index: 2;
+        }
+
+        #spots {
+            margin: 0 0 0 40px;
+        }
+        .mark_img {
+            z-index: 29891016;
+        }
+    </style>
+</head>
+<body>
+<div class="body_bg">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend th:text="${article ne null ?'修改资讯':'新增资讯'}">新增资讯</legend>
+    </fieldset>
+
+    <form class="layui-form layui-form submit-form"><!--th:action="@{/bg/adverts/c/}"-->
+        <!--<input th:value="${currs}" type="hidden" id="currs" name="currs"> &lt;!&ndash; 暂存页数 提交或者返回时提交到后台 &ndash;&gt;-->
+        <input type="hidden" name="id" id="id" th:value="${article.id}"
+               th:if="${article ne null}">
+        <input type="hidden" name="oneKeyCollege" id="oneKeyCollege" th:value="${article.oneKeyCollege}"
+               th:if="${article ne null}">
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面图片</label>
+                <div class="layui-input-block">
+                    <a id="add_pictureCover" class="layui-btn">添加封面图片</a>
+                    <span>图片比例：1:1！推荐比例： 280px*280px</span>
+                </div>
+                <div class="picture-container covers" style="margin-left: 110px">
+                    <div th:if="${article ne null}">
+                        <div class="pic_item cover">
+                            <img th:src="${article ne null ? article.cover :''}">
+                            <input id="cover" type="hidden" name="cover" th:value="${article.cover}"
+                                   th:if="${article.cover ne null}">
+                            <i class="layui-icon">&#x1006;</i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片</label>
+                <div class="layui-input-block">
+                    <a id="add_pictureImg" class="layui-btn">添加图片</a>
+                    <span>图片比例：1:1！推荐比例： 1300px*430px</span>
+                </div>
+                <div class="picture-container img" style="margin-left: 110px">
+                    <div th:if="${article ne null && article.image ne '' && article.image ne null}">
+                        <div class="pic_item image">
+                            <img th:src="${article ne null ? article.image : ''}">
+                            <input id="image" type="hidden" name="image" th:value="${article.image}"
+                                   th:if="${article.image ne null}">
+                            <i class="layui-icon">&#x1006;</i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类列表</label>
+                <div class="layui-input-inline">
+                    <select name="oneKeyCategory.id" lay-verify="required" lay-search="" lay-filter="oneKeyCategory"
+                            id="oneKeyCategory">
+                        <option value="" th:text="请选择分类"></option>
+                        <option th:each="category,stat2:${categorys}"
+                                th:value="${category.id}"
+                                th:text="${category.name}"
+                                th:selected="${article ne null ? article.oneKeyCategory.id == category.id : false}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-field-box" >
+            <div class="layui-form-item">
+                <label class="layui-form-label">二级菜单</label>
+                <div class="layui-input-inline">
+                    <select name="oneKeyTwoMenu.id" lay-verify="required" lay-search="" lay-filter="oneKeyTwoMenu"
+                            id="oneKeyTwoMenu">
+                        <option value="" th:text="请选择二级菜单"></option>
+                        <option th:each="menu,stat2:${menus}"
+                                th:value="${menu.id}"
+                                th:text="${menu.name}"
+                                th:selected="${article ne null ? article.oneKeyTwoMenu.id == menu.id : false}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入标题"
+                           autocomplete="off" class="layui-input" id="title"
+                           th:value="${article ne null ? article.title:''}">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">简介</label>
+                <div class="layui-input-block" style="border: 0px solid #ededed;">
+                    <textarea style="height: 200px" placeholder="请输入简介" name="summary" class="layui-textarea" id="summary"
+                              th:value="${article ne null ?article.summary:''}"
+                              th:text="${article ne null ?article.summary:''}"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章内容</label>
+                <div class="layui-input-block" style="border: 0px solid #ededed;">
+                    <textarea style="height: 400px" placeholder="请输入内容" name="content" class="pro_textarea" id="content"
+                              th:value="${article ne null ?article.content:''}"
+                              th:text="${article ne null ?article.content:''}"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--<div class="layui-field-box">-->
+            <!--<div class="layui-form-item">-->
+                <!--<label class="layui-form-label">标签</label>-->
+                <!--<div class="layui-input-block" id="oneKeyLabels">-->
+
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章排序</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sort" lay-verify="required" placeholder="请输入排序"
+                           autocomplete="off" class="layui-input" id="sort"
+                           th:value="${article ne null ? article.sort:''}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">发表人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="articleUser" lay-verify="required" placeholder="请输入发表人姓名"
+                           autocomplete="off" class="layui-input layui-disabled" id="articleUser"
+                           th:value="${article ne null ? article.articleUser:session.user.nickname}"
+                            disabled>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center;margin-bottom: 10px;">
+            <!--<button class="layui-btn" lay-submit="" id="sub-btn">提交</button>-->
+            <!--<input type="button" class="layui-btn comeBack" lay-submit="" value="返回" name="comeBack"/>-->
+            <a class="layui-btn submit-btn">提交</a>
+            <a class="layui-btn comeBack">返回</a>
+        </div>
+    </form>
+    <!--<div class="layui-hide">-->
+        <!--<input th:value="${labels}" id="labels">-->
+        <!--<input th:value="${selectData}" id="selectData">-->
+    <!--</div>-->
+</div>
+
+<script>
+    layui.config({
+        base: '/nzq/layui'
+    }).extend({
+        selectM: '/lay/layui_extends/selectM',
+        selectPicture: '/lay/layui_extends/selectPicture',
+    }).use(['jquery', 'form', 'layer', 'selectPicture', 'selectM','layedit'], function () {
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var selectPicture = layui.selectPicture;
+        var subform = $(".submit-form");
+        var selectM = layui.selectM;
+        /*
+        var oneKeyLabelData = $("#labels").val();
+        var selectLabel = $("#selectData").val();
+        var selectData = [];
+        if (selectLabel != "" && selectLabel != null && selectLabel.length > 0) {
+            selectData = JSON.parse(selectLabel);
+        }
+        if (oneKeyLabelData != "" && oneKeyLabelData != null && oneKeyLabelData.length > 0) {
+            oneKeyLabelData = JSON.parse(oneKeyLabelData);
+        }
+
+        var labelSelect = selectM({
+            //元素容器【必填】
+            elem: '#oneKeyLabels',
+            name: 'name'
+            //候选数据【必填】
+            , data: oneKeyLabelData
+            , selected: selectData
+            , max: 10000
+        });
+*/
+
+        $('body').on('click', '.add_usimg', function () {
+            var src = $(this)
+            var selPic = selectPicture({
+                elem: '#add_pictureImages',
+                callback: function (res) {
+                    src.parent().find("input[name='Imgsrc']").val(res.url)
+                }
+            });
+            selPic.show();
+        });
+
+        $('.picture-container').on('click', '.pic_item .layui-icon', function () {
+            $(this).parent().remove();
+        });
+
+        selectPicture({
+            elem: '#add_pictureImg',
+            callback: function (res) {
+                $(".picture-container.img").html('<div class="pic_item img"><img src="' + res.url + '"><input id="image" type="hidden" value="' + res.url + '" name="image"><i class="layui-icon">&#x1006;</i></div>');
+            }
+        });
+    selectPicture({
+            elem: '#add_pictureCover',
+            callback: function (res) {
+                $(".picture-container.covers").html('<div class="pic_item cover"><img src="' + res.url + '"><input id="cover" type="hidden" value="' + res.url + '" name="cover"><i class="layui-icon">&#x1006;</i></div>');
+            }
+        });
+
+        form.on('select(oneKeyCategory)', function (data) {
+            $.ajax({
+                url: "/bg/oneKeyArticle/v/getMenus/" + data.value,
+                success: function (data) {
+                    if (data != null) {
+                        if (data.code == 0) {
+                            $("#oneKeyTwoMenu").empty();
+                            $.each(data.data, function (n, value) {
+//                                $("#erji").show();
+                                $("#oneKeyTwoMenu").append("<option value='' th:text='请选择二级菜单'></option><option value='" + value.id + "'>" + value.name + "</option>");
+                            });
+                            form.render();
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                }, fail: function () {
+                    layer.msg("后台报错");
+                }
+            });
+        });
+
+        layedit.set({
+            uploadImage: {
+                url: '/bg/picture/c/upload/0    ',
+                accept: 'image',
+                acceptMime: 'image/*',
+                exts: 'jpg|png|gif|bmp|jpeg',
+                size: 1024 * 10,
+                done: function (data) {
+                    console.log(data);
+                }
+            },
+//            , uploadVideo: {
+//                url: 'your url',
+//                accept: 'video',
+//                acceptMime: 'video/*',
+//                exts: 'mp4|flv|avi|rm|rmvb',
+//                size: 1024 * 10 * 2,
+//                done: function (data) {
+//                    console.log(data);
+//                }
+//            }
+//            , uploadFiles: {
+//                url: 'your url',
+//                accept: 'file',
+//                acceptMime: 'file/*',
+//                size: '20480',
+//                done: function (data) {
+//                    console.log(data);
+//                }
+//            }
+//            , calldel: {
+//                url: 'your url',
+//                done: function (data) {
+//                    console.log(data);
+//                }
+//            }
+//            , facePath: 'http://knifez.gitee.io/kz.layedit/Content/Layui-KnifeZ/'
+//            , devmode: true
+            tool: [
+                'html',
+                'undo',
+                'redo',
+                'code',
+                'strong',
+                'italic',
+                'underline',
+//                'del',
+//                'addhr', '|',
+                'fontFomatt',
+                'fontfamily',
+                'fontSize',
+//                'fontBackColor',
+//                'colorpicker',
+//                'face',
+                '|',
+                'left',
+                'center',
+                'right',
+                '|',
+                'link',
+                'unlink',
+//                'images',
+                'image_alt',
+//                'video',
+//                'attachment',
+//                'anchors', '|',
+//                'table',
+//                'fullScreen'
+            ]
+            , height: '300px'
+        });
+        var ieditor = layedit.build('content');
+//        layedit.setContent(ieditor, "<h1>hello layedit</h1>", false);
+
+
+
+        $(".submit-btn").on("click", function () {
+//            console.log(layedit.getContent(ieditor));
+//            return;
+//            var values = labelSelect.values;
+            var postData = {};
+
+            postData.id = $("#id").val();
+            postData.oneKeyCollege = $("#oneKeyCollege").val();
+            postData.image = $("#image").val();
+            postData.cover = $("#cover").val();
+            postData.sort = $("#sort").val();
+            postData.title = $("#title").val();
+            postData.summary = $("#summary").val();
+            postData.content = layedit.getContent(ieditor);
+            postData.articleUser = $("#articleUser").val();
+
+            if (postData.cover == '' || typeof($("#cover").val()) == 'undefined'  ) {
+                layer.msg("请选择封面图片！");
+                return false;
+            }
+            if ( typeof($("#image").val()) == 'undefined'  ) {
+                postData.image = "";
+            }
+//            }
+            if (postData.title == '' || $("#title").val() == '') {
+                layer.msg("请填写标题！");
+                return false;
+            }
+            if (postData.articleUser == '' || $("#articleUser").val() == '') {
+                layer.msg("请填写发表人！");
+                return false;
+            }
+            /*if (oneKeyCategory.id == '' || oneKeyCategory.id == null) {
+                layer.msg("请选择分类标题！");
+                return false;
+            }
+            if (oneKeyTwoMenu.id == '' || oneKeyTwoMenu.id == null) {
+                layer.msg("请选择二级标题！");
+                return false;
+            }*/
+            if (postData.content == '' || postData.content == null) {
+                layer.msg("请填写内容！");
+                return false;
+            }
+            /*
+            for (var i = 0; i < values.length; i++) {
+                var permission = {};
+                permission.id = values[i];
+                LabelList[i] = permission;
+            }
+            postData.oneKeyLabel = LabelList;
+            */
+            $.ajax({
+                url: "/bg/article/c/",
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(postData),
+                success: function (data) {
+                    if (data != null) {
+                        if (data.code == 0) {
+                            layer.msg(data.msg);
+                            location.href = '/bg/article/v/index.html';
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                }, fail: function () {
+                    layer.msg("后台报错");
+                }
+            });
+        });
+
+        $(".comeBack").on('click', function () {
+            location.href = "/bg/article/v/index.html";
+        });
+    })
+    ;
+</script>
+
+</body>
+</html>

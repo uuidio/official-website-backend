@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.zhqu.website.bg.dao.PageInfoDao">
+    <resultMap id="Base_Column_List" type="net.zhqu.website.bg.model.PageInfoModel">
+        <id column="pageInfo_id" property="id"/>
+        <result column="banner" property="banner"/>
+        <result column="code" property="code"/>
+        <result column="seo_title" property="seoTitle"/>
+        <result column="seo_keywords" property="seoKeywords"/>
+        <result column="seo_description" property="seoDescription"/>
+        <result column="pageInfo_create_time" property="createTime"/>
+        <result column="pageInfo_last_modified_time" property="lastModifiedTime"/>
+        <association property="creator" javaType="net.zhqu.framework.entity.User">
+            <id property="id" column="creator_id"/>
+            <result property="name" column="creator_name"/>
+        </association>
+        <association property="org" javaType="net.zhqu.framework.entity.Org">
+            <id property="id" column="org_id"/>
+            <result property="name" column="org_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findOne" parameterType="Param" resultMap="Base_Column_List">
+        SELECT
+        a.id                    pageInfo_id,
+        a.seo_title            seo_title,
+        a.seo_keywords             seo_keywords,
+        a.seo_description          seo_description,
+        a.banner                 banner,
+        a.code                 code,
+        a.create_time           pageInfo_create_time,
+        a.last_modified_time    pageInfo_last_modified_time,
+		org.id                   org_id,
+        org.name                 org_name,
+        u.id                     creator_id,
+        u.name                   creator_name
+        FROM page_info a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id
+        <where>
+            <if test="id!=null">
+                a.id = #{id}
+            </if>
+            <if test="code!=null">
+                a.code = #{code}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllPage" resultMap="Base_Column_List" parameterType="Param">
+        SELECT
+        a.id pageInfo_id,
+        a.seo_title         seo_title,
+        a.seo_keywords      seo_keywords,
+        a.seo_description   seo_description,
+        a.banner banner,
+        a.code code,
+        a.create_time pageInfo_create_time,
+        a.last_modified_time pageInfo_last_modified_time,
+        org.id                                org_id,
+        org.name                              org_name,
+        u.id                                  creator_id,
+        u.name                                creator_name
+        FROM page_info a
+        LEFT JOIN org org ON  a.org_id = org.id
+        LEFT JOIN user u ON  a.creator_id = u.id,
+        <if test="orderByCreateTimeDesc">
+            order by a.create_time desc
+        </if>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO page_info(
+        seo_title,
+        seo_keywords,
+        seo_description,
+               banner,
+               code,
+			   org_id,
+			   creator_id,
+			   create_time,
+			   last_modified_time
+        )VALUES(
+          #{seoTitle},
+            #{seoKeywords},
+            #{seoDescription},
+            #{banner},
+            #{code},
+            #{org.id},
+            #{creator.id},
+            now(),
+            now()
+            )
+    </insert>
+
+
+    <update id="update" parameterType="net.zhqu.website.bg.model.PageInfoModel">
+        UPDATE page_info a
+        <set>
+            a.last_modified_time = now(),
+            <if test="seoTitle != null">a.seo_title  = #{seoTitle},</if>
+            <if test="seoKeywords != null">a.seo_keywords  = #{seoKeywords},</if>
+            <if test="seoDescription != null">a.seo_description  = #{seoDescription},</if>
+            <if test="code!=null and code != ''">a.code = #{code},</if>
+            <if test="banner!=null and banner != ''">a.banner = #{banner},</if>
+        </set>
+        <where>
+            <if test="id!=null">
+               and a.id = #{id}
+            </if>
+            <if test="code!=null">
+               and a.code = #{code}
+            </if>
+        </where>
+
+    </update>
+
+    <delete id="delete" parameterType="Param">
+        DELETE FROM page_info
+        WHERE id = #{id, jdbcType=BIGINT}
+    </delete>
+
+</mapper>

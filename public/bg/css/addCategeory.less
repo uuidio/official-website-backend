@@ -1,0 +1,133 @@
+@import "valid";
+.mark_img{
+  z-index: 99999999;
+}
+
+.center{
+  width: 98%;
+  margin: 0 auto;
+  //新增一级分类
+  .add_first_box{
+    margin: 10px 0;
+    border-bottom: 1px solid #e6e6e6;
+    .add_first:hover{
+      border: 1px solid #C9C9C9;
+    }
+  }
+  .categeory_content{
+    //一级分类
+    .one_categeory{
+      a:hover{
+        cursor: pointer;
+      }
+      i{ font-style:normal}
+      span{
+        border-width: 1px;
+        border-style: solid;
+        border-color: #e6e6e6;
+        padding: 10px 16px;
+        line-height: 20px;
+        font-size: 14px;
+        height: 40px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .more{
+        float: right;
+      }
+      //二级分类
+      .two_categeory{
+        display: none;
+        .layui-col-xs4{padding:10px 16px 10px 30px;}
+        //三级分类
+        .three_categeory{
+          display: none;
+          .layui-col-xs4{padding:10px 16px 10px 40px;}
+        }
+      }
+
+    }
+  }
+
+}
+
+//属性弹窗
+.edit_models {
+  margin: 10px;
+  .edit_list {
+    font-size: 0;
+    padding: 15px 0;
+    overflow: hidden;
+    .edit_item {
+      display:block;
+      float: left;
+
+      position: relative;
+      font-size: 16px;
+      margin-right: 20px;
+      margin-bottom: 10px;
+      a {
+        display: block;
+        background: #F5F5F5;
+        padding: 4px 14px;
+        border: 1px solid #d7d7d7;
+        border-radius: 5px;
+        color: #666666;
+        cursor: pointer;
+      }
+      .edit_item_close {
+        display: none;
+        position: absolute;
+        right: -10px;
+        top: -12px;
+        height: 20px;
+        width: 20px;
+        background: rgba(0, 0, 0, .5);
+        color: #FFF;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        font-style: normal;
+        cursor: pointer;
+      }
+    }
+  }
+  .edit_add {
+    input {
+      height: 34px;
+      padding: 5px;
+      width: 210px;
+      border: 1px solid #dfdfdf;
+      float: left;
+      border-right: none;
+    }
+    a {
+      background: #F5F5F5;
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      display: inline-block;
+      min-width: 80px;
+      border: 1px solid #DFDFDF;
+      color: #666666;
+      cursor: pointer;
+    }
+  }
+  .edit_select {
+    margin-bottom: 10px;
+    select {
+      height: 30px;
+      width: 100%;
+      font-size: 14px;
+      option {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+
+
+
+

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>设置</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="../../../../../public/nzq/layui/css/layui.css" th:href="@{/nzq/layui/css/layui.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/image_management.css" th:href="@{/bg/css/image_management.css}"/>
+    <link rel="stylesheet" href="../../../../../public/bg/css/global.css" th:href="@{/bg/css/global.css}"/>
+    <script src="../../../../../public/nzq/layui/layui.js" th:src="@{/nzq/layui/layui.js}" type="text/javascript"></script>
+
+</head>
+<body>
+<div class="body_bg">
+    <div class="content">
+        <!--图片管理-->
+        <div class="banner_setting">
+            <div class="samll_title">
+                <span>图片上传</span>
+                <button class="layui-btn layui-btn-sm popup-submit" id="img_up">选择上传图片</button>
+            </div>
+            <div class="mark_img">
+
+                <!--内容-->
+                <div class="mark_body">
+                    <!--分组-->
+                    <div class="mark_left">
+                        <ul>
+                            <li data-id="0">
+                                <span>未分组</span>
+                            </li>
+                            <li th:each="pictureGrouping,stat:${pictureGroupingList}" th:attr="data-id=${pictureGrouping.id}">
+                                <span th:text="${pictureGrouping.pictureOwnership}"></span>
+                            </li>
+                        </ul>
+
+                        <div class="add_btn">
+                            <button class="layui-btn add_group">新建分组</button>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <!--图片展示-->
+
+
+                    <div class="mark_right">
+                        <div class="layui-form" action="">
+                            <!--管理头部-->
+                            <div class="mark_head">
+                                <div class="mark_head_box">
+                                    <input  id="owner_all"    lay-filter="owner_all" type="checkbox" name="like1[seclect_items]" lay-skin="primary" title="全选">
+                                    <a  class="group_name" href="javascript:;">
+                                        <span>修改分组名称</span>
+                                    </a>
+                                    <a class="amend_group" href="javascript:;">
+                                        <img width="18" src="../../../../../public/bg/img/icon/modify_ground.png" th:src="@{/bg/img/icon/modify_ground.png}" >
+                                        <span>修改图片分组</span>
+                                    </a>
+                                    <a class="icon_delete" href="javascript:;">
+                                        <img width="14" src="../../../../../public/bg/img/icon/ground_delete.png" th:src="@{/bg/img/icon/ground_delete.png}" >
+                                        <span>批量删除图片</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <ul class="img_box" id="img_box">
+
+                            </ul>
+
+                            <div class="mark_right_bottom">
+
+                                <div class="page_box" id="page">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate','laypage','upload','layer'], function(){
+        var $=layui.$;
+        var layer=layui.layer;
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var laypage = layui.laypage;
+        var upload = layui.upload;
+        // 每页显示条数
+        var limit = 10;
+        // 选择的分组
+        var groping = 0;
+        // 当前页数
+        var page = 1;
+        // 图片总数
+        var total = '';
+        // 图片
+        var pictureList = '';
+        //默认选中第一分组
+        $('.mark_left ul li').eq(0).addClass('on');
+        getPicture(groping, limit, page);
+        // 点击分组查询分组图片
+        $('.mark_left ul li').on('click',function () {
+            $(this).addClass('on').siblings().removeClass('on');
+            groping = $(this).data('id');
+            getPicture(groping, limit, page);
+        });
+        // 删除图片
+        $('.img_box').on('click','#delete',function () {
+            var id = $(this).data('deleteid');
+            $.ajax({
+                type: "delete",
+                url: "/bg/picture/d/"+id,
+                dataType:'json',
+            }).success(function(message) {
+                if(message.code == 0) {
+                    layer.msg('删除成功');
+                    getPicture(groping, limit, page);
+                }else {
+                    layer.msg('删除失败');
+                }
+            }).fail(function(err){
+
+            })
+        })
+        // 获取分组图片
+        function getPicture(grop ,siaz, num) {
+            $.ajax({
+                type: 'get',
+                url: '/bg/picture/r/all.json?page='+num+'&limit='+siaz+'&pictureGroupingId=' + grop,
+                dateType: 'json',
+                success: function (result) {
+                    pictureList = result.pictureList;
+                    total = result.count;
+                    laypage.render({
+                        elem: 'page'
+                        , count: total
+                        ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                        , limit: limit
+                        , groups: 3
+                        , jump: function (obj) {
+                            page = obj.curr;
+                            $.ajax({
+                                type: 'get',
+                                url: '/bg/picture/r/all.json?page=' + page + '&limit=' + limit + '&pictureGroupingId=' + groping,
+                                dateType: 'json',
+                                success: function (result) {
+                                    pictureList = result.data;
+                                    total = result.count;
+                                    var arr = [];
+                                    layui.each(pictureList, function (index, item) {
+                                        // arr.push('<li>'+ item +'</li>');
+                                        arr.push('<li>'
+                                            + '<div class="img" data-id="'+item.id+'">'
+                                            + '<img src=' + item.cndImagePath + '/>'
+                                            // + '<p>160*160</p>'
+                                            + '</div>'
+                                            + '<div class="txt">'
+                                            + '<input class="check_item"  class="ownerCost" lay-filter="owner_one" type="checkbox" name="ownerCost" lay-skin="primary">'
+                                            + '</div>'
+                                            + '<div class="edit_btn">'
+                                            + '<span>...</span>'
+                                            + '<div class="operation">'
+                                            // + '<a href="javascript:;" id="updateName" class="second_name">改名</a>'
+                                            + '<a href="javascript:;" id="updateName">重命名</a>'
+                                            + '<a href="javascript:;" id="grop" >分组</a>'
+                                            + '<a href="javascript:;" id="delete" data-deleteId="'+item.id+'">删除</a>'
+                                            + '</div>'
+                                            + '</div>'
+                                            + '<p>' + item.newName + '</p>'
+                                            + '</li>'
+                                        )
+                                    })
+                                    $('.img_box').html(arr);
+                                    form.render('checkbox');
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+        // 图片上传
+        upload.render({
+            elem: '#img_up'
+            ,url: '/bg/picture/c/upload/'+$("#groping").data("id")
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                this.url = '/bg/picture/c/upload/' + groping;
+                obj.preview(function(index, file, result){
+                    $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                });
+            }
+            ,done: function(res){
+                if(res.code != 0) {
+                    layer.msg('上传失败');
+                }else {
+                    // 重新调用图片查询方法，刷新图片
+                    getPicture(groping, limit, page);
+                    layer.msg('上传成功');
+                }
+            }
+        });
+        // 全选
+        form.on('checkbox(owner_all)', function(data){
+            var a = data.elem.checked;
+            if(a == true){
+                $(".check_item").prop("checked", true);
+                form.render('checkbox');
+            }else{
+                $(".check_item").prop("checked", false);
+                form.render('checkbox');
+            }
+        });
+        // 委托人费用有一个未选中全选取消选中
+        form.on('checkbox(owner_one)',function(data){
+            var sib = $(data.elem).parents('#img_box').find('li .txt input[type="checkbox"]:checked').length;
+            var total = $(data.elem).parents('#img_box').find('li input[type="checkbox"]').length;
+            if(sib == total){
+                $('#owner_all').prop("checked",true);
+                form.render();
+            }else{
+                $('#owner_all').prop("checked",false);
+                form.render();
+            }
+        });
+        // 解决CSRF问题
+        $(function () {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
+        });
+        // 修改图片分组
+        $('.img_box').on('click','#grop',function () {
+            var idList = [];
+            var id = $(this).parent().parent().parent().find('.img').data('id');
+            idList.push(id);
+            $.ajax({
+                type: 'get',
+                url: '/bg/pictureGrouping/r/all.json',
+                dateType: 'json',
+                success: function (result) {
+                    var data = result.data;
+                    var optionHtml = [];
+                    layui.each(data, function (index, item) {
+                        optionHtml.push(
+                            '<option value="'+item.id+'">'+item.pictureOwnership+'</option>'
+                        )
+                    });
+                    layer.open({
+                        id:1
+                        ,type: 1
+                        ,area: ['330px', '160px']
+                        ,title: '选择分组'
+                        ,shade: 0
+                        ,maxmin: false
+                        ,anim: -1
+                        ,content: '<form>'+
+                        '<div class="sel_box" style="text-align: center;">' +
+                        '<select id = "ddlRegType" name="city" lay-verify="required" style="width: 90%;height: 30px;line-height: 30px;margin: 10px 0;">' +
+                        optionHtml+
+                        '</select>' +
+                        '</div>' +
+                        '</form>'
+                        ,btn:['保存']
+                        ,yes: function(index, layero){
+                            var gropId = $("#ddlRegType").find("option:selected").val();
+                            var date = {"pictureIdList":idList,"gropId":gropId};
+                            console.log(date);
+                            var jsonDate = JSON.stringify(date);
+                            // 更新图片分组
+                            $.ajax({
+                                url:'/bg/picture/u/multiple',
+                                type:"put",
+                                contentType:"application/json",
+                                dateType: 'json',
+                                data: jsonDate,
+                                success:function(msg){
+                                    if(msg.code == 0) {
+                                        layer.msg("更新成功");
+                                        getPicture(groping, limit, page);
+                                    }else {
+                                        layer.msg("更新失败");
+                                    }
+                                },
+                                error:function(xhr,textstatus,thrown){
+
+                                }
+                            });
+                            layer.close(index);
+                        }
+
+                    });
+                }
+            })
+        })
+        //  修改图片名
+        $('.img_box').on('click','#updateName',function () {
+            var id = $(this).parent().parent().parent().find('.img').data('id');
+            var second_name= $(this).closest('li').find('p').html();
+            layer.prompt({title: '图片名', value:second_name, formType: 2,shade: 0,id:'1'}, function(text, index){
+                if(!text) {
+                    return layer.msg('请输入图片名称');
+                }
+                var date = JSON.stringify({"newName":text});
+                $.ajax({
+                    url:'/bg/picture/u/'+id,
+                    type:"put",
+                    contentType:"application/json",
+                    dateType: 'json',
+                    data: date,
+                    success:function(msg){
+                        if(msg.code == 0) {
+                            layer.msg("修改成功");
+                            getPicture(groping, limit, page);
+                            layer.close(index);
+                        }else {
+                            layer.msg("修改失败");
+                        }
+                    },
+                    error:function(xhr,textstatus,thrown){
+
+                    }
+                });
+            })
+        })
+        // 添加分组
+        $('.add_group').click(function () {
+            layer.prompt({title: '分组名称', formType: 2,shade: 0,id:'1'}, function(text, index){
+                if(!text) {
+                    return layer.msg('请输入分组名称');
+                }
+                $.ajax({
+                    type: 'post',
+                    url: '/bg/pictureGrouping/c/',
+                    dateType: 'json',
+                    data: {"pictureOwnership" :text},
+                    success: function (result) {
+                        var code = result.code;
+                        if(code == 0) {
+                            layer.msg('添加成功');
+                            location.href = "/bg/picture/v/index.html";
+                        }else{
+                            layer.msg(result.msg);
+                        }
+                    }
+                })
+                layer.close(index);
+            });
+        })
+        // 批量删除
+        $('.icon_delete').click(function () {
+            var size = $('.img_box li').length;
+            var idList = [];
+            for(var i = 0; i < size; i++) {
+                if($('.img_box li').eq(i).find('.layui-unselect.layui-form-checkbox ').hasClass('layui-form-checked')) {
+                    idList.push($('.img_box li').eq(i).find('.img').data('id'));
+                }
+            }
+            if(idList.length == 0) {
+                return layer.msg("请选择需要删除的图片");
+            }
+            // 删除选中的图片
+            $.ajax({
+                url:'/bg/picture/pictures/'+idList,
+                type:"delete",
+                dateType: 'json',
+                success:function(date){
+                    if(date.code == 0) {
+                        layer.msg("删除成功");
+                        getPicture(groping, limit, page);
+                    }else {
+                        layer.msg(date.msg);
+                    }
+                },
+                error:function(xhr,textstatus,thrown){
+
+                }
+            });
+        })
+        // 批量修改分组
+        $('.amend_group').click(function () {
+            $.ajax({
+                type: 'get',
+                url: '/bg/pictureGrouping/r/all.json',
+                dateType: 'json',
+                success: function (result) {
+                    var data = result.data;
+                    var optionHtml = ['<option value="0">未分组</option>'];
+                    layui.each(data, function (index, item) {
+                        optionHtml.push(
+                            '<option value="'+item.id+'">'+item.pictureOwnership+'</option>'
+                        )
+                    });
+                    layer.open({
+                        id:1
+                        ,type: 1
+                        ,area: ['330px', '160px']
+                        ,title: '选择分组'
+                        ,shade: 0
+                        ,maxmin: false
+                        ,anim: -1
+                        ,content: '<form>'+
+                        '<div class="sel_box" style="text-align: center;">' +
+                        '<select id = "ddlRegType" name="city" lay-verify="required" style="width: 90%;height: 30px;line-height: 30px;margin: 10px 0;">' +
+                        optionHtml+
+                        '</select>' +
+                        '</div>' +
+                        '</form>'
+                        ,btn:['保存']
+                        ,yes: function(index, layero){
+                            var size = $('.img_box li').length;
+                            var idList = [];
+                            for(var i = 0; i < size; i++) {
+                                if($('.img_box li').eq(i).find('.layui-unselect.layui-form-checkbox ').hasClass('layui-form-checked')) {
+                                    idList.push($('.img_box li').eq(i).find('.img').data('id'));
+                                }
+                            }
+                            if(idList.length == 0) {
+                                return layer.msg("请选择需要分组的图片");
+                            }
+                            var gropId = $("#ddlRegType").find("option:selected").val();
+                            var date = {"pictureIdList":idList,"gropId":gropId};
+                            var jsonDate = JSON.stringify(date);
+                            // 更新图片分组
+                            $.ajax({
+                                url:'/bg/picture/u/multiple',
+                                type:"put",
+                                contentType:"application/json",
+                                dateType: 'json',
+                                data: jsonDate,
+                                success:function(msg){
+                                    if(msg.code == 0) {
+                                        layer.msg("修改成功");
+                                        getPicture(groping, limit, page);
+                                    }else {
+                                        layer.msg("修改失败");
+                                    }
+                                },
+                                error:function(xhr,textstatus,thrown){
+
+                                }
+                            });
+                            layer.close(index);
+                        }
+
+                    });
+                }
+            })
+        })
+        // 修改分组名称
+        $(".group_name").click(function () {
+            if(groping === 0) {
+                return layer.msg("默认分组不能修改");
+            }
+            var gropingName = $('.mark_left').find('.on span').html();
+            layer.prompt({title: '图片名', value:gropingName, formType: 2,shade: 0,id:'1'}, function(text, index){
+                if(!text) {
+                    return layer.msg('请输入分组名称');
+                }
+                var date = JSON.stringify({"pictureOwnership":text});
+                $.ajax({
+                    url:'/bg/pictureGrouping/u/'+groping,
+                    type:"put",
+                    contentType:"application/json",
+                    dateType: 'json',
+                    data: date,
+                    success:function(msg){
+                        if(msg.code == 0) {
+                            layer.msg("修改成功");
+                            $('.mark_left').find('.on span').html(text);
+                            getPicture(groping, limit, page);
+                            layer.close(index);
+                        }else {
+                            layer.msg("修改失败");
+                        }
+                    },
+                    error:function(xhr,textstatus,thrown){
+
+                    }
+                });
+            })
+        })
+    });
+</script>
+</body>
+</html>

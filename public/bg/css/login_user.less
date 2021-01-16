@@ -1,0 +1,139 @@
+@import "valid";
+@lWidth:400px;
+@lHeight:400px;
+@indexLogin:#F7F8FD;
+@lBtColor:#6EEEFF;
+
+
+#login{
+  //这种方法好
+  background-color:@indexLogin ;
+  height:100%;
+  position:fixed;
+  width:100%;
+}
+
+//两幅主图
+#imgF{
+  position: absolute;
+  top:0;
+  right:0;
+  width:249px;
+  height:200px;
+  background: url(../img/bg.png) no-repeat -60px -111px ;
+}
+#imgS{
+  position: absolute;
+  left:0;
+  bottom:0;
+  width:250px;
+  height:203px;
+  background: url(../img/bg.png) no-repeat -49px -287px ;
+}
+
+//表单部分
+#lForm{
+  box-shadow: 0 0 3px #F7F8FD;
+  background-color: #fff;
+  width:300px;
+  height:350px;
+  padding:15px;
+  position: absolute;
+  .center();
+  z-index: 10;
+
+  .layui-form-item{
+    margin-bottom: 0;
+  }
+
+  //顶部标签
+  .topNav{
+    text-align: center;
+    padding-bottom: 40px;
+    a{
+      display:inline-block;
+      padding:10px 20px;
+      font-size:1.1em;
+      color:#AEAEAE
+    }
+    a:hover{
+      color:@lBtColor
+    }
+    i{
+      border-left: 1px solid #ddd;
+    }
+  }
+
+  #user,#pwd{
+    border:1px solid transparent;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.8em;
+    color:#C0C0C0;
+  }
+  .layui-input-block{
+    margin: 2% 10%;
+    position:relative;
+  }
+
+  //submit的button
+  #submit{
+    background-color: @lBtColor;
+    margin-top:20px;
+    width:70%;
+    background:linear-gradient(to right,#3CCAFF,#73F1FF);
+  }
+  .layui-input{
+    padding-left: 0;
+  }
+  #checkbox{
+    color:#C0C0C0;
+  }
+}
+
+//footer
+.footer{
+  //调用居中对齐方法
+  .center();
+  top: 120%;
+  width:400px;
+  text-align: center;
+
+  a:not(:first-child){
+    border-left:1px solid #ddd;
+  }
+  a{
+    padding:0 3px;
+    font-size: 0.7em;
+  }
+  a:last-child{
+    color:#C0C0C0;
+  }
+}
+
+//logo部分
+#logo{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  img{
+    width:70px;
+  }
+}
+
+//user和pwd的小图
+i.imgPwd{
+  position: absolute;
+  right:-5px;
+  top:16px;
+  width:20px;
+  height:20px;
+  background: url(../img/login.png) no-repeat -25px -0px ;
+}
+i.imgUser{
+  position: absolute;
+  right:-5px;
+  top:15px;
+  width:20px;
+  height:20px;
+  background: url(../img/login.png) no-repeat 1px 0 ;
+}

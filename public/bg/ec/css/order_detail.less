@@ -1,0 +1,154 @@
+.content{
+  .progress_box.two{
+    .progress_items{
+      .progress_item {
+        width: 50%;
+      }
+    }
+    .layui-progress{
+      width: 50%;
+      margin: 0 auto;
+      background: #efefef;
+    }
+  }
+  .progress_box.three{
+    .progress_items{
+      .progress_item {
+        width: 33.33%;
+      }
+    }
+    .layui-progress{
+      width: 66.66%;
+      margin: 0 auto;
+      background: #efefef;
+    }
+  }
+  .progress_box.four{
+    .progress_items{
+      .progress_item {
+        width: 25%;
+      }
+    }
+    .layui-progress{
+      width: 75%;
+      margin: 0 auto;
+      background: #efefef;
+    }
+  }
+  .progress_box{
+    position:relative ;
+    margin: 20px 10px;
+
+    padding: 42px 0;
+    .progress_items{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      z-index: 2;
+      .progress_item {
+        width: 20%;
+        float: left;
+        text-align: center;
+        font-size: 16px;
+        .progress_img{
+          line-height: 40px;
+          font-size: 20px;
+          color: #ffffff;
+          width: 40px;
+          height: 40px;
+          background: #009688;
+          border-radius: 20px;
+          margin: 10px auto;
+          img{
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+    }
+    .layui-progress{
+      width: 80%;
+      margin: 0 auto;
+      background: #efefef;
+    }
+  }
+  .message{
+    .layui-field-title{
+      margin: 10px 0;
+      legend{
+        font-size: 18px;
+      }
+    }
+    .message_content{
+      padding: 10px;
+      overflow: hidden;
+      .message_item{
+        height: 36px;
+        line-height: 36px;
+        width: 33%;
+        float: left;
+        overflow: hidden;
+        .message_item_title{
+          float: left;
+          width: 80px;
+          display: block;
+          text-align: right;
+        }
+        p{
+          margin-left: 90px;
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+      .shop{
+        height: inherit;
+        overflow: visible;
+        float: none;
+        clear: both;
+        width: 100%;
+        .shop_remark{
+          overflow: visible;
+          text-overflow: initial;
+          white-space:initial;
+          word-wrap:break-word;
+        }
+      }
+    }
+    .message_btn{
+      padding: 0 10px;
+    }
+
+  }
+}
+.all_box{
+  p{
+    padding: 10px;
+    text-align: right;
+    font-size: 18px;
+    span{
+      color: red;
+      font-size: 20px;
+    }
+  }
+}
+tbody {
+  .layui-table-cell{
+    height: 100px;
+    .pro_img_box{
+      padding-left: 170px;
+      img{
+        margin-left: -170px;
+        float: left;
+        display: block;
+        width: 160px;
+        max-width: 160px;
+        height: 90px;
+      }
+    }
+  }
+}
+
